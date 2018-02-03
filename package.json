@@ -1,0 +1,22 @@
+{
+  "name": "lexium",
+  "version": "0.0.1",
+  "description": "Lexium",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://gitlab.com/f_dev/Lexium.git"
+  },
+  "keywords": [
+    "lexium"
+  ],
+  "author": "f_dev",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://gitlab.com/f_dev/Lexium/issues"
+  },
+  "homepage": "https://gitlab.com/f_dev/Lexium#README"
+}
