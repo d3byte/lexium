@@ -11,9 +11,9 @@
 .env.*.local
 
 # Log files
-/app/npm-debug.log*
-/app/yarn-debug.log*
-/app/yarn-error.log*
+/client/npm-debug.log*
+/client/yarn-debug.log*
+/client/yarn-error.log*
 
 # Editor directories and files
 .idea
