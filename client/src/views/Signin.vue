@@ -1,15 +1,19 @@
 <template>
   <div class="home">
-    <h2>Авторизация</h2>
-    
+    <Header/>
   </div>
 </template>
 
 <script>
 // @ is an alias to /sr
 import Preloader from '@/components/Preloader.vue'
+import Header from '@/components/Header.vue'
 
 export default {
-  name: 'signin',
-};
+    name: 'signin',
+    components: {
+        Preloader,
+        Header
+    }
+}
 </script>
