@@ -1,13 +1,13 @@
 <template>
-  <div class="home">
-    <TheButton :clickHandler="handler" className="authorization" text="Дальше"/>
-    <TheButton :clickHandler="handler" className="regular" text="Выполнить"/>
-    <div class="showcase-button">
-      <TheButton :clickHandler="handler" className="regular fluid" text="Выполнить"/>
-      <TheButton :clickHandler="handler" className="regular fluid" text="Улучшить результат"/>
-      <TheButton :clickHandler="handler" className="regular fluid lighter" text="Улучшить результат"/>
+    <div class="home">
+        <TheButton :clickHandler="handler" className="authorization" text="Дальше"/>
+        <TheButton :clickHandler="handler" className="regular" text="Выполнить"/>
+        <div class="showcase-button">
+            <TheButton :clickHandler="handler" className="regular fluid" text="Выполнить"/>
+            <TheButton :clickHandler="handler" className="regular fluid" text="Улучшить результат"/>
+            <TheButton :clickHandler="handler" className="regular fluid lighter" text="Улучшить результат"/>
+        </div>
     </div>
-  </div>
 </template>
 
 <script>
@@ -18,7 +18,15 @@ export default {
     name: 'home',
     methods: {
         handler() {
-            this.$router.push('/loading')
+            let random = Math.round(Math.random())
+            switch (random) {
+                case 0:
+                    this.$router.push('/loading')
+                    break
+                case 1:
+                    this.$router.push('/123')
+                    break
+            }
         }
     },
     components: {
