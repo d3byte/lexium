@@ -9,6 +9,7 @@
 import Preloader from '@/components/Preloader.vue'
 
 export default {
+    name: 'Loading',
     components: {
         Preloader
     }

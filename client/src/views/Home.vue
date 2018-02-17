@@ -18,15 +18,7 @@ export default {
     name: 'home',
     methods: {
         handler() {
-            let random = Math.round(Math.random())
-            switch (random) {
-                case 0:
-                    this.$router.push('/loading')
-                    break
-                case 1:
-                    this.$router.push('/123')
-                    break
-            }
+            this.$router.push('/123')
         }
     },
     components: {
