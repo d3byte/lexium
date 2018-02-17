@@ -5,16 +5,19 @@
         <div class="sub-title">К сожалению, такой страницы нет :(</div>
         <div class="proposal">Может вы искали одну из этих страниц?</div>
         <ul class="links">
-            <li>Авторизация</li> |
-            <li>Регистрация</li> |
-            <li>Профиль</li>
+            <li>
+                <router-link to="/signin">Авторизация</router-link>
+            </li> |
+            <li>
+                <router-link to="/signup">Регистрация</router-link>
+            </li> |
+            <li>
+                <router-link to="/profile">Профиль</router-link>
+            </li>
         </ul>
     </div>
 </div>
 </template>
-
-<script>
-</script>
 
 <style lang="sass" scoped>
 .main
@@ -49,11 +52,13 @@
         &:hover
             cursor: default
         li
+            margin: 0
+        a
             font-family: 'ProximaNova-Semibold', sans-serif
             font-size: 24px
-            margin: 0
-            transition: 0.2s
+            text-decoration: none
             color: #6B6DB8
+            transition: 0.2s
             &:hover
                 cursor: pointer
                 color: #8686DA
