@@ -1,12 +1,12 @@
 <template>
     <header :class="className">
         <img class="logo" src="@/assets/Lexium.png">
-        <ul v-if="className === 'isLoggedIn'" class="navigation">
-            <li>
-                <i class="material-icons">bookmark</i>
-            </li>
-            <li>
+        <ul v-if="className == 'isLoggedIn'" class="navigation">
+            <li class="search">
                 <i class="material-icons">search</i>
+            </li>
+            <li class="notifications">
+                <i class="material-icons">bookmark</i>
             </li>
             <li>
                 <i class="material-icons">reorder</i>
@@ -58,4 +58,23 @@ header
 
     .logo
         transform: scale(0.8)
+
+    .navigation
+        display: flex
+        align-items: center
+        justify-content: space-between
+        list-style-type: none
+        margin: 0
+        padding: 0
+        li
+            display: flex
+            align-items: center
+            margin-right: 20px
+            i
+                opacity: 0.6
+                transition: 0.2s
+                &:hover
+                    opacity: 0.7
+                    cursor: pointer
+
 </style>

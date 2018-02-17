@@ -11,4 +11,31 @@ body {
   width: 100%;
   padding: 0 160px;
 }
+
+@media (max-width: 1160px) {
+  .container, header {
+    padding: 0 70px !important;
+  }
+}
+
+@media (min-width: 601px) {
+  .humburger .search, .humburger .notifications {
+    display: none !important;
+  }
+}
+
+@media (max-width: 600px) {
+  .container, header {
+    padding: 0 20px !important;
+  }
+  .navigation .search, .navigation .notifications {
+    display: none !important;
+  }
+}
+
+@media (max-width: 370px) {
+  .logo {
+    width: 200px !important;
+  }
+}
 /*# sourceMappingURL=style.css.map */
