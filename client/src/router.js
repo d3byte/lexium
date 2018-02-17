@@ -4,6 +4,7 @@ import Home from './views/Home.vue'
 import Signin from './views/Signin.vue'
 import Signup from './views/Signup.vue'
 import Page404 from './views/Page404.vue'
+import Loading from './views/Loading.vue'
 
 Vue.use(Router)
 
@@ -24,6 +25,11 @@ export default new Router({
       path: '/signup',
       name: 'signup',
       component: Signup
+    },
+    {
+      path: '/loading',
+      name: 'loading',
+      component: Loading
     },
     {
       path: '/404',

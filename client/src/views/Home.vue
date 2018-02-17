@@ -15,15 +15,15 @@
 import TheButton from '@/components/TheButton.vue'
 
 export default {
-  name: 'home',
-  methods: {
-    handler() {
-      this.$router.push('/9123')
-    }
-  },
-  components: {
-    TheButton,
-  },
+    name: 'home',
+    methods: {
+        handler() {
+            this.$router.push('/loading')
+        }
+    },
+    components: {
+        TheButton,
+    },
 }
 </script>
 

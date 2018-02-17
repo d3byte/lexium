@@ -11,11 +11,11 @@ export default {
 <style lang="sass" scoped>
 @keyframes breathing
     from
-        transform: scale(1)
+        transform: scale(0.6)
     50%
-        transform: scale(1.1)
+        transform: scale(0.7)
     to
-        transform: scale(1)
+        transform: scale(0.6)
 img
-    animation: breathing 2s infinite linear 0
+    animation: breathing 2s infinite ease-in-out 0
 </style>
