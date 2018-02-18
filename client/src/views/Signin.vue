@@ -6,8 +6,8 @@
             <div class="card">
                 <div class="card-header">Авторизация</div>
                 <div class="card-body">
-                    <input type="text" v-model="login">
-                    <input type="text" v-model="password">
+                    <input type="text" v-model="login" class="line-based" placeholder="Логин">
+                    <input type="password" v-model="password" class="line-based" placeholder="Пароль">
                 </div>
                 <div class="card-footer">
                     <TheButton :clickHandler="submit" className="authorization" text="Войти" />
@@ -84,6 +84,7 @@ export default {
         align-items: center
         justify-content: center
         height: 50%
+        width: 80%
         input
             margin-bottom: 30px
             &:last-of-type
@@ -91,4 +92,9 @@ export default {
 
     .card-footer
         padding: 20px 0
+
+
+@media (max-width: 370px)
+    .card
+        width: 90%
 </style>

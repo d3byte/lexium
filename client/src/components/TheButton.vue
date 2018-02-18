@@ -26,7 +26,7 @@ button
     padding: 7px 0
     color: white
     font-size: 18px
-    font-family: 'ProximaNova-Semibold', sans-serif
+    font-family: 'ProximaNova-Regular', sans-serif
     &:hover
         background: #6F72E3
     &:active
