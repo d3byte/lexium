@@ -13,9 +13,9 @@
             <TheButton :clickHandler="submit" className="authorization" text="Дальше" />
           </div>
         </div>
-        <div class="card-msg">
-          <TheButton className="ultralight" text="Есть аккаунт?" />
-        </div>
+        <a class="card-msg">
+            <router-link to="/signin">Есть аккаунт?</router-link>
+        </a>
       </div>
     </div>
     <Loading v-if="loading" />

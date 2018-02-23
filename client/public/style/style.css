@@ -4,6 +4,22 @@ body {
   font-family: 'ProximaNova-Light', sans-serif;
 }
 
+a {
+  color: #BFBBBB;
+  text-decoration: none;
+  padding-bottom: 2px;
+  border-bottom: 1px solid transparent;
+  -o-transition: all .3s ease;
+  -ms-transition: all .3s ease;
+  -moz-transition: all .3s ease;
+  -webkit-transition: all .3s ease;
+  transition: all .3s ease;
+}
+
+a:hover {
+  border-bottom: 1px solid #BFBBBB;
+}
+
 ::placeholder {
   color: #BFBBBB !important;
 }
@@ -23,7 +39,6 @@ body {
   justify-content: center;
   flex-direction: column;
   height: calc(100vh - 60px);
-  padding-bottom: 50px;
 }
 
 .card {
