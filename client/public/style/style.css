@@ -1,6 +1,11 @@
 @import url("fonts.css");
 body {
   background: #F4F4F4;
+  font-family: 'ProximaNova-Light', sans-serif;
+}
+
+::placeholder {
+  color: #BFBBBB !important;
 }
 
 .hide {
@@ -16,7 +21,9 @@ body {
   display: flex;
   align-items: center;
   justify-content: center;
+  flex-direction: column;
   height: calc(100vh - 60px);
+  padding-bottom: 50px;
 }
 
 .card {
@@ -62,6 +69,13 @@ body {
 
 .card .card-footer {
   padding: 20px 0;
+}
+
+.card .card-msg {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
 }
 
 @media (max-width: 1160px) {

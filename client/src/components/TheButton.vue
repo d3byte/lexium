@@ -38,7 +38,6 @@ button
     color: white
     font-size: 14px
     font-family: 'ProximaNova-Regular', sans-serif
-    text-transform: uppercase
     &:hover
         background: #8686DA
     &:active
@@ -53,5 +52,20 @@ button
         background: #6F72E3
     &.lighter:active
         background: #5F61B2
+
+.ultralight
+    padding-top: 20px
+    color: #BFBBBB
+    text-decoration: none
+    border: none
+    padding-bottom: 2px
+    border-bottom: 1px solid transparent
+    -o-transition: all .3s ease
+    -ms-transition: all .3s ease
+    -moz-transition: all .3s ease
+    -webkit-transition: all .3s ease
+    transition: all .3s ease
+    &:hover
+        border-bottom: 1px solid #BFBBBB
 
 </style>
