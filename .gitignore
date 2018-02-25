@@ -4,7 +4,8 @@
 /server/dist
 /server/package-lock.json
 /server/node_modules
-
+/node
+/example
 
 # local env files
 .env.local
