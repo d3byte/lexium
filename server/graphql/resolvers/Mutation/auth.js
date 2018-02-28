@@ -8,7 +8,7 @@ const auth = {
   async signup(root, { email, name, username, password, }, context) {
     const hashedPassword = await bcrypt.hash(password, 10)
     const returnObject = {}
-    const user = await models.User.create({ email, name, username, hashedPassword, avatarUrl: '' }).then(user => {
+    const user = await models.User.create({ email, name, username, password: hashedPassword, avatarUrl: '' }).then(user => {
       returnObject.user = user
       returnObject.token = jwt.sign({ userId: user.id }, secret())
       return models.Group.create({ name: 'Личная группа', superUsers: JSON.stringify([JSON.stringify(user.id)]) })
@@ -19,8 +19,6 @@ const auth = {
       // group.setUsers([user.id])
       // group.setsuperUsers([user.id])
     })
-
-    console.log(returnObject)
 
     return returnObject
   },
@@ -35,9 +33,9 @@ const auth = {
     if (!valid) {
       throw new Error('Invalid password')
     }
-
+    
     return {
-      token: jwt.sign({ userId: user.id }, process.env.APP_SECRET),
+      token: jwt.sign({ userId: user.id }, secret()),
       user,
     }
   },

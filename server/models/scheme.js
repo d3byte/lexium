@@ -1,4 +1,5 @@
 const Sequelize = require('sequelize')
+const bcrypt = require('bcrypt')
 
 module.exports = function (sequelize) {
   const User = sequelize.define('User', {
@@ -9,6 +10,13 @@ module.exports = function (sequelize) {
     wordsLearnt: Sequelize.BIGINT,
     password: Sequelize.STRING
   })
+
+  User.prototype.validPassword = password => {
+    console.log(this.password, password)
+    return bcrypt.compare(password, this.password)
+      .then(value => value)
+      .catch(err => { throw new Error(err) })
+  }
 
   const Group = sequelize.define('Group', {
     name: Sequelize.STRING,
