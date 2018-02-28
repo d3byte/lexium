@@ -16,7 +16,7 @@ function createData () {
   // let twoHoursLater = new Date(oneHourLater.getTime() + HOUR)
   // let threeHoursLater = new Date(twoHoursLater.getTime() + HOUR)
 
-  Promise.all([usersPromise])
+  Promise.all([groupsPromise])
     .then(() => Promise.all([
       models.Group.findAll()
     ]))

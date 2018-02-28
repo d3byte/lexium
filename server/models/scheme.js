@@ -11,7 +11,8 @@ module.exports = function (sequelize) {
   })
 
   const Group = sequelize.define('Group', {
-    name: Sequelize.STRING
+    name: Sequelize.STRING,
+    superUsers: Sequelize.STRING
   })
 
   const Task = sequelize.define('Task', {
@@ -33,7 +34,6 @@ module.exports = function (sequelize) {
   Task.belongsToMany(Result, { through: 'Tasks_Results' })
   Task.belongsToMany(WordPair, { through: 'Tasks_WordPairs', as: 'wordPairs' })
   Group.belongsToMany(User, { through: 'Groups_Users' })
-  Group.belongsToMany(User, { through: 'Groups_Users', as: 'superUsers' })
   User.belongsToMany(Group, { through: 'Users_Groups' })
 
   return {

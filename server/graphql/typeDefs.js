@@ -87,8 +87,8 @@ scalar Date
 type Query {
   task(taskId: ID!): Task!
   tasks(groupId: ID!): [Task!]
-  groups(userId: ID!): [Group!]
-  group(id: ID!): Group!
+  groups: [Group!]
+  group: Group!
   user: User!
   users: [User!]!
 }
@@ -122,13 +122,14 @@ type AuthPayload {
 type Group {
   id: ID!
   name: String!
-  users: [User!]!
+  users: [User!]
   superUsers: [ID!]!
   tasks: [Task]
 }
 
 input GroupInput {
   name: String!
+  superUsers: [ID!]!
 }
 
 type User {
@@ -143,10 +144,11 @@ type User {
 }
 
 input UserInput {
-    name: String!
-    username: String!
-    password: Int!
-    email: String!
+  name: String!
+  username: String!
+  password: Int!
+  email: String!
+  avatarUrl: String!
 }
 
 type Task {

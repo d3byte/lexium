@@ -1,10 +1,9 @@
 const { models } = require('../../../models')
 
 module.exports = {
-    createGroup(root, { input, usersIds, userId }, context) {
+    createGroup(root, { input, usersIds }, context) {
         return models.Group.create(input)
-            .then(group => group.setUsers(usersIds))
-            .then(group => group.setSuperUsers([userId])
+            .then(group => group.setUsers(usersIds)
                 .then(() => group))
     },
 
