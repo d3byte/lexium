@@ -6,8 +6,8 @@
         <div class="card rounded">
           <div class="card-header">Регистрация</div>
           <div class="card-body">
-            <input type="text" v-model="login" class="line-based" placeholder="Имя">
-            <input type="text" v-model="password" class="line-based" placeholder="Фамилия">
+            <input type="text" v-model="firstName" class="line-based" placeholder="Имя">
+            <input type="text" v-model="lastName" class="line-based" placeholder="Фамилия">
           </div>
           <div class="card-footer">
             <TheButton :clickHandler="submit" className="authorization" text="Дальше" />
@@ -30,8 +30,8 @@
     name: 'signup',
     data() {
       return {
-        login: '',
-        password: '',
+        firstName: '',
+        lastName: '',
         loading: false
       }
     },
@@ -52,5 +52,5 @@
   }
 </script>
 
-<style lang="sass">
+<style lang="sass" scoped>
 </style>
