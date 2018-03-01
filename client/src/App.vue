@@ -34,6 +34,7 @@ input.line-based
     &:-ms-input-placeholder
         color: #D4D4D4
     &:focus
+        outline: none
         border-color: #626262
         &::-webkit-input-placeholder
             color: #9D9C9C
