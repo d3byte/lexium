@@ -13,6 +13,7 @@
                     <TheButton :clickHandler="submit" className="authorization" text="Войти" />
                 </div>
             </div>
+            <router-link class="form-link" to="/signup">Нет аккаунта? <img src="@/assets/arrow.svg"></router-link>
         </div>
     </div>
     <Loading v-if="loading"/>
