@@ -94,7 +94,7 @@ type Query {
 }
 
 type Mutation {
-  createGroup(name: String!): Group
+  createGroup(name: String!, usersIds: [ID!]!, superUsers: [ID!]!): Group
   updateGroup(id: ID!, input: GroupInput): Group
   addUserToGroup(id: ID!, userId: ID!): Group
   removeUserFromGroup(id: ID!, userId: ID!): Group
@@ -123,8 +123,9 @@ type Group {
   id: ID!
   name: String!
   users: [User!]
-  superUsers: [ID!]!
+  superUsers: String!
   tasks: [Task]
+  createdAt: Date!
 }
 
 input GroupInput {
@@ -141,6 +142,7 @@ type User {
   wordsLearnt: Int!
   groups: [Group!]!
   avatarUrl: String!
+  createdAt: Date!
 }
 
 input UserInput {

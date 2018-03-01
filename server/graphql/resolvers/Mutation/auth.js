@@ -11,13 +11,11 @@ const auth = {
     const user = await models.User.create({ email, name, username, password: hashedPassword, avatarUrl: '' }).then(user => {
       returnObject.user = user
       returnObject.token = jwt.sign({ userId: user.id }, secret())
-      return models.Group.create({ name: 'Личная группа', superUsers: JSON.stringify([JSON.stringify(user.id)]) })
+      return models.Group.create({ name: 'Личная группа', superUsers: JSON.stringify([user.id]) })
         .then(group => group.setUsers([user.id])
           .then(() => {
             return user.setGroups([group.id])
           }))
-      // group.setUsers([user.id])
-      // group.setsuperUsers([user.id])
     })
 
     return returnObject
