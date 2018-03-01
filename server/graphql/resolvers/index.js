@@ -22,9 +22,6 @@ module.exports = function resolvers() {
       users(group) {
         return group.getUsers()
       },
-      superUsers(group) {
-        return group.getSuperUsers()
-      }
     },
 
     Task: {
