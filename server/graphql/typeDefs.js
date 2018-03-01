@@ -86,7 +86,7 @@ scalar Date
 
 type Query {
   task(taskId: ID!): Task!
-  tasks(groupId: ID!): [Task!]
+  tasks: [Task!]
   groups: [Group!]
   group: Group!
   user: User!
@@ -109,6 +109,8 @@ type Mutation {
   removeTask(id: ID!): Task
 
   updateUser(id: ID!, input: UserInput!): User
+  verifyPassword(userId: ID!, password: String!): VerifyPayload!
+  changePassword(userId: ID!, password: String!): User
   removeUser(id: ID!): User
   signup(email: String!, password: String!, name: String!, username: String!): AuthPayload!
   login(username: String!, password: String!): AuthPayload!
@@ -117,6 +119,10 @@ type Mutation {
 type AuthPayload {
   token: String!
   user: User!
+}
+
+type VerifyPayload {
+  value: Boolean!
 }
 
 type Group {
@@ -148,7 +154,6 @@ type User {
 input UserInput {
   name: String!
   username: String!
-  password: Int!
   email: String!
   avatarUrl: String!
 }

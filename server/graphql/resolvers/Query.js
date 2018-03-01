@@ -17,7 +17,6 @@ task (root, { id }) {
     return models.Task.findById(id)
   },
   tasks (root, args, context) {
-    // return models.Room.findAll({ offset: 1 }, context)
     return models.Task.findAll({}, context)
   }
 }
