@@ -3,7 +3,7 @@
     <div class="home" v-show="!loading">
         <Header/>
         <div class="cards">
-            <div class="card">
+            <div class="card rounded">
                 <div class="card-header">Авторизация</div>
                 <div class="card-body">
                     <input type="text" v-model="login" class="line-based" placeholder="Логин">

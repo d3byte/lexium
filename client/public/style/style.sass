@@ -14,11 +14,6 @@ a
     -moz-transition: all .3s ease
     -webkit-transition: all .3s ease
     transition: all .3s ease
-    &:hover
-        border-bottom: 1px solid #BFBBBB
-
-::placeholder
-    color: #BFBBBB !important
 
 .hide
     display: none
@@ -26,6 +21,13 @@ a
 .container
     width: 100%
     padding: 0 160px
+
+a.form-link
+    font-family: 'ProximaNova-Regular', sans-serif
+    color: #D7D7D7
+    transition: 0.2s
+    &:hover
+        color: #D1D1D1
 
 .cards
     display: flex
@@ -43,8 +45,10 @@ a
     width: 350px
     height: 250px
     background: white
-    border-radius: 8px
     border: 1px solid #E0E0E0
+    margin-bottom: 10px
+    &.rounded
+        border-radius: 8px
     div
         padding-left: 40px
         padding-right: 40px

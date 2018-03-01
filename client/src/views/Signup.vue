@@ -3,7 +3,7 @@
     <div class="home" v-show="!loading">
       <Header/>
       <div class="cards">
-        <div class="card">
+        <div class="card rounded">
           <div class="card-header">Регистрация</div>
           <div class="card-body">
             <input type="text" v-model="login" class="line-based" placeholder="Имя">
@@ -13,9 +13,7 @@
             <TheButton :clickHandler="submit" className="authorization" text="Дальше" />
           </div>
         </div>
-        <a class="card-msg">
-            <router-link to="/signin">Есть аккаунт?</router-link>
-        </a>
+        <router-link class="form-link" to="/signin">Есть аккаунт? <img src="@/assets/arrow.svg"></router-link>
       </div>
     </div>
     <Loading v-if="loading" />

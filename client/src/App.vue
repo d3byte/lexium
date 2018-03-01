@@ -36,11 +36,11 @@ input.line-based
     &:focus
         outline: none
         border-color: #626262
-        &::-webkit-input-placeholder
+        &:-webkit-input-placeholder
             color: #9D9C9C
         &:-moz-placeholder
             color: #9D9C9C
-        &::-moz-placeholder
+        &:-moz-placeholder
             color: #9D9C9C
         &:-ms-input-placeholder
             color: #9D9C9C
