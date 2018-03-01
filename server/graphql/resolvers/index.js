@@ -27,9 +27,12 @@ module.exports = function resolvers() {
     Task: {
       results(task) {
         return task.getResults()
-      },
-      words(task) {
-        return task.getWordPairs()
+      }
+    },
+
+    Result: {
+      user(result) {
+        return result.getUser()
       }
     },
 

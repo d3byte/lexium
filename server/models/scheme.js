@@ -12,7 +12,6 @@ module.exports = function (sequelize) {
   })
 
   User.prototype.validPassword = password => {
-    console.log(this.password, password)
     return bcrypt.compare(password, this.password)
       .then(value => value)
       .catch(err => { throw new Error(err) })
@@ -25,7 +24,8 @@ module.exports = function (sequelize) {
 
   const Task = sequelize.define('Task', {
     name: Sequelize.STRING,
-    deadline: Sequelize.DATE
+    deadline: Sequelize.DATE,
+    words: Sequelize.STRING
   })
 
   const Result = sequelize.define('Result', {
@@ -38,11 +38,10 @@ module.exports = function (sequelize) {
     translation: Sequelize.STRING
   })
 
-  Task.belongsTo(Group)
   Task.belongsToMany(Result, { through: 'Tasks_Results' })
-  Task.belongsToMany(WordPair, { through: 'Tasks_WordPairs', as: 'wordPairs' })
   Group.belongsToMany(User, { through: 'Groups_Users' })
   User.belongsToMany(Group, { through: 'Users_Groups' })
+  Result.belongsTo(User)
 
   return {
     User, Group, Task, WordPair, Result
