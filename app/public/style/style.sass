@@ -1,0 +1,106 @@
+@import url('fonts.css')
+
+body
+    background: #F4F4F4
+    font-family: 'ProximaNova-Light', sans-serif
+
+a
+    color: #BFBBBB
+    text-decoration: none
+    padding-bottom: 2px;
+    border-bottom: 1px solid transparent
+    -o-transition: all .3s ease
+    -ms-transition: all .3s ease
+    -moz-transition: all .3s ease
+    -webkit-transition: all .3s ease
+    transition: all .3s ease
+
+.hide
+    display: none
+
+.container
+    width: 100%
+    padding: 0 160px
+
+a.form-link
+    font-family: 'ProximaNova-Regular', sans-serif
+    color: #D7D7D7
+    transition: 0.2s
+    &:hover
+        color: #D1D1D1
+
+.cards
+    display: flex
+    align-items: center
+    justify-content: center
+    flex-direction: column
+    height: calc(100vh - 60px)
+
+.card
+    display: flex
+    flex-direction: column
+    align-items: center
+    justify-content: space-between
+    box-sizing: content-box
+    width: 350px
+    height: 250px
+    background: white
+    border: 1px solid #E0E0E0
+    margin-bottom: 10px
+    &.rounded
+        border-radius: 8px
+    div
+        padding-left: 40px
+        padding-right: 40px
+
+    .card-header
+        font-family: 'ProximaNova-Semibold', sans-serif
+        font-size: 36px
+        padding: 20px 0
+
+    .card-body
+        display: flex
+        flex-direction: column
+        align-items: center
+        justify-content: center
+        height: 50%
+        width: 80%
+        input
+            margin-bottom: 30px
+            &:last-of-type
+                margin-bottom: 0
+
+    .card-footer
+        padding: 20px 0
+
+    .card-msg
+        display: flex
+        flex-direction: column
+        align-items: center
+        justify-content: center
+        
+
+
+
+@media (max-width: 1160px)
+    .container, header
+        padding: 0 70px !important
+
+@media (min-width: 601px)
+    .humburger
+        .search, .notifications
+            display: none !important
+
+@media (max-width: 600px)
+    .container, header
+        padding: 0 20px !important
+    
+    .navigation
+        .search, .notifications
+            display: none !important
+
+@media (max-width: 370px)
+    .logo
+        width: 200px !important
+    .card
+        width: 90% !important

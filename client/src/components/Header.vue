@@ -35,7 +35,7 @@ export default {
                 break
             default:
                 this.className = 'isLoggedIn'
-                this.rotue = route
+                this.route = route
         }
     },
 }

@@ -1,4 +1,6 @@
 .DS_Store
+/app/node_modules
+/app/src/**/*.css
 /client/node_modules
 /client/dist
 /server/dist
