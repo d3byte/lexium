@@ -5,11 +5,11 @@ import './style.css'
 
 export const Error404 = () => (
   <div className="main">
-    <div class="wrapper">
-    <div class="title">Ошибка 404</div>
-    <div class="sub-title">К сожалению, такой страницы нет :(</div>
-    <div class="proposal">Может вы искали одну из этих страниц?</div>
-      <ul class="links">
+    <div className="wrapper">
+    <div className="title">Ошибка 404</div>
+    <div className="sub-title">К сожалению, такой страницы нет :(</div>
+    <div className="proposal">Может вы искали одну из этих страниц?</div>
+      <ul className="links">
           <li>
               <Link to="/signin">Авторизация</Link>
           </li> |
