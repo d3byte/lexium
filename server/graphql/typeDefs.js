@@ -89,8 +89,8 @@ type Query {
   tasks: [Task!]
   groups: [Group!]
   group: Group!
-  user: User!
-  users: [User!]!
+  user(id: ID!): User
+  users: [User!]
 }
 
 type Mutation {
