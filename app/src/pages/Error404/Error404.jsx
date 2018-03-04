@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom'
 
 import './style.css'
 
-export const Error404 = () => (
+const Error404 = () => (
   <div className="main">
     <div className="wrapper">
     <div className="title">Ошибка 404</div>
@@ -23,3 +23,5 @@ export const Error404 = () => (
     </div>
   </div>
 )
+
+export default Error404

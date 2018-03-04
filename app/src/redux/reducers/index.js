@@ -1,5 +1,10 @@
 import { combineReducers } from 'redux'
-import { SET_USER_INFO } from '../types'
+import { SET_USER_INFO, REMOVE_USER_INFO } from '../types'
+
+const initialState = {
+    user: {},
+    currentGroup: {}
+}
 
 function userInfo(state = initialState, action) {
     switch(action) {

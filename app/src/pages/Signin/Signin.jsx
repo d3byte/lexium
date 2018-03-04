@@ -4,10 +4,11 @@ import { graphql } from 'react-apollo'
 
 import Button from '../../components/Button'
 import Header from '../../components/Header'
+import Loading from '../../components/Loading'
 
 import arrow from '../../assets/arrow.svg'
 
-import { LOGIN } from '../graphql/mutations'
+import { LOGIN } from '../../graphql/mutations'
 
 class Signin extends Component {
   constructor() {
@@ -31,6 +32,7 @@ class Signin extends Component {
     this.setState({ loading: true })
     try {
       const data = await this.props.mutate({ variables: { username, password } })
+      console.log(data)
       // Обработать данные
     } catch(error) {
       // Оповестить пользователя об ошибке
@@ -57,7 +59,7 @@ class Signin extends Component {
                       <Button clickHandler={this.submit} classNameProp="authorization" text="Войти" />
                   </div>
               </div>
-              <Link className="form-link" to="/signup">Нет аккаунта? <img src={arrow}/></Link>
+              <Link className="form-link" to="/signup">Нет аккаунта? <img src={arrow} alt="arrow"/></Link>
           </div>
       </div>
       {

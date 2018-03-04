@@ -4,10 +4,11 @@ import { graphql } from 'react-apollo'
 
 import Button from '../../components/Button'
 import Header from '../../components/Header'
+import Loading from '../../components/Loading'
 
 import arrow from '../../assets/arrow.svg'
 
-import { SIGNUP } from '../graphql/mutations'
+import { SIGNUP } from '../../graphql/mutations'
 
 class Signup extends Component {
   constructor() {
@@ -49,7 +50,7 @@ class Signup extends Component {
                       <Button clickHandler={this.submit} classNameProp="authorization" text="Войти" />
                   </div>
               </div>
-              <Link className="form-link" to="/signin">Есть аккаунт? <img src={arrow}/></Link>
+              <Link className="form-link" to="/signin">Есть аккаунт? <img src={arrow} alt="arrow" /></Link>
           </div>
       </div>
       {

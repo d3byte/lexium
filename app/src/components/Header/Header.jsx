@@ -30,7 +30,7 @@ export default class Header extends Component {
     const { className } = this.state
     return (
       <header className={className}>
-        <img className="logo" src={logo}/>
+        <img className="logo" src={logo} alt="logo"/>
         <ul v-if="className == 'isLoggedIn'" className="navigation">
             <li className="search">
                 <i className="material-icons">search</i>
