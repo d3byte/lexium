@@ -18,60 +18,105 @@
             border: 1px solid #E0E0E0
             display: flex
             flex-direction: row
-            width: 48%
-            height: 150px
-            &.reverse
-                flex-direction: row-reverse
-            
-            .avatar
-                width: 150px
-                background: #E0E0E0
+            &.of-info
+                width: 48%
+                min-height: 150px
+                &.reverse
+                    flex-direction: row-reverse
+                
+                .avatar
+                    width: 150px
+                    background: #E0E0E0
 
-            .container-main
-                width: calc(100% - 150px)
-                display: flex
-                flex-direction: column
-                justify-content: space-between
-                .info
-                    padding: 15px 0 0 20px
+                .container-main
+                    width: calc(100% - 150px)
                     display: flex
-                    flex-direction: column  
-                    font-family: 'ProximaNova-Regular', sans-serif
-                    height: calc(100% - 30px)
-                    .name
-                        margin-bottom: 5px
-                        span:first-of-type
-                            position: relative
-                            color: #171717
-                            font-size: 20px
-                            margin-right: 5px
-                            &.right-lined:after
-                                content: ''
-                                position: absolute
-                                width: 1px
-                                height: 20px
-                                top: 2px
-                                right: -10px
-                                background: #979797
-                        .username
-                            color: #6B6DB8
-                            font-size: 18px
-                            margin-left: 15px
-                    p, a
-                        margin: 0 0 5px 0
+                    flex-direction: column
+                    .info
+                        padding: 15px 0 0 20px
+                        display: flex
+                        flex-direction: column  
+                        font-family: 'ProximaNova-Regular', sans-serif
+                        height: calc(100% - 30px)
+                        &.equal-space
+                            .name
+                                margin-bottom: 10px
+                            p
+                                margin-top: 5px
+                        .name
+                            margin-bottom: 5px
+                            span:first-of-type
+                                position: relative
+                                color: #171717
+                                font-size: 20px
+                                margin-right: 5px
+                                &.right-lined:after
+                                    content: ''
+                                    position: absolute
+                                    width: 1px
+                                    height: 20px
+                                    top: 2px
+                                    right: -10px
+                                    background: #979797
+                            .username
+                                color: #6B6DB8
+                                font-size: 18px
+                                margin-left: 15px
+                        p, a
+                            margin: 0 0 5px 0
+                            color: #595959
+                            font-size: 15px
+                            &.lighten
+                                font-family: 'ProximaNova-Light', sans-serif
+                            &.bigger
+                                font-size: 16px
+                                margin-bottom: 6px
+                    .naming
+                        padding: 5px 0 10px 20px
+                        width: 100%
+                        text-transform: uppercase
+                        font-size: 12px
                         color: #595959
-                        font-size: 13px
-                        &.lighten
-                            font-family: 'ProximaNova-Light', sans-serif
-                        &.bigger
-                            font-size: 15px 
-                .naming
-                    padding: 5px 0 10px 20px
-                    width: 100%
-                    text-transform: uppercase
-                    font-size: 12px
-                    color: #595959
-                    opacity: 0.6
+                        opacity: 0.6
 
 
-    
+@media (max-width: 944px)
+    .section .containers .container.of-info .container-main .info .name span:first-of-type.right-lined:after
+        content: none
+
+    .section .containers .container.of-info .container-main .info .name
+        display: flex
+        flex-direction: column
+        span
+            margin: 0 !important
+
+@media (max-width: 850px)
+    .section .containers
+        flex-direction: column
+        .container.of-info
+            width: 100%
+            &:not(:last-of-type)
+                margin-bottom: 10px
+
+    .section .containers .container.of-info .container-main .info .name span:first-of-type.right-lined:after
+        content: ''
+
+    .section .containers .container.of-info .container-main .info .name
+        display: flex
+        flex-direction: row
+        align-items: center
+        span:first-of-type
+            margin-right: 5px
+        .username
+            margin-left: 15px !important
+        
+@media (max-width: 500px)
+    .section .containers .container.of-info 
+        .avatar
+            display: none
+        &.reverse
+            flex-direction: row
+        .container-main
+            width: 100%
+            .info
+                padding: 15px 20px

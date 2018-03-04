@@ -41,6 +41,7 @@ class Profile extends Component {
         this.token = await this.cache.readData('token')
         this.setState({ user: cachedUser, currentGroup })
       } catch (error) {
+        console.log(error)
         this.props.history.push('/signin')
       }
     } else {
@@ -62,12 +63,12 @@ class Profile extends Component {
           <span className="title">Информация</span>
           <div className="containers">
 
-            <div className="container">
+            <div className="container of-info">
               <div className="avatar">
                 <img src={user.avatarUrl} alt="avatar"/>
               </div>
               <div className="container-main">
-                <div className="info">
+                <div className="info equal-space">
                   <div className="name">
                     <span className="right-lined">{user.name}</span>
                     <span className="username">{user.username}</span>
@@ -79,14 +80,15 @@ class Profile extends Component {
               </div>
             </div>
 
-            <div className="container reverse">
+            <div className="container of-info reverse">
               <div className="avatar">
                 <img src={currentGroup.avatarUrl} alt="group-avatar" />
               </div>
               <div className="container-main">
                 <div className="info">
                   <div className="name">
-                    <span>{currentGroup.name}</span>
+                    {/* <span>{currentGroup.name}</span> */}
+                    <span>Длинное название группы пиздец</span>
                   </div>
                   <p className="bigger">Участников: <b>{currentGroup.users && currentGroup.users.length}</b></p>
                   <Link
