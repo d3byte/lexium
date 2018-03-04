@@ -158,24 +158,27 @@ class Profile extends Component {
               <div className="info">
                 <p className="name">Модальный глагол cut</p>
                 <p className="deadline">Осталось дней: <b>3</b></p>
+                <p className="deadline">Ваш результат: <b>87%</b></p>
               </div>
-              <Button clickHandler={() => console.log('Ура!')} classNameProp="regular fluid" text="Выполнить" />
+              <Button clickHandler={() => console.log('Ура!')} classNameProp="regular fluid" text="Улучшить результат" />
             </div>
 
             <div className="container of-task">
               <div className="info">
                 <p className="name">Модальный глагол cut</p>
                 <p className="deadline">Осталось дней: <b>3</b></p>
+                <p className="deadline">Ваш результат: <b>87%</b></p>
               </div>
-              <Button clickHandler={() => console.log('Ура!')} classNameProp="regular fluid" text="Выполнить" />
+              <Button clickHandler={() => console.log('Ура!')} classNameProp="regular fluid" text="Улучшить результат" />
             </div>
 
             <div className="container of-task">
               <div className="info">
                 <p className="name">Модальный глагол cut</p>
                 <p className="deadline">Осталось дней: <b>3</b></p>
+                <p className="deadline">Ваш результат: <b>87%</b></p>
               </div>
-              <Button clickHandler={() => console.log('Ура!')} classNameProp="regular fluid" text="Выполнить" />
+              <Button clickHandler={() => console.log('Ура!')} classNameProp="regular fluid" text="Улучшить результат" />
             </div>
 
           </div>
