@@ -8,7 +8,7 @@ import Loading from '../../components/Loading'
 
 import arrow from '../../assets/arrow.svg'
 
-import { SIGNUP } from '../../graphql/mutations'
+import { SIGN_UP } from '../../graphql/mutations'
 
 class Signup extends Component {
   constructor() {
@@ -61,4 +61,4 @@ class Signup extends Component {
   }
 }
 
-export default graphql(SIGNUP)(Signup)
+export default graphql(SIGN_UP)(Signup)

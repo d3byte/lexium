@@ -20,6 +20,11 @@ class Signin extends Component {
     }
   }
 
+  componentDidMount = () => {
+    // console.log(this.props)
+  }
+  
+
   inputHandler(e, target) {
     this.setState({
       [target]: e.target.value
@@ -47,7 +52,7 @@ class Signin extends Component {
     return (
       <div>
         <div className={'home ' + (loading && 'hide')}>
-          <Header/>
+          <Header pathname={this.props.location.pathname}/>
           <div className="cards">
               <div className="card rounded">
                   <div className="card-header">Авторизация</div>
@@ -63,7 +68,7 @@ class Signin extends Component {
           </div>
       </div>
       {
-        loading && <Loading />
+        loading && (<Loading />)
       }
       </div>
     )

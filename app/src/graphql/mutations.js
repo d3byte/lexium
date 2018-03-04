@@ -1,6 +1,6 @@
 import gql from 'graphql-tag'
 
-export const LOGIN = gql`
+const LOGIN = gql`
 mutation login($username: String!, $password: String!) {
     login(username: $username, password: $password) {
         token
@@ -40,7 +40,7 @@ mutation login($username: String!, $password: String!) {
 }
 `
 
-export const SIGNUP = gql`
+const SIGN_UP = gql`
 mutation signup($username: String!, $name: String!, $email: String!, $password: String!) {
     signup(email: $email, password: $password, name: $name, username: $username) {
         token
@@ -80,7 +80,7 @@ mutation signup($username: String!, $name: String!, $email: String!, $password: 
 }
 `
 
-export const createGroup = gql`
+const CREATE_GROUP = gql`
 mutation createGroup($name: String!, $usersIds: [ID!]!, $superUsers: [ID!]!) {
     createGroup(name: $name, usersIds: $usersIds, superUsers: $superUsers) {
          id
@@ -95,7 +95,7 @@ mutation createGroup($name: String!, $usersIds: [ID!]!, $superUsers: [ID!]!) {
 }
 `
 
-export const updateGroup = gql`
+const UPDATE_GROUP = gql`
 mutation updateGroup($id: ID!, $input: GroupInput!) {
     updateGroup(id: $id, input: $input) {
         id
@@ -109,3 +109,8 @@ mutation updateGroup($id: ID!, $input: GroupInput!) {
     }
 }
 `
+
+export {
+    LOGIN, SIGN_UP,
+    CREATE_GROUP, UPDATE_GROUP
+}
