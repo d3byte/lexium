@@ -1,3 +1,6 @@
+div
+    box-sizing: border-box
+    
 header
     display: flex
     align-items: center
@@ -13,7 +16,7 @@ header
         justify-content: space-between
 
     .logo
-        transform: scale(0.8)
+        width: 200px
 
     .navigation
         display: flex
@@ -26,6 +29,8 @@ header
             display: flex
             align-items: center
             margin-right: 20px
+            &:last-of-type
+                margin-right: 0
             i
                 opacity: 0.6
                 transition: 0.2s

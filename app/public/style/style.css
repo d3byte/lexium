@@ -20,9 +20,8 @@ a {
   display: none;
 }
 
-.container {
-  width: 100%;
-  padding: 0 160px;
+.hover:hover {
+  cursor: pointer;
 }
 
 a.form-link {
@@ -148,7 +147,7 @@ input.line-based:focus:-ms-input-placeholder {
 }
 
 @media (max-width: 1160px) {
-  .container, header {
+  .section, header {
     padding: 0 70px !important;
   }
 }
@@ -160,7 +159,7 @@ input.line-based:focus:-ms-input-placeholder {
 }
 
 @media (max-width: 600px) {
-  .container, header {
+  .section, header {
     padding: 0 20px !important;
   }
   .navigation .search, .navigation .notifications {

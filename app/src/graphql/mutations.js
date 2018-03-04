@@ -13,6 +13,9 @@ mutation login($username: String!, $password: String!) {
             groups {
                 id
                 name
+                users {
+                    name
+                }
                 tasks {
                     id
                     name
@@ -21,7 +24,6 @@ mutation login($username: String!, $password: String!) {
                         id
                         wordsLearnt
                         user {
-                            id
                             name
                             wordsLearnt
                         }
