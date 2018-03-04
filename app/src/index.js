@@ -18,4 +18,4 @@ const ApolloApp = () => (
     </ApolloProvider>
 )
 
-render(ApolloApp, document.getElementById('root'))
+render(ApolloApp(), document.getElementById('root'))

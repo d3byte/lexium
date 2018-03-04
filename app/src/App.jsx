@@ -10,7 +10,7 @@ import Signup from './pages/Signup'
 import Main from './pages/Main'
 import Error404 from './pages/Error404'
 
-class App extends Component {
+export default class App extends Component {
   render() {
     return (
       <Router>
@@ -25,4 +25,3 @@ class App extends Component {
   }
 }
 
-export default App

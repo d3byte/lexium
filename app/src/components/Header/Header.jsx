@@ -1,5 +1,7 @@
 import React, { Component } from 'react'
 
+import './style.css'
+
 import logo from '../../assets/Lexium.png'
 
 export default class Header extends Component {
@@ -11,18 +13,15 @@ export default class Header extends Component {
   }
 
   componentDidMount = () => {
-    // TODO: Переделать на реакторский лад
-    // const route = this.$route.path
-    // switch (route) {
-    //   case '/signin':
-    //   case '/signup':
-    //     this.className = 'isNotLoggedIn'
-    //     this.route = route
-    //     break
-    //   default:
-    //     this.className = 'isLoggedIn'
-    //     this.route = route
-    // }
+    const { pathname } = this.props
+    switch (pathname) {
+      case '/signin':
+      case '/signup':
+        this.setState({ className: 'isNotLoggedIn' })
+        break
+      default:
+        this.setState({ className: 'isLoggedIn' })
+    }
   }
   
 
@@ -31,18 +30,22 @@ export default class Header extends Component {
     return (
       <header className={className}>
         <img className="logo" src={logo} alt="logo"/>
-        <ul v-if="className == 'isLoggedIn'" className="navigation">
-            <li className="search">
+        {
+          className === 'isLoggedIn' && (
+            <ul className="navigation">
+              <li className="search">
                 <i className="material-icons">search</i>
-            </li>
-            <li className="notifications">
+              </li>
+              <li className="notifications">
                 <i className="material-icons">bookmark</i>
-            </li>
-            <li>
+              </li>
+              <li>
                 <i className="material-icons">reorder</i>
-            </li>
-        </ul>
-    </header>
+              </li>
+            </ul>
+          )
+        }
+      </header>
     )
   }
 }
