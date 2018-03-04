@@ -33,11 +33,12 @@ class Signin extends Component {
     this.setState({ loading: true })
     try {
       const data = await this.props.mutate({ variables: { username, password } })
-      console.log(data)
+      this.setState({ loading: false })
+      const { user, token } = data.data.login
+      console.log(user)
       // Обработать данные
     } catch(error) {
       // Оповестить пользователя об ошибке
-      console.log(this.props)
       this.setState({ loading: false })
     }
 
