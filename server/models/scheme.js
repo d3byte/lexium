@@ -7,7 +7,7 @@ module.exports = function (sequelize) {
     username: Sequelize.STRING,
     name: Sequelize.STRING,
     avatarUrl: Sequelize.STRING,
-    wordsLearnt: Sequelize.BIGINT,
+    wordsLearnt: { type: Sequelize.BIGINT, defaultValue: 0 },
     password: Sequelize.STRING
   })
 
@@ -40,6 +40,7 @@ module.exports = function (sequelize) {
 
   Task.belongsToMany(Result, { through: 'Tasks_Results' })
   Group.belongsToMany(User, { through: 'Groups_Users' })
+  Group.belongsToMany(Task, { through: 'Groups_Task' })
   User.belongsToMany(Group, { through: 'Users_Groups' })
   Result.belongsTo(User)
 
