@@ -24,12 +24,12 @@ const auth = {
   async login(parent, { username, password }, info) {
     const user = await models.User.findOne({ where: { username } })
     if (!user) {
-      throw new Error(`No such user found for email: ${username}`)
+      throw new Error('Пользователя с таким логином не существует')
     }
 
     const valid = await bcrypt.compare(password, user.password)
     if (!valid) {
-      throw new Error('Invalid password')
+      throw new Error('Неверный пароль')
     }
     
     return {
