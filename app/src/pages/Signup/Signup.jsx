@@ -43,6 +43,10 @@ class Signup extends Component {
     })
     setTimeout(() => this.setState({ cardIndex: this.state.cardIndex + 1 }), 900)
   }
+
+  getFullName = () => {
+    return this.state.firstName + ' ' + this.state.lastName
+  }
   
   submit = async () => {
     // Отправить форму
@@ -54,7 +58,7 @@ class Signup extends Component {
     return (
       <div>
         <div className={'home ' + (loading && 'hide')}>
-          <Header/>
+          <Header pathname={this.props.location.pathname}/>
           <div className="cards">
               <div className="card card-0 rounded">
                   <div className="card-header">Регистрация</div>
