@@ -35,29 +35,35 @@ class Signin extends Component {
     const { username, password } = this.state
     this.setState({ loading: true })
     try {
-      const data = await this.props.mutate(
-        { variables: { username, password },
-          update: (proxy, { data: { login } }) => {
-            // proxy.writeQuery({ query: USER_CACHE, data: { user: login.user } })
-            // proxy.writeQuery({ query: TOKEN_CACHE, data: { token: login.token } })
-            let user = login.user
-            user.groups.map(group => {
-              group.superUsers = JSON.parse(group.superUsers)
-              if (group.tasks) {
-                group.tasks.map(task => {
-                  task.words = JSON.parse(task.words)
-                })
-              }
-            })
-            this.cache.writeData('token', login.token)
-            this.cache.writeData('user', login.user)
-            this.cache.writeData('currentGroup', login.user.groups[0])
-          }
-        }
-      )
+      const data = await this.props.mutate({ variables: { username, password } })
       this.setState({ loading: false })
-      const { user, token } = data.data.login
-      this.props.history.push({ pathname: '/profile', state: { user, token } })
+      let { user, token } = data.data.login
+      user.groups.map(group => {
+        group.superUsers = JSON.parse(group.superUsers)
+        if (group.tasks) {
+          group.tasks.map(task => {
+            task.words = JSON.parse(task.words)
+          })
+        }
+      })
+      const dataToWrite = [
+        {
+          key: 'token',
+          value: token
+        },
+        {
+          key: 'user',
+          value: user
+        },
+        {
+          key: 'currentGroup',
+          value: user.groups[0]
+        }
+      ]
+      this.cache.writeMultipleData(dataToWrite).then(res => {
+        return this.props.history.push({ pathname: '/profile', state: { user, token } })
+      })
+      
     } catch(error) {
       // Оповестить пользователя об ошибке
       this.setState({ loading: false })
