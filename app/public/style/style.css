@@ -99,6 +99,54 @@ a.form-link:hover {
   justify-content: center;
 }
 
+input.line-based {
+  font-family: 'ProximaNova-Regular', sans-serif;
+  font-size: 16px;
+  border: none;
+  border-bottom: 1px solid #979797;
+  padding-left: 10px;
+  width: 100%;
+  transition: 0.2s;
+  color: #595959;
+}
+
+input.line-based::-webkit-input-placeholder {
+  color: #D4D4D4;
+}
+
+input.line-based:-moz-placeholder {
+  color: #D4D4D4;
+}
+
+input.line-based::-moz-placeholder {
+  color: #D4D4D4;
+}
+
+input.line-based:-ms-input-placeholder {
+  color: #D4D4D4;
+}
+
+input.line-based:focus {
+  outline: none;
+  border-color: #626262;
+}
+
+input.line-based:focus:-webkit-input-placeholder {
+  color: #9D9C9C;
+}
+
+input.line-based:focus:-moz-placeholder {
+  color: #9D9C9C;
+}
+
+input.line-based:focus:-moz-placeholder {
+  color: #9D9C9C;
+}
+
+input.line-based:focus:-ms-input-placeholder {
+  color: #9D9C9C;
+}
+
 @media (max-width: 1160px) {
   .container, header {
     padding: 0 70px !important;
