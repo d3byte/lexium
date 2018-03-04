@@ -1,0 +1,29 @@
+.card
+    z-index: 100
+
+    &:nth-of-type(2)
+        transform: scale(0.8)
+        z-index: 50
+        margin-top: -230px
+        &.current
+            margin-top: -280px
+            & ~ .form-link
+                margin-top: -30px
+            & + .card
+                transform: scale(0.8)
+                margin-top: -230px
+
+    &:last-of-type
+        transform: scale(0.6)
+        z-index: 25
+        margin-top: -230px
+        &.current
+            margin-top: -280px
+            & + .form-link
+                margin-top: 0px
+
+    & + .form-link
+                margin-top: -50px
+
+    &.current
+        transform: scale(1)

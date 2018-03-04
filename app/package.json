@@ -3,6 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "animejs": "^2.2.0",
     "apollo-boost": "0.1.1",
     "apollo-client-preset": "^1.0.6",
     "enzyme": "^3.3.0",
