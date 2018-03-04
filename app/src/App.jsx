@@ -11,6 +11,10 @@ import Main from './pages/Main'
 import Error404 from './pages/Error404'
 
 export default class App extends Component {
+  componentWillReceiveProps = props => {
+    console.log(props)
+  }
+
   render() {
     return (
       <Router>

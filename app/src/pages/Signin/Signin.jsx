@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import { Link } from 'react-router-dom'
 import { graphql } from 'react-apollo'
+import { InMemoryCache, defaultDataIdFromObject } from 'apollo-cache-inmemory'
 
 import Button from '../../components/Button'
 import Header from '../../components/Header'
@@ -20,11 +21,6 @@ class Signin extends Component {
     }
   }
 
-  componentDidMount = () => {
-    // console.log(this.props)
-  }
-  
-
   inputHandler(e, target) {
     this.setState({
       [target]: e.target.value
@@ -41,8 +37,8 @@ class Signin extends Component {
       // Обработать данные
     } catch(error) {
       // Оповестить пользователя об ошибке
+      console.log(this.props)
       this.setState({ loading: false })
-      throw new Error(error)
     }
 
   }
