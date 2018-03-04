@@ -6,6 +6,16 @@ const { secret } = require('../../../utils/index')
 
 const auth = {
   async signup(root, { email, name, username, password, }, context) {
+    const usernameUser = await models.User.findOne({ where: { username } })
+    if (usernameUser) {
+      throw new Error('Пользователь с таким логином уже существует')
+    }
+
+    const emailUser = await models.User.findOne({ where: { email } })
+    if (emailUser) {
+      throw new Error('Пользователь с такой почтой уже существует')
+    }
+
     const hashedPassword = await bcrypt.hash(password, 10)
     const returnObject = {}
     const user = await models.User.create({ email, name, username, password: hashedPassword, avatarUrl: '' }).then(user => {

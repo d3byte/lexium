@@ -60,7 +60,7 @@ class Signup extends Component {
         <div className={'home ' + (loading && 'hide')}>
           <Header pathname={this.props.location.pathname}/>
           <div className="cards">
-              <div className="card card-0 rounded">
+              <div className="card card-0 signup rounded">
                   <div className="card-header">Регистрация</div>
                   <div className="card-body">
                       <input type="text" onChange={e => this.inputHandler(e, 'firstName')} className="line-based" placeholder="Имя"/>
@@ -70,7 +70,7 @@ class Signup extends Component {
                       <Button clickHandler={this.nextCard} classNameProp="authorization" text="Дальше" />
                   </div>
               </div>
-              <div className={'card card-1 rounded ' + (cardIndex == 1 && 'current') }>
+              <div className={'card card-1 signup rounded ' + (cardIndex == 1 && 'current') }>
                 <div className="card-header">Регистрация</div>
                 <div className="card-body">
                   <input type="text" onChange={e => this.inputHandler(e, 'username')} className="line-based" placeholder="Логин" />
@@ -80,7 +80,7 @@ class Signup extends Component {
                   <Button clickHandler={this.nextCard} classNameProp="authorization" text="Дальше" />
                 </div>
               </div>
-              <div className={'card card-2 rounded ' + (cardIndex == 2 && 'current') }>
+              <div className={'card card-2 signup rounded ' + (cardIndex == 2 && 'current') }>
                 <div className="card-header">Регистрация</div>
                 <div className="card-body">
                   <input type="password" onChange={e => this.inputHandler(e, 'password')} className="line-based" placeholder="Пароль" />
