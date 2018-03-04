@@ -50,6 +50,7 @@ class Signin extends Component {
       const { user, token } = data.data.login
       // console.log(user)
       // Обработать данные
+      // this.props.history.push('/profile')
     } catch(error) {
       // Оповестить пользователя об ошибке
       this.setState({ loading: false })

@@ -36,7 +36,7 @@ class Signup extends Component {
 
   nextCard = () => {
     const { cardIndex } = this.state
-    const animation = anime({
+    anime({
       targets: `.card-${cardIndex}`,
       translateY: { value: -50, duration: 1000 },
       translateX: { value: 1500, duration: 2000, delay: 900 }
@@ -50,7 +50,7 @@ class Signup extends Component {
   
   submit = async () => {
     // Отправить форму
-
+    this.props.history.push('/profile')
   }
 
   render() {
@@ -70,7 +70,7 @@ class Signup extends Component {
                       <Button clickHandler={this.nextCard} classNameProp="authorization" text="Дальше" />
                   </div>
               </div>
-              <div className={'card card-1 signup rounded ' + (cardIndex == 1 && 'current') }>
+              <div className={'card card-1 signup rounded ' + (cardIndex === 1 && 'current') }>
                 <div className="card-header">Регистрация</div>
                 <div className="card-body">
                   <input type="text" onChange={e => this.inputHandler(e, 'username')} className="line-based" placeholder="Логин" />
@@ -80,7 +80,7 @@ class Signup extends Component {
                   <Button clickHandler={this.nextCard} classNameProp="authorization" text="Дальше" />
                 </div>
               </div>
-              <div className={'card card-2 signup rounded ' + (cardIndex == 2 && 'current') }>
+              <div className={'card card-2 signup rounded ' + (cardIndex === 2 && 'current') }>
                 <div className="card-header">Регистрация</div>
                 <div className="card-body">
                   <input type="password" onChange={e => this.inputHandler(e, 'password')} className="line-based" placeholder="Пароль" />
