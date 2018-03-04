@@ -12,6 +12,7 @@ import './style.css'
 import arrow from '../../assets/arrow.svg'
 
 import { SIGN_UP } from '../../graphql/mutations'
+import { CacheManager } from '../../utils/index'
 
 class Signup extends Component {
   constructor() {
@@ -26,6 +27,7 @@ class Signup extends Component {
       repeatPassword: '',
       cardIndex: 0
     }
+    this.cache = new CacheManager()
   }
 
   inputHandler(e, target) {
@@ -51,6 +53,13 @@ class Signup extends Component {
   submit = async () => {
     // Отправить форму
     this.props.history.push('/profile')
+  }
+
+  componentDidMount = async () => {
+    try {
+      const token = await this.cache.readData('token')
+      this.props.history.push('/profile')
+    } catch (error) { }
   }
 
   render() {

@@ -1,8 +1,8 @@
 import gql from 'graphql-tag'
 
-const USER = gql`
-query user($id: ID!) {
-    user(id: $id) {
+const USER_CACHE = gql`
+query user {
+    user {
         id
         name
         username
@@ -37,6 +37,12 @@ query user($id: ID!) {
 }
 `
 
+const TOKEN_CACHE = gql`
+query token {
+    token
+}
+`
+
 export {
-    USER
+    USER_CACHE, TOKEN_CACHE
 }
