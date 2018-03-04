@@ -6,6 +6,13 @@ export default class CacheManager {
         })
     }
 
+    writeMultipleData = data => {
+        return new Promise((resolve, reject) => {
+            data.map(item => localStorage.setItem(item.key, JSON.stringify(item.data)))
+            resolve(true)
+        })
+    }
+
     readData = key => {
         return new Promise((resolve, reject) => {
             const data = localStorage.getItem(key)
