@@ -1,23 +1,30 @@
+.profile
+    padding-bottom: 40px
+
 .section
     margin-top: 30px
     padding: 0 160px
 
     .title
+        display: flex
         font-size: 16px
         color: #595959
         opacity: 0.6
         text-transform: uppercase
     
     .containers
-        margin-top: 5px
+        margin-top: 10px
         display: flex
         justify-content: space-between
+        &.hide
+            display: none
         
         .container
             background: white
             border: 1px solid #E0E0E0
             display: flex
             flex-direction: row
+
             &.of-info
                 width: 48%
                 min-height: 150px
@@ -79,6 +86,31 @@
                         color: #595959
                         opacity: 0.6
 
+            &.of-task
+                display: flex
+                flex-direction: column
+                justify-content: space-between
+                width: 30%
+                padding: 15px
+                min-height: 150px
+                margin-top: 10px
+                &:nth-of-type(1), &:nth-of-type(2), &:nth-of-type(3)
+                    margin: 0
+
+                .info
+                    font-family: 'ProximaNova-Regular', sans-serif
+                    p
+                        font-size: 14px
+                        margin: 10px 0 0 0
+                        color: #595959
+                        opacity: 0.6
+
+                    .name
+                        margin: 0
+                        font-size: 18px
+                        opacity: 1
+
+
 
 @media (max-width: 944px)
     .section .containers .container.of-info .container-main .info .name span:first-of-type.right-lined:after
@@ -91,7 +123,7 @@
             margin: 0 !important
 
 @media (max-width: 850px)
-    .section .containers
+    .section.info .containers
         flex-direction: column
         .container.of-info
             width: 100%
@@ -109,6 +141,21 @@
             margin-right: 5px
         .username
             margin-left: 15px !important
+
+@media (max-width: 850px)
+    .section.tasks .containers
+        flex-wrap: wrap
+        .container.of-task
+            width: 48%
+            &:nth-of-type(3)
+                margin-top: 10px
+
+@media (max-width: 540px)
+    .section.tasks .containers
+        .container.of-task
+            width: 100%
+            &:nth-of-type(2)
+                margin-top: 10px        
         
 @media (max-width: 500px)
     .section .containers .container.of-info 
@@ -120,3 +167,9 @@
             width: 100%
             .info
                 padding: 15px 20px
+
+@media (max-width: 395px)
+    .section .title
+        flex-direction: column
+        .switch
+            margin: 5px 0 0 -15px

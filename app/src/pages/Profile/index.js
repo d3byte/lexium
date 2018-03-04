@@ -15,7 +15,8 @@ class Profile extends Component {
     this.state = {
       user: {},
       level: '',
-      currentGroup: {}
+      currentGroup: {},
+      showCompleted: false
     }
     this.cache = new CacheManager()
     this.token = ''
@@ -30,6 +31,10 @@ class Profile extends Component {
 
   callGroupList = () => {
     // Вызвать модал со списком групп
+  }
+
+  toggleCompletedTasks = () => {
+    this.setState({ showCompleted: !this.state.showCompleted })
   }
 
   componentDidMount = async () => {
@@ -53,13 +58,12 @@ class Profile extends Component {
   
 
   render() {
-    const { user, currentGroup, level } = this.state
-    console.log(user, currentGroup, level)
+    const { user, currentGroup, level, showCompleted } = this.state
     return (
       <div className="profile">
         <Header pathname={this.props.location.pathname} />
 
-        <div className="section">
+        <div className="section info">
           <span className="title">Информация</span>
           <div className="containers">
 
@@ -106,6 +110,77 @@ class Profile extends Component {
 
           </div>
         </div>
+
+        <div className="section tasks">
+          <span className="title">Задания</span>
+          <div className="containers">
+
+            <div className="container of-task">
+              <div className="info">
+                <p className="name">Модальный глагол cut</p>
+                <p className="deadline">Осталось дней: <b>3</b></p>
+              </div>
+              <Button clickHandler={() => console.log('Ура!')} classNameProp="regular fluid" text="Выполнить" />
+            </div>
+
+            <div className="container of-task">
+              <div className="info">
+                <p className="name">Модальный глагол cut</p>
+                <p className="deadline">Осталось дней: <b>3</b></p>
+              </div>
+              <Button clickHandler={() => console.log('Ура!')} classNameProp="regular fluid" text="Выполнить" />
+            </div>
+
+            <div className="container of-task">
+              <div className="info">
+                <p className="name">Модальный глагол cut</p>
+                <p className="deadline">Осталось дней: <b>3</b></p>
+              </div>
+              <Button clickHandler={() => console.log('Ура!')} classNameProp="regular fluid" text="Выполнить" />
+            </div>
+
+          </div>
+        </div>
+
+        <div className="section tasks">
+          <span className="title">
+            Показать выполненные задания
+            <div class="switch">
+              <label>
+                <input type="checkbox" onChange={this.toggleCompletedTasks} />
+                <span class="lever"></span>
+              </label>
+            </div>
+          </span>
+          <div className={'containers ' + (!showCompleted ? 'hide' : '')}>
+
+            <div className="container of-task">
+              <div className="info">
+                <p className="name">Модальный глагол cut</p>
+                <p className="deadline">Осталось дней: <b>3</b></p>
+              </div>
+              <Button clickHandler={() => console.log('Ура!')} classNameProp="regular fluid" text="Выполнить" />
+            </div>
+
+            <div className="container of-task">
+              <div className="info">
+                <p className="name">Модальный глагол cut</p>
+                <p className="deadline">Осталось дней: <b>3</b></p>
+              </div>
+              <Button clickHandler={() => console.log('Ура!')} classNameProp="regular fluid" text="Выполнить" />
+            </div>
+
+            <div className="container of-task">
+              <div className="info">
+                <p className="name">Модальный глагол cut</p>
+                <p className="deadline">Осталось дней: <b>3</b></p>
+              </div>
+              <Button clickHandler={() => console.log('Ура!')} classNameProp="regular fluid" text="Выполнить" />
+            </div>
+
+          </div>
+        </div>
+
       </div>
     )
   }
