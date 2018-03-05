@@ -117,8 +117,9 @@ type Mutation {
 }
 
 type AuthPayload {
-  token: String!
-  user: User!
+  token: String
+  user: User
+  error: String
 }
 
 type VerifyPayload {
