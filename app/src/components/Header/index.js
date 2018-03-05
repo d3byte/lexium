@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import anime from 'animejs'
 
 import './style.css'
 
@@ -9,13 +10,18 @@ export default class Header extends Component {
     super()
     this.state = {
       className: '',
-      fetching: false
+      fetching: false,
+      searching: false
     }
   }
 
   componentWillReceiveProps = props => {
     const { fetching } = props
     this.setState({ fetching })
+  }
+
+  toggleSearch = () => {
+    this.setState({ searching: !this.state.searching })
   }
 
   componentDidMount = () => {
@@ -33,7 +39,7 @@ export default class Header extends Component {
   
 
   render() {
-    const { className, fetching } = this.state
+    const { className, fetching, searching } = this.state
     return (
       <header className={className}>
         <img className="logo" src={logo} alt="logo"/>
@@ -47,7 +53,18 @@ export default class Header extends Component {
                   </li>
                 )
               }
-              <li className="search">
+              <li className="search" onClick={this.toggleSearch}>
+                <input
+                  ref={input => {
+                    if(input) {
+                      this.input = input
+                      input.focus()
+                    }
+                  }}
+                  onBlur={this.toggleSearch}
+                  type="text" className={'line-based ' + (!searching ? 'hide' : '')}
+                  placeholder="Название задания"
+                />
                 <i className="material-icons">search</i>
               </li>
               <li className="notifications">
