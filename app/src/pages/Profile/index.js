@@ -41,13 +41,13 @@ class Profile extends Component {
     this.setState({ showCompleted: !this.state.showCompleted })
   }
 
-  splitTasks = tasks => {
+  splitTasks = (tasks, userId) => {
     let uncompletedTasks = [], completedTasks = []
     tasks.map(task => {
       if (task.results) {
         let isDone = false
         task.results.map(result => {
-          if (result.user.id === user.id) {
+          if (result.user.id === userId) {
             isDone = true
           }
           return result
@@ -92,7 +92,7 @@ class Profile extends Component {
       }
     }).filter(item => item !== undefined)
     // Разбить задания на выполненные и невыполненные
-    const { uncompletedTasks, completedTasks } = this.splitTasks(suitableTasks)
+    const { uncompletedTasks, completedTasks } = this.splitTasks(suitableTasks, user.id)
     this.setState({ query: { uncompletedTasks, completedTasks } })
   }
 
