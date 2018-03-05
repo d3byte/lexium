@@ -113,7 +113,7 @@ type Mutation {
   changePassword(userId: ID!, password: String!): User
   removeUser(id: ID!): User
   checkEmail(email: String!): VerifyPayload!
-  checkUsername(email: String!): VerifyPayload!
+  checkUsername(username: String!): VerifyPayload!
   signup(email: String!, password: String!, name: String!, username: String!): AuthPayload!
   login(username: String!, password: String!): AuthPayload!
 }

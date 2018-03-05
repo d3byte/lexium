@@ -18,7 +18,7 @@ const auth = {
     }
   },
 
-  async checkUsername(root, { email }, context) {
+  async checkUsername(root, { username }, context) {
     const usernameUser = await models.User.findOne({ where: { username } })
     if (usernameUser) {
       return {
