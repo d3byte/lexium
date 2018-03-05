@@ -63,6 +63,24 @@ class Profile extends Component {
     return { uncompletedTasks, completedTasks }
   }
 
+  splitDate = date => {
+    return {
+      year: date.slice(0, 4),
+      month: date.slice(5, 7),
+      day: date.slice(8, 10),
+      time: {
+        hours: date.slice(11, 13),
+        minutes: date.slice(14, 16),
+        seconds: date.slice(17, 19),
+      },
+    }
+  }
+
+  determineRemainingDays = task => {
+    const deadline = this.splitDate(task.deadline).day
+    const today = new Date().getDate
+  }
+
   searchTasks = e => {
     const { currentGroup, user } = this.state
     const text = e.target.value
@@ -121,7 +139,7 @@ class Profile extends Component {
   
 
   render() {
-    const { user, currentGroup, level, showCompleted, fetching } = this.state
+    const { user, currentGroup, level, showCompleted, fetching, query } = this.state
     const { pathname } = this.props.location
     return (
       <div className="profile">
@@ -179,13 +197,29 @@ class Profile extends Component {
           <span className="title">Задания</span>
           <div className="containers">
 
-            <div className="container of-task">
-              <div className="info">
-                <p className="name">Модальный глагол cut</p>
-                <p className="deadline">Осталось дней: <b>3</b></p>
-              </div>
-              <Button clickHandler={() => console.log('Ура!')} classNameProp="regular fluid" text="Выполнить" />
-            </div>
+            {
+              query.completedTasks.length > 0 || query.uncompletedTasks.length > 0 ?
+                query.completedTasks.length > 0 ?
+                    query.completedTasks.map(task => (
+                    <div className="container of-task">
+                      <div className="info">
+                        <p className="name">{task.name}</p>
+                        <p className="deadline">Осталось дней: <b>3</b></p>
+                      </div>
+                      <Button clickHandler={() => console.log('Ура!')} classNameProp="regular fluid" text="Выполнить" />
+                    </div>
+                    )
+                  ) : <p>Нет найдено подходящих заданий</p> :
+                  currentGroup.uncompletedTasks.map(task => (
+                  <div className="container of-task">
+                    <div className="info">
+                      <p className="name">{task.name}</p>
+                      <p className="deadline">Осталось дней: <b>{this.determineRemainingDays(task)}</b></p>
+                    </div>
+                    <Button clickHandler={() => console.log('Ура!')} classNameProp="regular fluid" text="Выполнить" />
+                  </div>
+                  ))
+            }
 
             <div className="container of-task">
               <div className="info">
