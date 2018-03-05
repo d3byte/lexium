@@ -8,12 +8,21 @@ export default class Header extends Component {
   constructor() {
     super()
     this.state = {
-      className: ''
+      className: '',
+      fetching: false
+    }
+  }
+
+  componentWillReceiveProps = props => {
+    const { fetching } = props
+    if (fetching === false) {
+      this.setState({ fetching })
     }
   }
 
   componentDidMount = () => {
-    const { pathname } = this.props
+    const { pathname, fetching } = this.props
+    this.setState({ fetching })
     switch (pathname) {
       case '/signin':
       case '/signup':
@@ -26,13 +35,20 @@ export default class Header extends Component {
   
 
   render() {
-    const { className } = this.state
+    const { className, fetching } = this.state
     return (
       <header className={className}>
         <img className="logo" src={logo} alt="logo"/>
         {
           className === 'isLoggedIn' && (
             <ul className="navigation">
+              {
+                fetching && (
+                  <li className="fetch">
+                    <i className="material-icons">loop</i>
+                  </li>
+                )
+              }
               <li className="search">
                 <i className="material-icons">search</i>
               </li>
