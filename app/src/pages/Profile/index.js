@@ -54,13 +54,19 @@ class Profile extends Component {
   }
 
   componentDidMount = async () => {
-    const { client, user, token } = this.props
+    const { client, location } = this.props
+    let user, token
+    if (location.state) {
+      user = location.state.user
+      token = location.state.token
+    }
     this.client = client
-    if (!user || !token) {
+    if (user == undefined || token == undefined) {
       try {
         const cachedUser = await this.cache.readData('user')
         const currentGroup = await this.cache.readData('currentGroup')
         const token = await this.cache.readData('token')
+        console.log('Cached stuff:', cachedUser, currentGroup, token)
         this.token = token
         this.setState({ user: cachedUser, currentGroup, fetching: true })
         this.fetchData(token)

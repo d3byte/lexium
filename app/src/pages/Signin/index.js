@@ -46,23 +46,10 @@ class Signin extends Component {
           })
         }
       })
-      const dataToWrite = [
-        {
-          key: 'token',
-          value: token
-        },
-        {
-          key: 'user',
-          value: user
-        },
-        {
-          key: 'currentGroup',
-          value: user.groups[0]
-        }
-      ]
       this.cache.writeData('token', token)
       this.cache.writeData('user', user)
       this.cache.writeData('currentGroup', user.groups[0])
+      console.log('Sending props: ', user, token)
       this.props.history.push({ pathname: '/profile', state: { user, token } })
     } catch(error) {
       // Оповестить пользователя об ошибке

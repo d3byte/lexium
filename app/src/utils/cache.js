@@ -1,23 +1,25 @@
-export default class CacheManager {
-    writeData = (key, data) => {
-        return new Promise((resolve, reject) => {
-            localStorage.setItem(key, JSON.stringify(data))
-            resolve(true)
-        })
+import EncryptionManager from './encrypt'
+
+export default class CacheManager extends EncryptionManager {
+    constructor() {
+        super()
     }
 
-    writeMultipleData = data => {
+    writeData = (key, data) => {
         return new Promise((resolve, reject) => {
-            data.map(item => localStorage.setItem(item.key, JSON.stringify(item.data)))
+            const encryptedData = this.encrypt(data)
+            localStorage.setItem(key, encryptedData)
             resolve(true)
         })
     }
 
     readData = key => {
         return new Promise((resolve, reject) => {
-            const data = localStorage.getItem(key)
-            if (data !== '' && data !== null && data !== undefined)
-                resolve(JSON.parse(data))
+            const encryptedData = localStorage.getItem(key)
+            console.log('Encrypted data:', encryptedData)
+            const decryptedData = this.decrypt(encryptedData)
+            if (decryptedData !== '' && decryptedData !== null && decryptedData != undefined)
+                resolve(decryptedData)
             else
                 throw new Error(`Отсутствует запись запрошенных данных: ${key}`)
         })
@@ -30,21 +32,21 @@ export default class CacheManager {
         })
     }
 
-    updateData = async (key, data) => {
-        const oldData = await this.readData(key)
-        if (typeof oldData == 'object' || typeof oldData == 'array') {
-            return new Promise((resolve, reject) => {
+    updateData = (key, data) => {
+        return new Promise((resolve, reject) => {
+            const encryptedOldData = this.readData(key),
+                decryptedOldData = this.decrypt(encryptedOldData)
+            if (typeof decryptedOldData == 'object') {
                 this.removeData(key)
-                let newData = Object.assign({}, oldData, data)
+                let newData = Object.assign({}, decryptedOldData, data)
                 this.setData(key, newData)
-                resolve(true)
-            })
-        } else {
-            return new Promise((resolve, reject) => {
+                return true
+            } else {
                 this.removeData(key)
-                this.setData(key, data)
-                resolve(true)
-            })
-        }
+                const encryptedData = this.encrypt(data)
+                this.setData(key, encryptedData)
+                return true
+            }
+        })
     }
 }
