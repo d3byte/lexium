@@ -16,7 +16,6 @@ export default class Header extends Component {
   componentWillReceiveProps = props => {
     const { fetching } = props
     this.setState({ fetching })
-    console.log(fetching)
   }
 
   componentDidMount = () => {
