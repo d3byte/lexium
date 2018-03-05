@@ -15,8 +15,9 @@ class Profile extends Component {
     super()
     this.state = {
       user: {},
-      level: '',
       currentGroup: {},
+      level: '',
+      query: [],
       showCompleted: false,
       fetching: false
     }
@@ -38,6 +39,43 @@ class Profile extends Component {
 
   toggleCompletedTasks = () => {
     this.setState({ showCompleted: !this.state.showCompleted })
+  }
+
+  splitTasks = tasks => {
+    let uncompletedTasks = [], completedTasks = []
+    tasks.map(task => {
+      if (task.results) {
+        let isDone = false
+        task.results.map(result => {
+          if (result.user.id === user.id) {
+            isDone = true
+          }
+          return result
+        })
+        if (!isDone) {
+          uncompletedTasks.push(task)
+        } else {
+          completedTasks.push(task)
+        }
+      }
+      return task
+    })
+    return { uncompletedTasks, completedTasks }
+  }
+
+  searchTasks = e => {
+    const { currentGroup, user } = this.state
+    const text = e.target.value
+    
+    // Найти подходящие под поиск задания
+    const suitableTasks =  currentGroup.tasks.map(task => {
+      if (task.name.indexOf(text) !== -1) {
+        return task
+      }
+    }).filter(item => item !== undefined)
+    // Разбить задания на выполненные и невыполненные
+    const { uncompletedTasks, completedTasks } = this.splitTasks(suitableTasks)
+    this.setState({ query: { uncompletedTasks, completedTasks } })
   }
 
   fetchData = async token => {
@@ -84,9 +122,10 @@ class Profile extends Component {
 
   render() {
     const { user, currentGroup, level, showCompleted, fetching } = this.state
+    const { pathname } = this.props.location
     return (
       <div className="profile">
-        <Header fetching={fetching} pathname={this.props.location.pathname} />
+        <Header fetching={fetching} pathname={pathname} inputHandler={this.searchTasks} />
 
         <div className="section info">
           <span className="title">Информация</span>
