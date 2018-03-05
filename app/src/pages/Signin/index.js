@@ -60,10 +60,10 @@ class Signin extends Component {
           value: user.groups[0]
         }
       ]
-      this.cache.writeMultipleData(dataToWrite).then(res => {
-        return this.props.history.push({ pathname: '/profile', state: { user, token } })
-      })
-      
+      this.cache.writeData('token', token)
+      this.cache.writeData('user', user)
+      this.cache.writeData('currentGroup', user.groups[0])
+      this.props.history.push({ pathname: '/profile', state: { user, token } })
     } catch(error) {
       // Оповестить пользователя об ошибке
       this.setState({ loading: false })
