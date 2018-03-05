@@ -4,6 +4,7 @@ const LOGIN = gql`
 mutation login($username: String!, $password: String!) {
     login(username: $username, password: $password) {
         token
+        error
         user {
             id
             name
@@ -46,6 +47,7 @@ const SIGN_UP = gql`
 mutation signup($username: String!, $name: String!, $email: String!, $password: String!) {
     signup(email: $email, password: $password, name: $name, username: $username) {
         token
+        error
         user {
             id
             name
@@ -112,7 +114,26 @@ mutation updateGroup($id: ID!, $input: GroupInput!) {
 }
 `
 
+const CHECK_USERNAME = gql`
+mutation checkUsername($username: String!) {
+    checkUsername(username: $username) {
+        valid
+        error
+    }
+}
+`
+
+const CHECK_EMAIL = gql`
+mutation checkEmail($email: String!) {
+    checkEmail(email: $email) {
+        valid
+        error
+    }
+}
+`
+
 export {
     LOGIN, SIGN_UP,
-    CREATE_GROUP, UPDATE_GROUP
+    CREATE_GROUP, UPDATE_GROUP,
+    CHECK_USERNAME, CHECK_EMAIL
 }

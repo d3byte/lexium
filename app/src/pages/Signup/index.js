@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
+import { compose, graphql } from 'react-apollo'
+import gql from 'graphql-tag'
 import { Link } from 'react-router-dom'
-import { graphql } from 'react-apollo'
 import anime from 'animejs'
 
 import Button from '../../components/Button'
@@ -12,6 +13,8 @@ import './style.css'
 import arrow from '../../assets/arrow.svg'
 
 import { SIGN_UP } from '../../graphql/mutations'
+import { CHECK_USERNAME } from '../../graphql/mutations'
+import { CHECK_EMAIL } from '../../graphql/mutations'
 import { CacheManager } from '../../utils/index'
 
 class Signup extends Component {
@@ -25,7 +28,9 @@ class Signup extends Component {
       email: '',
       password: '',
       repeatPassword: '',
-      cardIndex: 0
+      cardIndex: 0,
+      errorInput: '',
+      error: ''
     }
     this.cache = new CacheManager()
   }
@@ -36,8 +41,19 @@ class Signup extends Component {
     })
   }
 
-  nextCard = () => {
-    const { cardIndex } = this.state
+  nextCard = async () => {
+    const { cardIndex, username, email, firstName, lastName } = this.state
+    if (cardIndex === 0 && (!firstName || !lastName)) return
+    if (cardIndex === 1){
+      const usernameResponce = await this.props.checkUsername({ variables: { username } })
+      const usernameError  = usernameResponce.data.checkUsername.error
+      this.setState({ error: usernameError, errorInput: 'username'})
+      if (usernameError) return
+      const emailResponce = await this.props.checkEmail({ variables: { email } })
+      const emailError = emailResponce.data.checkEmail.error
+      this.setState({ error: emailError, errorInput: 'email'})
+      if (emailError) return
+    }
     anime({
       targets: `.card-${cardIndex}`,
       translateY: { value: -50, duration: 1000 },
@@ -51,8 +67,16 @@ class Signup extends Component {
   }
   
   submit = async () => {
-    // Отправить форму
-    this.props.history.push('/profile')
+    const { password, repeatPassword } = this.state
+    if (password !== repeatPassword) {
+      const error = "Пароли не совпадают",
+        errorInput = error === 'Пароли не совпадают' ? 'repeatPassword' : ''
+      this.setState({ error, errorInput })
+    } else {
+      // Отправить форму
+      
+      this.props.history.push('/profile')
+    } 
   }
 
   componentDidMount = async () => {
@@ -63,42 +87,45 @@ class Signup extends Component {
   }
 
   render() {
-    const { loading, cardIndex } = this.state
+    const { loading, cardIndex, errorInput, error } = this.state
     return (
       <div>
         <div className={'home ' + (loading && 'hide')}>
           <Header pathname={this.props.location.pathname}/>
           <div className="cards">
-              <div className="card card-0 signup rounded">
+          {
+            error && error.length > 0 && <div className="error signup">{ error }</div>
+          }
+              <form onSubmit={e => e.preventDefault()} className="card card-0 signup rounded">
                   <div className="card-header">Регистрация</div>
                   <div className="card-body">
-                      <input type="text" onChange={e => this.inputHandler(e, 'firstName')} className="line-based" placeholder="Имя"/>
-                      <input type="text" onChange={e => this.inputHandler(e, 'lastName')} className="line-based" placeholder="Фамилия"/>
+                      <input type="text" onChange={e => this.inputHandler(e, 'firstName')} className="line-based" placeholder="Имя" required={true}/>
+                      <input type="text" onChange={e => this.inputHandler(e, 'lastName')} className="line-based" placeholder="Фамилия" required={true}/>
                   </div>
                   <div className="card-footer">
                       <Button clickHandler={this.nextCard} classNameProp="authorization" text="Дальше" />
                   </div>
-              </div>
-              <div className={'card card-1 signup rounded ' + (cardIndex === 1 && 'current') }>
+              </form>
+              <form onSubmit={e => e.preventDefault()} className={'card card-1 signup rounded ' + (cardIndex === 1 && 'current') }>
                 <div className="card-header">Регистрация</div>
                 <div className="card-body">
-                  <input type="text" onChange={e => this.inputHandler(e, 'username')} className="line-based" placeholder="Логин" />
-                  <input type="email" onChange={e => this.inputHandler(e, 'email')} className="line-based" placeholder="Почта" />
+                  <input type="text" onChange={e => this.inputHandler(e, 'username')} className={'line-based ' + (errorInput === 'username' ? 'error-input' : '')} placeholder="Логин" required={true}/>
+                  <input type="email" onChange={e => this.inputHandler(e, 'email')} className={'line-based ' + (errorInput === 'email' ? 'error-input' : '')} placeholder="Почта" required={true}/>
                 </div>
                 <div className="card-footer">
                   <Button clickHandler={this.nextCard} classNameProp="authorization" text="Дальше" />
                 </div>
-              </div>
-              <div className={'card card-2 signup rounded ' + (cardIndex === 2 && 'current') }>
+              </form>
+              <form onSubmit={e => e.preventDefault()} className={'card card-2 signup rounded ' + (cardIndex === 2 && 'current') }>
                 <div className="card-header">Регистрация</div>
                 <div className="card-body">
-                  <input type="password" onChange={e => this.inputHandler(e, 'password')} className="line-based" placeholder="Пароль" />
-                  <input type="password" onChange={e => this.inputHandler(e, 'repeatPassword')} className="line-based" placeholder="Повторите пароль" />
+                  <input type="password" onChange={e => this.inputHandler(e, 'password')} className="line-based" placeholder="Пароль" required={true}/>
+                  <input type="password" onChange={e => this.inputHandler(e, 'repeatPassword')} className={'line-based ' + (errorInput === 'repeatPassword' ? 'error-input' : '')} placeholder="Повторите пароль" required={true}/>
                 </div>
                 <div className="card-footer">
                   <Button clickHandler={this.submit} classNameProp="authorization" text="Зарегистрироваться" />
                 </div>
-              </div>
+              </form>
               <Link className="form-link" to="/signin">Есть аккаунт? <img src={arrow} alt="arrow" /></Link>
           </div>
       </div>
@@ -110,4 +137,8 @@ class Signup extends Component {
   }
 }
 
-export default graphql(SIGN_UP)(Signup)
+export default compose(
+  graphql(SIGN_UP, { name: 'signup' }),
+  graphql(CHECK_USERNAME, { name: 'checkUsername' }),
+  graphql(CHECK_EMAIL, { name: 'checkEmail' })
+)(Signup);

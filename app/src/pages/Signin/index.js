@@ -19,7 +19,9 @@ class Signin extends Component {
       loading: false,
       username: '',
       password: '',
-      user: {}
+      user: {},
+      error: '',
+      errorInput: ''
     }
     this.cache = new CacheManager()
   }
@@ -34,28 +36,26 @@ class Signin extends Component {
     // Отправить форму
     const { username, password } = this.state
     this.setState({ loading: true })
-    try {
       const data = await this.props.mutate({ variables: { username, password } })
-      this.setState({ loading: false })
-      let { user, token } = data.data.login
-      user.groups.map(group => {
-        group.superUsers = JSON.parse(group.superUsers)
-        if (group.tasks) {
-          group.tasks.map(task => {
-            task.words = JSON.parse(task.words)
-          })
-        }
-      })
-      this.cache.writeData('token', token)
-      this.cache.writeData('user', user)
-      this.cache.writeData('currentGroup', user.groups[0])
-      console.log('Sending props: ', user, token)
-      this.props.history.push({ pathname: '/profile', state: { user, token } })
-    } catch(error) {
-      // Оповестить пользователя об ошибке
-      this.setState({ loading: false })
-    }
-
+      const { error } = data.data.login
+      if(error) {
+        const errorInput = error == 'Неверный пароль' ? 'password' : 'username'
+        this.setState({ error, loading: false, errorInput })
+       } else {
+        let { user, token } = data.data.login
+        user.groups.map(group => {
+          group.superUsers = JSON.parse(group.superUsers)
+          if (group.tasks) {
+            group.tasks.map(task => {
+              task.words = JSON.parse(task.words)
+            })
+          }
+        })
+        this.cache.writeData('token', token)
+        this.cache.writeData('user', user)
+        this.cache.writeData('currentGroup', user.groups[0])
+        this.props.history.push({ pathname: '/profile', state: { user, token } })
+       }
   }
 
   componentDidMount = async () => {
@@ -67,22 +67,27 @@ class Signin extends Component {
   
 
   render() {
-    const { loading } = this.state
+    const { loading, error, errorInput } = this.state
     return (
       <div>
         <div className={'home ' + (loading && 'hide')}>
           <Header pathname={this.props.location.pathname}/>
           <div className="cards">
+          {
+            error.length > 0 && <div className="error">{ error }</div>
+          }
+            <form>
               <div className="card rounded">
                   <div className="card-header">Авторизация</div>
                   <div className="card-body">
-                      <input type="text" onChange={e => this.inputHandler(e, 'username')} className="line-based" placeholder="Логин"/>
-                      <input type="password" onChange={e => this.inputHandler(e, 'password')} className="line-based" placeholder="Пароль"/>
+                      <input type="text" onChange={e => this.inputHandler(e, 'username')} className={'line-based ' + (errorInput === 'username' ? 'error-input' : '')} placeholder="Логин"/>
+                      <input type="password" onChange={e => this.inputHandler(e, 'password')} className={'line-based ' + (errorInput === 'password' ? 'error-input' : '')} placeholder="Пароль"/>
                   </div>
                   <div className="card-footer">
                       <Button clickHandler={this.submit} classNameProp="authorization" text="Войти" />
                   </div>
               </div>
+              </form>
               <Link className="form-link" to="/signup">Нет аккаунта? <img src={arrow} alt="arrow"/></Link>
           </div>
       </div>
