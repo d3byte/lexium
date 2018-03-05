@@ -1,12 +1,8 @@
 const jwt = require('jsonwebtoken')
 
-function getUserId(request) {
-  const Authorization = request.get('Authorization')
-  if (Authorization) {
-    const token = Authorization.replace('Bearer ', '')
-    const { userId } = jwt.verify(token, secret())
-    return userId
-  }
+async function getUserId(token) {
+  const { userId } = await jwt.verify(token, secret())
+  return userId
 
   throw new AuthError()
 }

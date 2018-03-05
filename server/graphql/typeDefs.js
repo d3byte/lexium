@@ -89,7 +89,7 @@ type Query {
   tasks: [Task!]
   groups: [Group!]
   group: Group!
-  user(id: ID!): User
+  user(token: String!): User
   users: [User!]
 }
 

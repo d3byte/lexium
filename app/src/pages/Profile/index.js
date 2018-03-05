@@ -6,6 +6,7 @@ import Button from '../../components/Button'
 import Header from '../../components/Header'
 
 import { CacheManager } from '../../utils/index'
+import { USER } from '../../graphql/queries'
 
 import './style.css'
 
@@ -16,9 +17,11 @@ class Profile extends Component {
       user: {},
       level: '',
       currentGroup: {},
-      showCompleted: false
+      showCompleted: false,
+      fetching: false
     }
     this.cache = new CacheManager()
+    this.client = {}
     this.token = ''
   }
 
@@ -37,14 +40,22 @@ class Profile extends Component {
     this.setState({ showCompleted: !this.state.showCompleted })
   }
 
+  fetchData = async token => {
+    const response = await this.client.query({ query: USER, variables: { token } })
+    console.log(response)
+  }
+
   componentDidMount = async () => {
     const { client, user, token } = this.props
+    this.client = client
     if (!user || !token) {
       try {
         const cachedUser = await this.cache.readData('user')
         const currentGroup = await this.cache.readData('currentGroup')
-        this.token = await this.cache.readData('token')
-        this.setState({ user: cachedUser, currentGroup })
+        const token = await this.cache.readData('token')
+        this.token = token
+        this.setState({ user: cachedUser, currentGroup, fetching: true })
+        this.fetchData(token)
       } catch (error) {
         console.log(error)
         this.props.history.push('/signin')

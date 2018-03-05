@@ -1,8 +1,8 @@
 import gql from 'graphql-tag'
 
 const USER = gql`
-query user($id: ID!) {
-    user(id: $id) {
+query user($token: String!) {
+    user(token: $token) {
         id
         name
         username
