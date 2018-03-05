@@ -145,10 +145,10 @@ class Profile extends Component {
         <div className="section tasks">
           <span className="title">
             Показать выполненные задания
-            <div class="switch">
+            <div className="switch">
               <label>
                 <input type="checkbox" onChange={this.toggleCompletedTasks} />
-                <span class="lever"></span>
+                <span className="lever"></span>
               </label>
             </div>
           </span>
