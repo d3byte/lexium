@@ -42,7 +42,15 @@ class Profile extends Component {
 
   fetchData = async token => {
     const response = await this.client.query({ query: USER, variables: { token } })
-    console.log(response)
+    const { user } = response.data
+    this.cache.writeData('user', user)
+    const { currentGroup } = this.state
+    user.groups.map(group => {
+      if(group.id == currentGroup.id) {
+        this.setState({ currentGroup: group, fetching: false })
+        this.cache.writeData('currentGroup', group)
+      } 
+    })
   }
 
   componentDidMount = async () => {
@@ -69,10 +77,10 @@ class Profile extends Component {
   
 
   render() {
-    const { user, currentGroup, level, showCompleted } = this.state
+    const { user, currentGroup, level, showCompleted, fetching } = this.state
     return (
       <div className="profile">
-        <Header pathname={this.props.location.pathname} />
+        <Header fetching={fetching} pathname={this.props.location.pathname} />
 
         <div className="section info">
           <span className="title">Информация</span>
