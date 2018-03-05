@@ -34,6 +34,7 @@ const auth = {
   async signup(root, { email, name, username, password, }, context) {
     const hashedPassword = await bcrypt.hash(password, 10)
     const returnObject = {}
+    console.log(email, name, username, password)
     const user = await models.User.create({ email, name, username, password: hashedPassword, avatarUrl: '' }).then(user => {
       returnObject.user = user
       returnObject.token = jwt.sign({ userId: user.id }, secret())

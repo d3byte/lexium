@@ -36,26 +36,26 @@ class Signin extends Component {
     // Отправить форму
     const { username, password } = this.state
     this.setState({ loading: true })
-      const data = await this.props.mutate({ variables: { username, password } })
-      const { error } = data.data.login
-      if(error) {
-        const errorInput = error == 'Неверный пароль' ? 'password' : 'username'
-        this.setState({ error, loading: false, errorInput })
-       } else {
-        let { user, token } = data.data.login
-        user.groups.map(group => {
-          group.superUsers = JSON.parse(group.superUsers)
-          if (group.tasks) {
-            group.tasks.map(task => {
-              task.words = JSON.parse(task.words)
-            })
-          }
-        })
-        this.cache.writeData('token', token)
-        this.cache.writeData('user', user)
-        this.cache.writeData('currentGroup', user.groups[0])
-        this.props.history.push({ pathname: '/profile', state: { user, token } })
-       }
+    const data = await this.props.mutate({ variables: { username, password } })
+    const { error } = data.data.login
+    if(error) {
+      const errorInput = error == 'Неверный пароль' ? 'password' : 'username'
+      this.setState({ error, loading: false, errorInput })
+      } else {
+      let { user, token } = data.data.login
+      user.groups.map(group => {
+        group.superUsers = JSON.parse(group.superUsers)
+        if (group.tasks) {
+          group.tasks.map(task => {
+            task.words = JSON.parse(task.words)
+          })
+        }
+      })
+      this.cache.writeData('token', token)
+      this.cache.writeData('user', user)
+      this.cache.writeData('currentGroup', user.groups[0])
+      this.props.history.push({ pathname: '/profile', state: { user, token } })
+      }
   }
 
   componentDidMount = async () => {

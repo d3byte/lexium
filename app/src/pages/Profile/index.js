@@ -173,8 +173,7 @@ class Profile extends Component {
               <div className="container-main">
                 <div className="info">
                   <div className="name">
-                    {/* <span>{currentGroup.name}</span> */}
-                    <span>Длинное название группы пиздец</span>
+                    <span>{currentGroup.name}</span>
                   </div>
                   <p className="bigger">Участников: <b>{currentGroup.users && currentGroup.users.length}</b></p>
                   <Link

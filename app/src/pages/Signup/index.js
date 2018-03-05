@@ -47,13 +47,18 @@ class Signup extends Component {
     if (cardIndex === 1){
       const usernameResponce = await this.props.checkUsername({ variables: { username } })
       const usernameError  = usernameResponce.data.checkUsername.error
-      this.setState({ error: usernameError, errorInput: 'username'})
-      if (usernameError) return
+      if (usernameError) {
+        this.setState({ error: usernameError, errorInput: 'username' })
+        return
+      }
       const emailResponce = await this.props.checkEmail({ variables: { email } })
       const emailError = emailResponce.data.checkEmail.error
-      this.setState({ error: emailError, errorInput: 'email'})
-      if (emailError) return
+      if (emailError) {
+        this.setState({ error: emailError, errorInput: 'email' })
+        return
+      }
     }
+    this.setState({ error: '', errorInput: '' })
     anime({
       targets: `.card-${cardIndex}`,
       translateY: { value: -50, duration: 1000 },
@@ -67,15 +72,29 @@ class Signup extends Component {
   }
   
   submit = async () => {
-    const { password, repeatPassword } = this.state
+    const { username, email, password, repeatPassword } = this.state
     if (password !== repeatPassword) {
       const error = "Пароли не совпадают",
         errorInput = error === 'Пароли не совпадают' ? 'repeatPassword' : ''
       this.setState({ error, errorInput })
     } else {
-      // Отправить форму
-      
-      this.props.history.push('/profile')
+      this.setState({ loading: true })
+      const data = await this.props.signup({
+        variables: { username, password, name: this.getFullName(), email }
+      })
+      let { user, token } = data.data.signup
+      user.groups.map(group => {
+        group.superUsers = JSON.parse(group.superUsers)
+        if (group.tasks) {
+          group.tasks.map(task => {
+            task.words = JSON.parse(task.words)
+          })
+        }
+      })
+      this.cache.writeData('token', token)
+      this.cache.writeData('user', user)
+      this.cache.writeData('currentGroup', user.groups[0])
+      this.props.history.push({ pathname: '/profile', state: { user, token } })
     } 
   }
 
