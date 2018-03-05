@@ -112,6 +112,8 @@ type Mutation {
   verifyPassword(userId: ID!, password: String!): VerifyPayload!
   changePassword(userId: ID!, password: String!): User
   removeUser(id: ID!): User
+  checkEmail(email: String!): VerifyPayload!
+  checkUsername(email: String!): VerifyPayload!
   signup(email: String!, password: String!, name: String!, username: String!): AuthPayload!
   login(username: String!, password: String!): AuthPayload!
 }
@@ -123,7 +125,8 @@ type AuthPayload {
 }
 
 type VerifyPayload {
-  value: Boolean!
+  valid: Boolean
+  error: String
 }
 
 type Group {

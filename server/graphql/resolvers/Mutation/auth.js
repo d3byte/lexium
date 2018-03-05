@@ -5,21 +5,33 @@ const Group = require('./group')
 const { secret } = require('../../../utils/index')
 
 const auth = {
-  async signup(root, { email, name, username, password, }, context) {
-    const usernameUser = await models.User.findOne({ where: { username } })
-    if (usernameUser) {
-      return {
-        error: 'Пользователь с таким логином уже существует' 
-      }
-    }
-
+  async checkEmail(root, { email }, context) {
     const emailUser = await models.User.findOne({ where: { email } })
     if (emailUser) {
       return {
         error: 'Пользователь с такой почтой уже существует'
       }
+    } else {
+      return {
+        valid: true
+      }
     }
+  },
 
+  async checkUsername(root, { email }, context) {
+    const usernameUser = await models.User.findOne({ where: { username } })
+    if (usernameUser) {
+      return {
+        error: 'Пользователь с таким логином уже существует'
+      }
+    } else {
+      return {
+        valid: true
+      }
+    }
+  },
+
+  async signup(root, { email, name, username, password, }, context) {
     const hashedPassword = await bcrypt.hash(password, 10)
     const returnObject = {}
     const user = await models.User.create({ email, name, username, password: hashedPassword, avatarUrl: '' }).then(user => {

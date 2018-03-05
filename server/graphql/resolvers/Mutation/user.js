@@ -13,7 +13,7 @@ module.exports = {
         return models.User.findById(userId)
         .then(user => {
             const value = bcrypt.compare(password, user.password).then(value => value)
-            return { value }
+            return { valid: value }
         })
     },
 
