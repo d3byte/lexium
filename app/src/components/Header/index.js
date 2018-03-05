@@ -10,6 +10,7 @@ export default class Header extends Component {
     super()
     this.state = {
       className: '',
+      pathname: '',
       fetching: false,
       searching: false
     }
@@ -26,7 +27,7 @@ export default class Header extends Component {
 
   componentDidMount = () => {
     const { pathname, fetching } = this.props
-    this.setState({ fetching })
+    this.setState({ fetching, pathname })
     switch (pathname) {
       case '/signin':
       case '/signup':
@@ -39,7 +40,8 @@ export default class Header extends Component {
   
 
   render() {
-    const { className, fetching, searching } = this.state
+    const { className, fetching, searching, pathname } = this.state
+    const { inputHandler } = this.props
     return (
       <header className={className}>
         <img className="logo" src={logo} alt="logo"/>
@@ -53,20 +55,25 @@ export default class Header extends Component {
                   </li>
                 )
               }
-              <li className="search" onClick={this.toggleSearch}>
-                <input
-                  ref={input => {
-                    if(input) {
-                      this.input = input
-                      input.focus()
-                    }
-                  }}
-                  onBlur={this.toggleSearch}
-                  type="text" className={'line-based ' + (!searching ? 'hide' : '')}
-                  placeholder="Название задания"
-                />
-                <i className="material-icons">search</i>
-              </li>
+              {
+                pathname == '/profile' && (
+                  <li className="search" onClick={this.toggleSearch}>
+                    <input
+                      ref={input => {
+                        if (input) {
+                          this.input = input
+                          input.focus()
+                        }
+                      }}
+                      onBlur={this.toggleSearch}
+                      onChange={inputHandler}
+                      type="text" className={'line-based ' + (!searching ? 'hide' : '')}
+                      placeholder="Название задания"
+                    />
+                    <i className="material-icons">search</i>
+                  </li>
+                )
+              }
               <li className="notifications">
                 <i className="material-icons">bookmark</i>
               </li>
