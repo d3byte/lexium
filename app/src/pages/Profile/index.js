@@ -198,9 +198,9 @@ class Profile extends Component {
           <div className="containers">
 
             {
-              query.completedTasks.length > 0 || query.uncompletedTasks.length > 0 ?
-                query.completedTasks.length > 0 ?
-                    query.completedTasks.map(task => (
+              query.completedTasks || query.uncompletedTasks ?
+                query.uncompletedTasks ?
+                    query.uncompletedTasks.map(task => (
                     <div className="container of-task">
                       <div className="info">
                         <p className="name">{task.name}</p>
@@ -209,8 +209,8 @@ class Profile extends Component {
                       <Button clickHandler={() => console.log('Ура!')} classNameProp="regular fluid" text="Выполнить" />
                     </div>
                     )
-                  ) : <p>Нет найдено подходящих заданий</p> :
-                  currentGroup.uncompletedTasks.map(task => (
+                  ) : <p className="no-tasks">Нет найдено подходящих заданий</p> :
+                currentGroup.uncompletedTasks ? currentGroup.uncompletedTasks.map(task => (
                   <div className="container of-task">
                     <div className="info">
                       <p className="name">{task.name}</p>
@@ -218,24 +218,8 @@ class Profile extends Component {
                     </div>
                     <Button clickHandler={() => console.log('Ура!')} classNameProp="regular fluid" text="Выполнить" />
                   </div>
-                  ))
+                )) : <p className="no-tasks">Нет невыполненных заданий</p>
             }
-
-            <div className="container of-task">
-              <div className="info">
-                <p className="name">Модальный глагол cut</p>
-                <p className="deadline">Осталось дней: <b>3</b></p>
-              </div>
-              <Button clickHandler={() => console.log('Ура!')} classNameProp="regular fluid" text="Выполнить" />
-            </div>
-
-            <div className="container of-task">
-              <div className="info">
-                <p className="name">Модальный глагол cut</p>
-                <p className="deadline">Осталось дней: <b>3</b></p>
-              </div>
-              <Button clickHandler={() => console.log('Ура!')} classNameProp="regular fluid" text="Выполнить" />
-            </div>
 
           </div>
         </div>
