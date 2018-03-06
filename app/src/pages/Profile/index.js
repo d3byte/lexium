@@ -19,7 +19,8 @@ class Profile extends Component {
       level: '',
       query: [],
       showCompleted: false,
-      fetching: false
+      fetching: false,
+      groupListIsActive: false
     }
     this.cache = new CacheManager()
     this.client = {}
@@ -34,7 +35,11 @@ class Profile extends Component {
   }
 
   callGroupList = () => {
-    // Вызвать модал со списком групп
+    this.setState({ groupListIsActive: true })
+  }
+
+  hideGroupList = () => {
+    this.setState({ groupListIsActive: false })
   }
 
   toggleCompletedTasks = () => {
@@ -152,7 +157,7 @@ class Profile extends Component {
   
 
   render() {
-    const { user, currentGroup, level, showCompleted, fetching, query } = this.state
+    const { user, currentGroup, level, showCompleted, fetching, query, groupListIsActive } = this.state
     const { pathname } = this.props.location
     const { history } = this.props
     return (
@@ -277,6 +282,28 @@ class Profile extends Component {
             }
 
           </div>
+        </div>
+
+        <div className={'modal ' + (groupListIsActive ? '' : 'hide')}>
+            <div className="header">
+              <span class="title">Выбор группы</span>
+              <i onClick={this.hideModal} class="material-icons">close</i>
+            </div>
+            <div className="body">
+
+              <div className="group">
+                <div className="avatar">
+                  <img src="" alt="group-avatar" />
+                </div>
+                <div className="info">
+                  <span className="name">Личная группа</span>
+                  <span className="participants">Участников: 1</span>
+                </div>
+              </div>
+
+            </div>
+        </div>
+        <div className={'modal-overlay' + (groupListIsActive ? '' : 'hide')} onClick={this.hideModal}>
         </div>
 
       </div>
