@@ -63,7 +63,7 @@ class Signin extends Component {
     if(error) {
       const errorInput = error == 'Неверный пароль' ? 'password' : 'username'
       this.setState({ error, loading: false, errorInput })
-      } else {
+    } else {
       let { user, token } = data.data.login
       user.groups.map(group => {
         group.superUsers = JSON.parse(group.superUsers)
@@ -73,11 +73,12 @@ class Signin extends Component {
           group.completedTasks = completedTasks
         }
       })
+      console.log(user, token)
       this.cache.writeData('token', token)
       this.cache.writeData('user', user)
       this.cache.writeData('currentGroup', user.groups[0])
       this.props.history.push({ pathname: '/profile', state: { user, token } })
-      }
+    }
   }
 
   componentDidMount = async () => {
@@ -95,10 +96,10 @@ class Signin extends Component {
         <div className={'home ' + (loading && 'hide')}>
           <Header pathname={this.props.location.pathname}/>
           <div className="cards">
-          {
-            error.length > 0 && <div className="error">{ error }</div>
-          }
-            <form>
+            {
+              error.length > 0 && <div className="error">{ error }</div>
+            }
+            <form onSubmit={e => e.preventDefault()}>
               <div className="card rounded">
                   <div className="card-header">Авторизация</div>
                   <div className="card-body">
@@ -109,13 +110,13 @@ class Signin extends Component {
                       <Button clickHandler={this.submit} classNameProp="authorization" text="Войти" />
                   </div>
               </div>
-              </form>
-              <Link className="form-link" to="/signup">Нет аккаунта? <img src={arrow} alt="arrow"/></Link>
+            </form>
+            <Link className="form-link" to="/signup">Нет аккаунта? <img src={arrow} alt="arrow"/></Link>
           </div>
-      </div>
-      {
-        loading && (<Loading />)
-      }
+        </div>
+        {
+          loading && (<Loading />)
+        }
       </div>
     )
   }
