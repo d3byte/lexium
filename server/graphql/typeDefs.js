@@ -85,12 +85,9 @@ module.exports = `
 scalar Date
 
 type Query {
-  task(taskId: ID!): Task!
-  tasks: [Task!]
-  groups: [Group!]
-  group: Group!
+  task(token: String!, id: ID!, groupId: ID!): QueryPayload!
+  group(token: String!, id: ID!): QueryPayload!
   user(token: String!): User
-  users: [User!]
 }
 
 type Mutation {
@@ -116,6 +113,12 @@ type Mutation {
   checkUsername(username: String!): VerifyPayload!
   signup(email: String!, password: String!, name: String!, username: String!): AuthPayload!
   login(username: String!, password: String!): AuthPayload!
+}
+
+type QueryPayload {
+  group: Group
+  task: Task
+  error: String
 }
 
 type AuthPayload {

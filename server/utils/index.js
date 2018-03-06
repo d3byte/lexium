@@ -13,7 +13,7 @@ function secret() {
 
 class AuthError extends Error {
   constructor() {
-    super('Not authorized')
+    super('Вы не авторизированы')
   }
 }
 
