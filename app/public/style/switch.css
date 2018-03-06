@@ -17,7 +17,7 @@
   background-color: #B5B6DB; }
 
 .switch label input[type=checkbox]:checked + .lever:after {
-  background-color: #6B6DB8; }
+  background-color: #6B6DB8; box-shadow: none; border: none; }
 
 .switch label .lever {
   content: "";
@@ -40,7 +40,7 @@
   height: 21px;
   background-color: #F1F1F1;
   border-radius: 21px;
-  box-shadow: 0 1px 3px 1px rgba(0, 0, 0, 0.4);
+  border: 1px solid darkgray;
   left: -5px;
   top: -3px;
   transition: left 0.3s ease, background 0.3s ease, box-shadow 0.1s ease; }
