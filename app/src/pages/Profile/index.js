@@ -1,6 +1,8 @@
 import React, { Component } from 'react'
 import { Link } from 'react-router-dom'
 import { withApollo } from 'react-apollo'
+import keyIndex from 'react-key-index'
+import anime from 'animejs'
 
 import Button from '../../components/Button'
 import Header from '../../components/Header'
@@ -40,6 +42,12 @@ class Profile extends Component {
 
   hideGroupList = () => {
     this.setState({ groupListIsActive: false })
+  }
+
+  changeGroup = group => {
+    this.setState({ currentGroup: group })
+    this.cache.writeData('currentGroup', group)
+    this.hideGroupList()
   }
 
   toggleCompletedTasks = () => {
@@ -219,7 +227,7 @@ class Profile extends Component {
               query.completedTasks || query.uncompletedTasks ?
                 query.uncompletedTasks && query.uncompletedTasks.length > 0 ?
                     query.uncompletedTasks.map(task => (
-                    <div className="container of-task">
+                    <div key={task.id} className="container of-task">
                       <div className="info">
                         <p className="name">{task.name}</p>
                         <p className="deadline">Осталось дней: <b>{this.determineRemainingDays(task)}</b></p>
@@ -230,7 +238,7 @@ class Profile extends Component {
                   ) : <p className="no-tasks">Не найдено подходящих заданий</p> :
                 currentGroup.uncompletedTasks && currentGroup.uncompletedTasks.length > 0 ? 
                   currentGroup.uncompletedTasks.map(task => (
-                  <div className="container of-task">
+                  <div key={task.id}className="container of-task">
                     <div className="info">
                       <p className="name">{task.name}</p>
                       <p className="deadline">Осталось дней: <b>{this.determineRemainingDays(task)}</b></p>
@@ -259,7 +267,7 @@ class Profile extends Component {
               query.completedTasks || query.uncompletedTasks ?
                 query.completedTasks && query.completedTasks.length > 0 ?
                   query.completedTasks.map(task => (
-                    <div className="container of-task">
+                    <div key={task.id} className="container of-task">
                       <div className="info">
                         <p className="name">Модальный глагол cut</p>
                         <p className="deadline">Осталось дней: <b>{this.determineRemainingDays(task)}</b></p>
@@ -270,7 +278,7 @@ class Profile extends Component {
                   )) : <p className="no-tasks">Не найдено подходящих заданий</p> :
                 currentGroup.completedTasks && currentGroup.completedTasks.length > 0 ?
                   currentGroup.completedTasks.map(task => (
-                  <div className="container of-task">
+                  <div key={task.id} className="container of-task">
                     <div className="info">
                       <p className="name">{task.name}</p>
                       <p className="deadline">Осталось дней: <b>{this.determineRemainingDays(task)}</b></p>
@@ -286,24 +294,28 @@ class Profile extends Component {
 
         <div className={'modal ' + (groupListIsActive ? '' : 'hide')}>
             <div className="header">
-              <span class="title">Выбор группы</span>
-              <i onClick={this.hideModal} class="material-icons">close</i>
+              <span className="title">Выбор группы</span>
+              <i onClick={this.hideGroupList} className="material-icons">close</i>
             </div>
             <div className="body">
 
-              <div className="group">
-                <div className="avatar">
-                  <img src="" alt="group-avatar" />
+              {
+                user.groups && user.groups.map(group => (
+                <div key={group.id} className="group" onClick={() => this.changeGroup(group)}>
+                  <div className="avatar">
+                    <img src="" alt="group-avatar" />
+                  </div>
+                  <div className="info">
+                    <p className="name">{group.name}</p>
+                    <p className="participants">Участников: <b>{group.users ? group.users.length: 0}</b></p>
+                  </div>
                 </div>
-                <div className="info">
-                  <span className="name">Личная группа</span>
-                  <span className="participants">Участников: 1</span>
-                </div>
-              </div>
+                ))
+              }            
 
             </div>
         </div>
-        <div className={'modal-overlay' + (groupListIsActive ? '' : 'hide')} onClick={this.hideModal}>
+        <div className={'modal-overlay' + (groupListIsActive ? '' : 'hide')} onClick={this.hideGroupList}>
         </div>
 
       </div>

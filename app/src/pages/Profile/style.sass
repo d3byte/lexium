@@ -1,5 +1,7 @@
 .profile
     padding-bottom: 40px
+    min-height: 100vh
+    position: relative
 
 .section
     margin-top: 30px
@@ -114,6 +116,85 @@ p.no-tasks
     font-family: 'ProximaNova-Regular', sans-serif
     color: #595959
 
+.modal-overlay
+    position: absolute
+    z-index: 1200
+    top: 0
+    left: 0
+    width: 100%
+    height: 100%
+    background: #D8D8D8
+    opacity: 0.6
+
+.modal
+    position: absolute
+    z-index: 1300
+    left: 15%
+    top: 15%
+    width: 70%
+    min-height: 60%
+    background: white
+    border: 1px solid #E0E0E0
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.25)
+    padding: 20px 40px
+    overflow-y: hidden
+    .header
+        display: flex
+        justify-content: space-between
+        margin-bottom: 30px
+        .title
+            font-family: 'ProximaNova-Light', sans-serif
+            font-size: 36px
+            color: #595959
+            opacity: 0.6
+            text-transform: uppercase
+        i
+            opacity: 0.6
+            &:hover
+                cursor: pointer
+
+    .body
+        display: flex
+        justify-content: space-between
+        flex-wrap: wrap
+        padding-bottom: 20px
+
+        .group
+            display: flex
+            width: 48%
+            min-height: 80px
+            overflow: hidden
+            margin-top: 20px
+            border: 1px solid transparent
+            transition: 0.3s
+            &:first-of-type, &:nth-of-type(2)
+                margin-top: 0
+            &:hover
+                cursor: pointer
+                border: 1px solid #6B6DB8
+                .avatar
+                    border: none
+                    border-right: 1px solid #6B6DB8
+            .avatar
+                width: 80px
+                height: 80px
+                background: lightgray
+                border: 1px solid #979797
+                transition: 0.3s
+            .info
+                width: calc(100% - 80px)
+                padding: 10px 0 0 20px
+                font-family: 'ProximaNova-Regular', sans-serif
+                color: #595959
+                p
+                    margin: 0
+                .name
+                    font-size: 20px
+                .participants
+                    font-size: 14px
+
+
+
 @media (max-width: 944px)
     .section .containers .container.of-info .container-main .info .name span:first-of-type.right-lined:after
         content: none
@@ -123,6 +204,11 @@ p.no-tasks
         flex-direction: column
         span
             margin: 0 !important
+
+    .modal
+        width: 90%
+        top: 10%
+        left: 5%
 
 @media (max-width: 850px)
     .section.info .containers
@@ -143,6 +229,15 @@ p.no-tasks
             margin-right: 5px
         .username
             margin-left: 15px !important
+
+    .modal 
+        width: 96%
+        left: 2%
+        top: 2%
+        .body .group
+            width: 100%
+            &:nth-of-type(2)
+             margin-top: 20px
 
 @media (max-width: 850px)
     .section.tasks .containers
@@ -169,9 +264,16 @@ p.no-tasks
             width: 100%
             .info
                 padding: 15px 20px
+    
+    .modal
+        .header .title
+            font-size: 26px
 
 @media (max-width: 395px)
     .section .title
         flex-direction: column
         .switch
             margin: 5px 0 0 -15px
+
+    .modal
+        padding: 20px

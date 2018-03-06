@@ -122,16 +122,16 @@ export default class Header extends Component {
           <ul className="dropdown-menu">
             <li>
               <Link to="/profile">
-                <i class="material-icons">account_circle</i> Профиль
+                <i className="material-icons">account_circle</i> Профиль
               </Link>
             </li>
             <li>
               <Link to="/settings">
-                <i class="material-icons">settings</i> Настройки
+                <i className="material-icons">settings</i> Настройки
               </Link>
             </li>
             <li className="divider" onClick={this.logout}>
-              <i class="material-icons">exit_to_app</i> Выход
+              <i className="material-icons">exit_to_app</i> Выход
             </li>
           </ul>
         </div>
