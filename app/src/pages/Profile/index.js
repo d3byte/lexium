@@ -154,9 +154,10 @@ class Profile extends Component {
   render() {
     const { user, currentGroup, level, showCompleted, fetching, query } = this.state
     const { pathname } = this.props.location
+    const { history } = this.props
     return (
       <div className="profile">
-        <Header fetching={fetching} pathname={pathname} inputHandler={this.searchTasks} />
+        <Header fetching={fetching} pathname={pathname} history={history} inputHandler={this.searchTasks} />
 
         <div className="section info">
           <span className="title">Информация</span>

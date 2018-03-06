@@ -174,6 +174,9 @@ input.line-based:focus:-ms-input-placeholder {
   .section, header {
     padding: 0 70px !important;
   }
+  .dropdown.menu {
+    right: 70px !important;
+  }
 }
 
 @media (min-width: 601px) {
@@ -185,6 +188,9 @@ input.line-based:focus:-ms-input-placeholder {
 @media (max-width: 600px) {
   .section, header {
     padding: 0 20px !important;
+  }
+  .dropdown.menu {
+    right: 20px !important;
   }
   .navigation .search, .navigation .notifications {
     display: none !important;

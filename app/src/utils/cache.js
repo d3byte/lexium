@@ -32,6 +32,10 @@ export default class CacheManager extends EncryptionManager {
         })
     }
 
+    clear = () => {
+        localStorage.clear()
+    }
+
     updateData = (key, data) => {
         return new Promise((resolve, reject) => {
             const encryptedOldData = this.readData(key),
