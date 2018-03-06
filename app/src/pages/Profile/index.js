@@ -222,7 +222,7 @@ class Profile extends Component {
                       <Button clickHandler={() => console.log('Ура!')} classNameProp="regular fluid" text="Выполнить" />
                     </div>
                     )
-                  ) : <p className="no-tasks">Нет найдено подходящих заданий</p> :
+                  ) : <p className="no-tasks">Не найдено подходящих заданий</p> :
                 currentGroup.uncompletedTasks && currentGroup.uncompletedTasks.length > 0 ? 
                   currentGroup.uncompletedTasks.map(task => (
                   <div className="container of-task">
@@ -262,7 +262,7 @@ class Profile extends Component {
                       </div>
                       <Button clickHandler={() => console.log('Ура!')} classNameProp="regular fluid" text="Улучшить результат" />
                     </div>
-                  )) : <p className="no-tasks">Нет найдено подходящих заданий</p> :
+                  )) : <p className="no-tasks">Не найдено подходящих заданий</p> :
                 currentGroup.completedTasks && currentGroup.completedTasks.length > 0 ?
                   currentGroup.completedTasks.map(task => (
                   <div className="container of-task">
