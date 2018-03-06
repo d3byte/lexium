@@ -32,6 +32,29 @@ class Signin extends Component {
     })
   }
 
+  handleTasks = (tasks, userId) => {
+    let uncompletedTasks = [], completedTasks = []
+    tasks.map(task => {
+      task.words = JSON.parse(task.words)
+      if (task.results) {
+        let isDone = false
+        task.results.map(result => {
+          if (result.user.id === userId) {
+            isDone = true
+          }
+          return result
+        })
+        if (!isDone) {
+          uncompletedTasks.push(task)
+        } else {
+          completedTasks.push(task)
+        }
+      }
+      return task
+    })
+    return { uncompletedTasks, completedTasks }
+  }
+
   submit = async () => {
     // Отправить форму
     const { username, password } = this.state
@@ -46,9 +69,9 @@ class Signin extends Component {
       user.groups.map(group => {
         group.superUsers = JSON.parse(group.superUsers)
         if (group.tasks) {
-          group.tasks.map(task => {
-            task.words = JSON.parse(task.words)
-          })
+          const { uncompletedTasks, completedTasks } = this.handleTasks(group.tasks)
+          group.uncompletedTasks = uncompletedTasks
+          group.completedTasks = completedTasks
         }
       })
       this.cache.writeData('token', token)

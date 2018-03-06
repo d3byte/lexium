@@ -85,11 +85,6 @@ class Signup extends Component {
       let { user, token } = data.data.signup
       user.groups.map(group => {
         group.superUsers = JSON.parse(group.superUsers)
-        if (group.tasks) {
-          group.tasks.map(task => {
-            task.words = JSON.parse(task.words)
-          })
-        }
       })
       this.cache.writeData('token', token)
       this.cache.writeData('user', user)
