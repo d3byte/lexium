@@ -1,6 +1,5 @@
 import React, { Component } from 'react'
 import { compose, graphql } from 'react-apollo'
-import gql from 'graphql-tag'
 import { Link } from 'react-router-dom'
 import anime from 'animejs'
 

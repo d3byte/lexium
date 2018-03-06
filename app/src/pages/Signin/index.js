@@ -9,7 +9,6 @@ import Loading from '../../components/Loading'
 import arrow from '../../assets/arrow.svg'
 
 import { LOGIN } from '../../graphql/mutations'
-import { USER_CACHE, TOKEN_CACHE } from '../../graphql/cache'
 import { CacheManager } from '../../utils/index'
 
 class Signin extends Component {
