@@ -106,45 +106,45 @@ class Signup extends Component {
         <div className={'home ' + (loading && 'hide')}>
           <Header pathname={this.props.location.pathname}/>
           <div className="cards">
-          {
-            error && error.length > 0 && <div className="error signup">{ error }</div>
-          }
-              <form onSubmit={e => e.preventDefault()} className="card card-0 signup rounded">
-                  <div className="card-header">Регистрация</div>
-                  <div className="card-body">
-                      <input type="text" onChange={e => this.inputHandler(e, 'firstName')} className="line-based" placeholder="Имя" required={true}/>
-                      <input type="text" onChange={e => this.inputHandler(e, 'lastName')} className="line-based" placeholder="Фамилия" required={true}/>
-                  </div>
-                  <div className="card-footer">
-                      <Button clickHandler={this.nextCard} classNameProp="authorization" text="Дальше" />
-                  </div>
-              </form>
-              <form onSubmit={e => e.preventDefault()} className={'card card-1 signup rounded ' + (cardIndex === 1 && 'current') }>
+            {
+              error && error.length > 0 && <div className="error signup">{ error }</div>
+            }
+            <form onSubmit={e => e.preventDefault()} className="card card-0 signup rounded">
                 <div className="card-header">Регистрация</div>
                 <div className="card-body">
-                  <input type="text" onChange={e => this.inputHandler(e, 'username')} className={'line-based ' + (errorInput === 'username' ? 'error-input' : '')} placeholder="Логин" required={true}/>
-                  <input type="email" onChange={e => this.inputHandler(e, 'email')} className={'line-based ' + (errorInput === 'email' ? 'error-input' : '')} placeholder="Почта" required={true}/>
+                    <input type="text" onChange={e => this.inputHandler(e, 'firstName')} className="line-based" placeholder="Имя" required={true}/>
+                    <input type="text" onChange={e => this.inputHandler(e, 'lastName')} className="line-based" placeholder="Фамилия" required={true}/>
                 </div>
                 <div className="card-footer">
-                  <Button clickHandler={this.nextCard} classNameProp="authorization" text="Дальше" />
+                    <Button clickHandler={this.nextCard} classNameProp="authorization" text="Дальше" />
                 </div>
-              </form>
-              <form onSubmit={e => e.preventDefault()} className={'card card-2 signup rounded ' + (cardIndex === 2 && 'current') }>
-                <div className="card-header">Регистрация</div>
-                <div className="card-body">
-                  <input type="password" onChange={e => this.inputHandler(e, 'password')} className="line-based" placeholder="Пароль" required={true}/>
-                  <input type="password" onChange={e => this.inputHandler(e, 'repeatPassword')} className={'line-based ' + (errorInput === 'repeatPassword' ? 'error-input' : '')} placeholder="Повторите пароль" required={true}/>
-                </div>
-                <div className="card-footer">
-                  <Button clickHandler={this.submit} classNameProp="authorization" text="Зарегистрироваться" />
-                </div>
-              </form>
-              <Link className="form-link" to="/signin">Есть аккаунт? <img src={arrow} alt="arrow" /></Link>
+            </form>
+            <form onSubmit={e => e.preventDefault()} className={'card card-1 signup rounded ' + (cardIndex === 1 && 'current') }>
+              <div className="card-header">Регистрация</div>
+              <div className="card-body">
+                <input type="text" onChange={e => this.inputHandler(e, 'username')} className={'line-based ' + (errorInput === 'username' ? 'error-input' : '')} placeholder="Логин" required={true}/>
+                <input type="email" onChange={e => this.inputHandler(e, 'email')} className={'line-based ' + (errorInput === 'email' ? 'error-input' : '')} placeholder="Почта" required={true}/>
+              </div>
+              <div className="card-footer">
+                <Button clickHandler={this.nextCard} classNameProp="authorization" text="Дальше" />
+              </div>
+            </form>
+            <form onSubmit={e => e.preventDefault()} className={'card card-2 signup rounded ' + (cardIndex === 2 && 'current') }>
+              <div className="card-header">Регистрация</div>
+              <div className="card-body">
+                <input type="password" onChange={e => this.inputHandler(e, 'password')} className="line-based" placeholder="Пароль" required={true}/>
+                <input type="password" onChange={e => this.inputHandler(e, 'repeatPassword')} className={'line-based ' + (errorInput === 'repeatPassword' ? 'error-input' : '')} placeholder="Повторите пароль" required={true}/>
+              </div>
+              <div className="card-footer">
+                <Button clickHandler={this.submit} classNameProp="authorization" text="Зарегистрироваться" />
+              </div>
+            </form>
+            <Link className="form-link" to="/signin">Есть аккаунт? <img src={arrow} alt="arrow" /></Link>
           </div>
-      </div>
-      {
-        loading && <Loading />
-      }
+        </div>
+        {
+          loading && <Loading />
+        }
       </div>
     )
   }
