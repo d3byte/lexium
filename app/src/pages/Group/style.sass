@@ -1,6 +1,11 @@
 
 .section
 
+    .tasks
+        display: flex
+        align-items: center
+        justify-content: space-between
+
     .titles
         display: flex
         align-items: center
@@ -25,7 +30,7 @@
     width: 48%
     
     .container
-        &.of-task, &.of-help
+        &.of-task, &.of-help, &.of-edit
             width: 100%
         &.of-help
             display: block
@@ -34,6 +39,21 @@
         .lightest
             align-self: flex-end
             opacity: 0.6
+    
+    .container
+        &.of-edit
+            display: flex
+            align-items: center !important
+
+.containers.edit-block
+    flex-direction: column
+    width: 48%
+
+.single-line
+    display: flex
+    justify-content: space-between
+    flex-direction: row
+
 
 .container-main.menu
     flex-flow: wrap row !important
@@ -50,4 +70,6 @@
             color: white
             background: #8A8CE6
 
+.highlighted
+    border: 1px solid #8A8CE6 !important
         

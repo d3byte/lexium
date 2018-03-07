@@ -13,7 +13,8 @@ class Group extends Component {
   constructor() {
     super()
     this.state = {
-      showHelp: false
+      showHelp: false,
+      showEdit: null
     }
     this.client = {}
     this.cache = new CacheManager()
@@ -43,7 +44,18 @@ class Group extends Component {
   }
 
   toggleHelp = () => {
-    this.setState({ showHelp: !this.state.showHelp })
+    this.setState({
+      showHelp: !this.state.showHelp
+    })
+  }
+
+  toggleEdit = taskId => {
+    const {showEdit} = this.state
+    if (showEdit) {
+      this.setState({showEdit: false, highlighted: null})
+      return
+    }
+    this.setState({showEdit: true, highlighted: taskId})
   }
 
   componentDidMount = async() => {
@@ -100,7 +112,7 @@ class Group extends Component {
       }
 
       render() {
-        const {fetching, showHelp} = this.state
+        const {fetching, showHelp, showEdit, highlighted} = this.state
         const {user, group} = this.props.location.state
         const {pathname} = this.props.location
         const {history} = this.props
@@ -122,15 +134,23 @@ class Group extends Component {
 
                 <div className="container of-info">
                   <div className="avatar">
-                    <img src={group ? group.avatarUrl : ''} alt="avatar"/>
+                    <img
+                      src={group
+                      ? group.avatarUrl
+                      : ''}
+                      alt="avatar"/>
                   </div>
                   <div className="container-main">
                     <div className="info equal-space">
                       <div className="name">
-                        <span className="">{group ? group.name : ''}</span>
+                        <span className="">{group
+                            ? group.name
+                            : ''}</span>
                       </div>
                       <p className="bigger">Участников:
-                        <b>{group.users ? group.users.length : ''}</b>
+                        <b>{group.users
+                            ? group.users.length
+                            : ''}</b>
                       </p>
                       <p className="lighten hover">Покинуть группу</p>
                     </div>
@@ -150,33 +170,58 @@ class Group extends Component {
             </div>
 
             <div className="section tasks">
-              <span className="title with-icon">Список заданий
-                <i
-                  className="material-icons"
-                  onClick={this.toggleHelp}
-                  onBlur={this.toggleHelp}>help_outline</i>
-              </span>
-              <div className="containers task-list">
-              {
-                showHelp && (
-                  <div className="container of-help">
-                  <p>Выберите задание, кликнув по нему.</p>
-                  <p>Измените название задания, нажав на него и </p>
-                  <p>введя новое. Отредактируйте пары слов, воспользовавшись редактором.</p>
-                </div>
-                )
-              }
-              <div className="container of-task">
-              <div className="info">
-              <p className="name">Любителям бананидзе посвящидзе</p>
-              <p className="task-info">Пар слов: <b>2</b></p>
-              <p className="task-info">Пройдено раз: <b>3</b></p>
+              <div className="titles">
+                <span className="title with-icon">Список заданий
+                  <i
+                    className="material-icons"
+                    onClick={this.toggleHelp}
+                    onBlur={this.toggleHelp}>help_outline</i>
+                </span>
+                <span className="title">Редактор слов</span>
               </div>
-              <p className="lightest">Создано: 08.03.2018</p>
-              </div>
-              </div>
-            </div>
 
+              <div className="single-line">
+                <div className="containers task-list">
+                  {showHelp && (
+                    <div className="container of-help">
+                      <p>Выберите задание, кликнув по нему.</p>
+                      <p>Измените название задания, нажав на него и
+                      </p>
+                      <p>введя новое. Отредактируйте пары слов, воспользовавшись редактором.</p>
+                    </div>
+                  )
+}
+                  <div
+                    className={'container of-task' + (highlighted == 1
+                    ? ' highlighted'
+                    : '')}
+                    onClick={() => this.toggleEdit(1)}>
+                    <div className="info">
+                      <p className="name">Любителям бананидзе посвящидзе</p>
+                      <p className="task-info">Пар слов:
+                        <b>
+                          2</b>
+                      </p>
+                      <p className="task-info">Пройдено раз:
+                        <b>
+                          3</b>
+                      </p>
+                    </div>
+                    <p className="lightest">Создано: 08.03.2018</p>
+                  </div>
+                </div>
+
+                <div className="containers edit-block">
+                  {showEdit && (
+                    <div className="container of-edit">
+                      <p>джю</p>
+                    </div>
+                  )
+}
+                </div>
+              </div>
+
+            </div>
           </div>
         )
       }
