@@ -5,7 +5,7 @@ import Button from '../../components/Button'
 import Header from '../../components/Header'
 
 import { CacheManager } from '../../utils/index'
-import { USER } from '../../graphql/queries'
+import { GROUP } from '../../graphql/queries'
 
 
 class Group extends Component {

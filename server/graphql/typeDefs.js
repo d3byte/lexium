@@ -138,6 +138,7 @@ type Group {
   users: [User!]
   superUsers: String!
   tasks: [Task]
+  avatarUrl: String!
   createdAt: Date!
 }
 

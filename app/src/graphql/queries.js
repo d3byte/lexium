@@ -38,7 +38,7 @@ query user($token: String!) {
 `
 
 const GROUP = gql`
-query group($token: String!, id: ID!) {
+query group($token: String!, $id: ID!) {
     group(token: $token, id: $id) {
         id
         name
