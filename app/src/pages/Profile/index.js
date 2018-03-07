@@ -204,7 +204,7 @@ class Profile extends Component {
                   <p className="bigger">Участников: <b>{currentGroup.users && currentGroup.users.length}</b></p>
                   <Link
                     className="lighten"
-                    to={{ pathname: '/group', state: { group: currentGroup, user, token: this.token } }}>
+                    to={{ pathname: `/group/${currentGroup.id}`, state: { group: currentGroup, user, token: this.token } }}>
                     Посмотреть подробную информацию
                   </Link>
                   <p className="lighten hover" onClick={this.callGroupList}>Сменить группу</p>
