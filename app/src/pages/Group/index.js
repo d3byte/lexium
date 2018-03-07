@@ -66,10 +66,34 @@ class Group extends Component {
   }
 
   render() {
+    const { fetching } = this.state
+    const { user, group } = this.props.location.state
+    const { pathname } = this.props.location
+    const { history } = this.props
     return (
       <div>
-        
+        <Header fetching={fetching} pathname={pathname} history={history} inputHandler={this.searchTasks} />
+        <div className="section info">
+          <span className="title">Информация</span>
+          <div className="containers">
+          <div className="container of-info">
+              <div className="avatar">
+                <img src={group ? group.avatarUrl : ''} alt="avatar"/>
+              </div>
+              <div className="container-main">
+                <div className="info equal-space">
+                  <div className="name">
+                    <span className="">{group ? group.name : ''}</span>
+                  </div>
+                  <p className="bigger">Участников: <b>{group.users && group.users.length}</b></p>
+                  <p className="lighten hover">Покинуть группу</p>
+                </div>
+                <div className="naming"></div>
+              </div>
+            </div>
+        </div>
       </div>
+    </div>
     )
   }
 }
