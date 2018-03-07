@@ -59,6 +59,9 @@ query group($token: String!, $id: ID!) {
             deadline
             createdAt
         }
+        users {
+            name
+        }
         superUsers
         avatarUrl
         createdAt
