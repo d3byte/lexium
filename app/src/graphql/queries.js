@@ -37,6 +37,35 @@ query user($token: String!) {
 }
 `
 
+const GROUP = gql`
+query group($token: String!, id: ID!) {
+    group(token: $token, id: $id) {
+        id
+        name
+        tasks {
+            id
+            name
+            words
+            results {
+                id
+                wordsLearnt
+                user {
+                    id
+                    name
+                    wordsLearnt
+                }
+                percentage
+            }
+            deadline
+            createdAt
+        }
+        superUsers
+        avatarUrl
+        createdAt
+    }
+}
+`
+
 export {
-    USER
+    USER, GROUP
 }

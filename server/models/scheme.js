@@ -19,7 +19,8 @@ module.exports = function (sequelize) {
 
   const Group = sequelize.define('Group', {
     name: Sequelize.STRING,
-    superUsers: Sequelize.STRING
+    superUsers: Sequelize.STRING,
+    avatarUrl: Sequelize.STRING,
   })
 
   const Task = sequelize.define('Task', {
