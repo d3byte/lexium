@@ -1,0 +1,53 @@
+
+.section
+
+    .titles
+        display: flex
+        align-items: center
+        justify-content: space-between
+        
+    .title.with-icon
+        display: flex
+        align-items: center
+        vertical-align: middle
+        & > i
+            opacity: 0.6
+            font-size: 20px
+            margin-left: 5px
+            transition: 0.3s
+            &:hover
+                cursor: pointer
+                opacity: 1
+                
+
+.containers.task-list
+    flex-direction: column
+    width: 48%
+    
+    .container
+        &.of-task, &.of-help
+            width: 100%
+        &.of-help
+            display: block
+            margin-bottom: 10px
+            padding: 15px
+        .lightest
+            align-self: flex-end
+            opacity: 0.6
+
+.container-main.menu
+    flex-flow: wrap row !important
+    width: 100% !important
+    
+    .menu-item
+        display: flex
+        width: 50%
+        align-items: center
+        justify-content: center
+        transition: 0.3s
+        &:hover
+            cursor: pointer
+            color: white
+            background: #8A8CE6
+
+        
