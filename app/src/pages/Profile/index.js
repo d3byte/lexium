@@ -237,7 +237,7 @@ class Profile extends Component {
                   ) : <p className="no-tasks">Не найдено подходящих заданий</p> :
                 currentGroup.uncompletedTasks && currentGroup.uncompletedTasks.length > 0 ? 
                   currentGroup.uncompletedTasks.map(task => (
-                  <div key={task.id}className="container of-task">
+                  <div key={task.id} className="container of-task">
                     <div className="info">
                       <p className="name">{task.name}</p>
                       <p className="deadline">Осталось дней: <b>{this.determineRemainingDays(task)}</b></p>
