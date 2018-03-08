@@ -122,6 +122,10 @@ a.form-link:hover {
   color: #CC4D4D !important;
 }
 
+.underlined {
+  text-decoration: underline;
+}
+
 input.line-based {
   font-family: 'ProximaNova-Regular', sans-serif;
   font-size: 16px;

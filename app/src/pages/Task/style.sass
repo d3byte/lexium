@@ -1,0 +1,102 @@
+.task
+    padding-bottom: 40px
+    
+.container-main
+    &.full-width
+        width: 100% !important
+
+    p, a
+        color: #595959
+        opacity: 0.6
+
+
+.game-bar
+    display: flex
+    flex-wrap: wrap
+    .game
+        display: flex
+        flex-direction: column
+        width: 25%
+        position: relative
+        background: white
+        border: 1px solid #E0E0E0
+        border-right: none
+        margin-top: 15px
+        &:hover
+            cursor: pointer
+            .hint
+                display: block
+        &:last-of-type
+            border-right: 1px solid #E0E0E0
+        span
+            width: 100%
+        .name
+            font-family: 'ProximaNova-Semibold', sans-serif
+            font-size: 20px
+            color: #6B6DB8
+            border-bottom: 1px solid #E0E0E0
+            text-align: center
+            padding: 10px 0
+        .attempts
+            font-family: 'ProximaNova-Regular', sans-serif
+            font-size: 10px
+            color: #595959
+            opacity: 0.6
+            text-align: center
+            padding: 5px 0
+        .hint
+            display: none
+            width: calc(100% + 2px)
+            position: absolute
+            top: 65px
+            left: -1px
+            background: white
+            border: 1px solid #E0E0E0
+            font-family: 'ProximaNova-Regular', sans-serif
+            font-size: 14px
+            color: #595959
+            padding: 10px
+            z-index: 1000
+            p
+                margin: 0
+                opacity: 0.8
+
+.word-table
+    width: 50%
+    margin: 15px auto 0 auto
+    .table-row
+        display: flex
+        align-items: center
+        justify-content: space-between
+        margin-top: 10px
+        &:first-of-type, &:nth-of-type(2)
+            margin-top: 0
+        .cell
+            width: 48%
+            padding: 10px 0
+            background: white
+            border: 1px solid #E0E0E0
+            font-family: 'ProximaNova-Light', sans-serif
+            font-size: 18px
+            text-align: center
+            &.heading
+                font-size: 16px
+                opacity: 0.8
+                background: transparent
+                border: none
+
+@media (max-width: 900px)
+    .word-table
+        width: 75%
+
+@media (max-width: 660px)
+    .word-table
+        width: 90%
+
+@media (max-width: 540px)
+    .game-bar
+        .game
+            width: 50%
+
+    .word-table
+        width: 100%

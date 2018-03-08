@@ -11,6 +11,7 @@ import Main from './pages/Main'
 import Error404 from './pages/Error404'
 import Profile from './pages/Profile'
 import Group from './pages/Group'
+import Task from './pages/Task'
 
 export default class App extends Component {
   componentWillReceiveProps = props => {
@@ -26,6 +27,7 @@ export default class App extends Component {
             <Route exact path="/signup" component={Signup} />
             <Route exact path="/profile" component={Profile} />
             <Route exact path="/group/:id" component={Group} />
+            <Route exact path="/task" component={Task} />
             <Route exact path="*" component={Error404} />
           </Switch>
       </Router>
