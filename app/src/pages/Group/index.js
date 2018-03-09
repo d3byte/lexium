@@ -13,6 +13,7 @@ class Group extends Component {
   constructor() {
     super()
     this.state = {
+      currentTab: 'task-list',
       showTaskList: true,
       showHelp: false,
       showEdit: null,
@@ -32,6 +33,10 @@ class Group extends Component {
     if (error && error.length > 0) { this.props.history.push('/profile') }
     group.superUsers = JSON.parse(group.superUsers)
     this.setState({ group, fetching: false })
+  }
+
+  changeTab = (tabName) => {
+    this.setState({ currentTab: tabName })
   }
 
   toggleHelp = () => {
