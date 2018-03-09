@@ -166,8 +166,23 @@ class Group extends Component {
             <div className="containers edit-block">
               {
                 showEdit && (
-                  <div className="container of-edit">
-                    <p>джю</p>
+                  <div className="word-editor">
+                    <div className="word-table">
+                      <div className="table-row">
+                      <div className="cell edit-heading">Слово</div>
+                      <div className="cell edit-heading">Перевод</div>
+                    </div>
+                      <div className="table-row">
+                        <div className="cell">Banana</div>
+                        <div className="cell">Банан</div>
+                      </div>
+                      <div className="table-row">
+                        <div className="cell">Allergy</div>
+                        <div className="cell">Аллергия</div>
+                      </div>
+                    </div>
+                    <button className="regular add-words">+</button>
+                    <button className="regular save-words">Сохранить</button>
                   </div>
                 )
               }
