@@ -59,13 +59,11 @@ class Group extends Component {
         const token = await this.cache.readData('token')
         const cachedGroup = cachedUser.groups.map(group => {
           let isValid = false
-          if (group.id === id) {
-            group.users.map(user => {
-              if (user.id == cachedUser.id) {
-                isValid = true
-              }
-            })
-          }
+          group.users.map(user => {
+            if (user.id == cachedUser.id) {
+              isValid = true
+            }
+          })
           if (isValid) {
             return group
           }
@@ -158,14 +156,8 @@ class Group extends Component {
                 className={ 'container of-task' + (highlighted == 1? ' highlighted': '') } onClick={() => this.toggleEdit(1)}>
                 <div className="info">
                   <p className="name">Любителям бананидзе посвящидзе</p>
-                  <p className="task-info">Пар слов:
-                    <b>
-                      2</b>
-                  </p>
-                  <p className="task-info">Пройдено раз:
-                    <b>
-                      3</b>
-                  </p>
+                  <p className="task-info">Пар слов: <b>2</b></p>
+                  <p className="task-info">Пройдено раз: <b>3</b></p>
                 </div>
                 <p className="lightest">Создано: 08.03.2018</p>
               </div>
