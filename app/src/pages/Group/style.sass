@@ -24,6 +24,13 @@
                 opacity: 1
                 
 
+.containers.task-create
+    flex-direction: column
+    width: 48%
+    .container
+        &.of-task
+            width: 100%
+
 .containers.task-list
     flex-direction: column
     width: 48%
@@ -75,6 +82,10 @@
             cursor: pointer
             color: white
             background: #8A8CE6
+        &.selected
+            cursor: pointer
+            color: white
+            background: #8A8CE6
 
 .highlighted
     border: 1px solid #8A8CE6 !important
@@ -101,3 +112,19 @@
         font-size: 20px
     &.save-words
         margin-top: 10px
+
+input.task
+    border-bottom: none
+    font-family: 'ProximaNova-Regular', sans-serif
+    border: none
+    &.task-name
+        font-size: 24px
+        width: 100%
+
+.meta-info
+    display: flex
+    width: 100%
+    flex-direction: row
+    justify-content: space-between
+    .date
+        align-self: flex-end !important
