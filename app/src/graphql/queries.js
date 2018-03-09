@@ -28,6 +28,11 @@ query user($token: String!) {
                 deadline
                 createdAt
             }
+            users {
+                id
+                name
+                createdAt
+            }
             superUsers
             createdAt
         }
@@ -60,7 +65,9 @@ query group($token: String!, $id: ID!) {
             createdAt
         }
         users {
+            id
             name
+            createdAt
         }
         superUsers
         avatarUrl

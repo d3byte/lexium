@@ -15,7 +15,9 @@ mutation login($username: String!, $password: String!) {
                 id
                 name
                 users {
+                    id
                     name
+                    createdAt
                 }
                 tasks {
                     id
@@ -74,6 +76,11 @@ mutation signup($username: String!, $name: String!, $email: String!, $password: 
                     deadline
                     createdAt
                 }
+                users {
+                    id
+                    name
+                    createdAt
+                }
                 superUsers
                 createdAt
             }
@@ -87,8 +94,12 @@ mutation signup($username: String!, $name: String!, $email: String!, $password: 
 const CREATE_GROUP = gql`
 mutation createGroup($name: String!, $usersIds: [ID!]!, $superUsers: [ID!]!) {
     createGroup(name: $name, usersIds: $usersIds, superUsers: $superUsers) {
-         id
+        id
         name
+        tasks {
+            id
+            name
+        }
         users {
             id
             name
@@ -104,6 +115,10 @@ mutation updateGroup($id: ID!, $input: GroupInput!) {
     updateGroup(id: $id, input: $input) {
         id
         name
+        tasks {
+            id
+            name
+        }
         users {
             id
             name
