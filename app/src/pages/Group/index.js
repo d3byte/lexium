@@ -195,29 +195,33 @@ class Group extends Component {
                   </div>
                 )
               }
-              <div className={ 'container of-task' + (highlighted == 1? ' highlighted': '') } onClick={() => this.toggleEdit(1)}>
+              <div className={ 'container of-task' + (highlighted == 1 ? ' highlighted': '') } onClick={() => this.toggleEdit(1)}>
                 <div className="info">
-                  <p className="name">Любителям бананов посвящяется</p>
+                {
+                  highlighted !== 1 ? (
+                    <p className="name">Любителям бананов посвящяется</p>
+                  ) : (
+                    <input className="task task-name" placeholder="Любителям бананов посвящяется" selected></input>
+                  )
+                }
                   <p className="task-info">Пар слов: <b>2</b></p>
                   <p className="task-info">Пройдено раз: <b>3</b></p>
                 </div>
                 {
-                  highlighted == 1 && (
+                  highlighted !== 1 ? (
+                    <p className="lightest">Создано: 08.03.2018</p>
+                  ) : (
                     <div className="meta-info">
                     <p className="lightest">Редактирование</p>
                     <p className="lightest">Создано: 08.03.2018</p>
                     </div>
                   )
                 }
-                {
-                  highlighted !== 1 && (
-                    <p className="lightest">Создано: 08.03.2018</p>
-                  )
-                }
               </div>
             </div>
             )
           }
+          
           {
                 currentTab == 'new-task' && (
                   <div className="containers task-create">
