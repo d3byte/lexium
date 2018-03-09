@@ -251,7 +251,7 @@ class Profile extends Component {
         </div>
 
         <div className="section tasks">
-          <span className="title">
+          <span className="title switch">
             Показать выполненные задания
             <div className="switch">
               <label>
