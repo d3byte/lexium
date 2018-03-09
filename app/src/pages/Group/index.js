@@ -59,11 +59,13 @@ class Group extends Component {
         const token = await this.cache.readData('token')
         const cachedGroup = cachedUser.groups.map(group => {
           let isValid = false
-          group.users.map(user => {
-            if (user.id == cachedUser.id) {
-              isValid = true
-            }
-          })
+          if (group.id === id) {
+            group.users.map(user => {
+              if (user.id == cachedUser.id) {
+                isValid = true
+              }
+            })
+          }
           if (isValid) {
             return group
           }
