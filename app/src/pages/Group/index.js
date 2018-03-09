@@ -13,8 +13,12 @@ class Group extends Component {
   constructor() {
     super()
     this.state = {
+      showTaskList: true,
       showHelp: false,
-      showEdit: null
+      showEdit: null,
+      showCreate: null,
+      showAddMember: null,
+      showAllMembers: null
     }
     this.client = {}
     this.cache = new CacheManager()
@@ -35,12 +39,21 @@ class Group extends Component {
   }
 
   toggleEdit = taskId => {
-    const {showEdit} = this.state
+    const { showEdit } = this.state
     if (showEdit) {
       this.setState({ showEdit: false, highlighted: null })
       return
     }
     this.setState({ showEdit: true, highlighted: taskId })
+  }
+
+  toggleCreate = () => {
+    const { showCreate, showHelp, showEdit, showAddMember, showAllmembers, showTaskList, highlighted } = this.state
+    if (!showCreate){
+      this.setState ({ showCreate: true, showTaskList: false, showHelp: false, showEdit: false, showAddMember: false, showAllmembers: false, highlighted: null })
+    } else {
+      this.setState ({ showCreate: false, showTaskList: true })
+    }
   }
 
   componentDidMount = async () => {
@@ -87,7 +100,7 @@ class Group extends Component {
   render() {
     const { history } = this.props
     const { pathname } = this.props.location
-    const { fetching, showHelp, showEdit, highlighted, user, group } = this.state
+    const { fetching, showHelp, showEdit, showCreate, showTaskList, highlighted, user, group } = this.state
     return (
       <div> 
         <Header fetching={fetching} pathname={pathname} history={history} inputHandler={this.searchTasks}/>
@@ -119,7 +132,7 @@ class Group extends Component {
 
             <div className="container of-info">
               <div className="container-main menu">
-                <div className="menu-item">Новое задание</div>
+                <div className="menu-item" onClick={ this.toggleCreate }>Новое задание</div>
                 <div className="menu-item">Все задания</div>
                 <div className="menu-item">Добавить участника</div>
                 <div className="menu-item">Все участники</div>
@@ -131,29 +144,52 @@ class Group extends Component {
 
         <div className="section tasks">
           <div className="titles">
-            <span className="title with-icon">Список заданий
+          {
+            showTaskList && (
+              <span className="title with-icon">Список заданий
               <i
                 className="material-icons"
                 onClick={this.toggleHelp}
                 onBlur={this.toggleHelp}>help_outline</i>
             </span>
-            <span className="title">Редактор слов</span>
+            )
+          }
+          {
+            showCreate && (
+              <span className="title with-icon">Информация о задании
+              <i
+                className="material-icons"
+                onClick={this.toggleHelp}
+                onBlur={this.toggleHelp}>help_outline</i>
+            </span>
+            )
+          }
+            <span className="title reverse">Редактор слов</span>
           </div>
 
           <div className="single-line">
-            <div className="containers task-list">
+          {
+            showCreate && (
+              <div className="containers">
+              <div className="container of-create">
+              <p>Джу</p>
+              </div>
+              </div>
+            )
+          }
+          {
+            showTaskList && (
+              <div className="containers task-list">
               { 
                 showHelp && (
                   <div className="container of-help">
                     <p>Выберите задание, кликнув по нему.</p>
-                    <p>Измените название задания, нажав на него и
-                    </p>
-                    <p>введя новое. Отредактируйте пары слов, воспользовавшись редактором.</p>
+                    <p>Измените название задания, нажав на него и введя новое.</p>
+                    <p>Отредактируйте пары слов, воспользовавшись редактором.</p>
                   </div>
                 )
               }
-              <div
-                className={ 'container of-task' + (highlighted == 1? ' highlighted': '') } onClick={() => this.toggleEdit(1)}>
+              <div className={ 'container of-task' + (highlighted == 1? ' highlighted': '') } onClick={() => this.toggleEdit(1)}>
                 <div className="info">
                   <p className="name">Любителям бананидзе посвящидзе</p>
                   <p className="task-info">Пар слов: <b>2</b></p>
@@ -162,6 +198,8 @@ class Group extends Component {
                 <p className="lightest">Создано: 08.03.2018</p>
               </div>
             </div>
+            )
+          }
 
             <div className="containers edit-block">
               {
