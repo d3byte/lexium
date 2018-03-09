@@ -201,7 +201,7 @@ class Group extends Component {
                   highlighted !== 1 ? (
                     <p className="name">Любителям бананов посвящяется</p>
                   ) : (
-                    <input className="task task-name" placeholder="Любителям бананов посвящяется" selected></input>
+                    <input className="task task-name" placeholder="Любителям бананов посвящяется"></input>
                   )
                 }
                   <p className="task-info">Пар слов: <b>2</b></p>
