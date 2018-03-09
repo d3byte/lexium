@@ -224,10 +224,13 @@ class Group extends Component {
           
           {
                 currentTab == 'new-task' && (
-                  <div className="containers task-create">
+                  <div className="containers task-list">
                     <div className="container of-task">
                       <div className="info">
-                      <input className="task task-name" placeholder="Название задания"></input>
+                      <p className="name">Как назвать задание?</p>
+                      <input className="line-based" placeholder="Название задания"></input>
+                      <p className="due-date">Сколько дней на выполнение?</p>
+                      <input className="line-based" placeholder="Дни"></input>
                       </div>
                     </div>
                   </div>
