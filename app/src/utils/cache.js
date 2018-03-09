@@ -16,7 +16,6 @@ export default class CacheManager extends EncryptionManager {
     readData = key => {
         return new Promise((resolve, reject) => {
             const encryptedData = localStorage.getItem(key)
-            console.log('Encrypted data:', encryptedData)
             const decryptedData = this.decrypt(encryptedData)
             if (decryptedData !== '' && decryptedData !== null && decryptedData != undefined)
                 resolve(decryptedData)

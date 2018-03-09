@@ -6,17 +6,12 @@ export default class EncryptionManager {
     }
 
     encrypt = data => {
-        console.log('Encrypting...')
         const encryptedData = jwt.sign({ data }, this.secret)
-        console.log(encryptedData)
         return encryptedData
     }
 
     decrypt = encryptedData => {
-        console.log('Decrypting...')
-        console.log('Target:', encryptedData)
         const { data } = jwt.verify(encryptedData, this.secret)
-        console.log('Result:', data)
         return data
     }
 }
