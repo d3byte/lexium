@@ -23,22 +23,9 @@ class Group extends Component {
 
   fetchData = async(token, groupId) => {
     const {location} = this.props
-    const response = await this
-      .client
-      .query({
-        query: GROUP,
-        variables: {
-          token,
-          id: groupId
-        }
-      })
+    const response = await this.client.query({ query: GROUP, variables: { token, id: groupId } })
     let {group, error} = response.data
-    if (error && error.length > 0) {
-      this
-        .props
-        .history
-        .push('/profile')
-    }
+    if (error && error.length > 0) { this.props.history.push('/profile') }
     group.superUsers = JSON.parse(group.superUsers)
     this.setState({group, fetching: false})
   }
@@ -59,70 +46,46 @@ class Group extends Component {
   }
 
   componentDidMount = async() => {
-    const {client, location} = this.props
-      const {id} = location.params
-        let group,
-          user,
-          token
-        if (location.state) {
-          group = location.state.group
-          user = location.state.user
-          token = location.state.token
+    const {client, match} = this.props
+      const {id} = match.params
+        let group, user, token
+        if (match.state) { 
+          group = match.state.group
+          user = match.state.user
+          token = match.state.token
         }
         this.client = client
         if (group == undefined || user == undefined || token == undefined) {
           try {
-            const cachedUser = await this
-              .cache
-              .readData('user')
-            const token = await this
-              .cache
-              .readData('token')
-            const cachedGroup = cachedUser
-              .groups
-              .map(group => {
-                group
-                  .users
-                  .map(user => {
+            const cachedUser = await this.cache.readData('user')
+            const token = await this.cache.readData('token')
+            const cachedGroup = cachedUser.groups.map(group => { group.users.map(user => {
                     if (user.id == cachedUser.id) {
                       return group
                     }
                   })
               })[0]
-            if (cachedGroup === undefined) {
-              this
-                .props
-                .history
-                .push('/profile')
-            }
+            if (cachedGroup === undefined) { this.props.history.push('/profile') }
             this.token = token
             this.setState({user: cachedUser, group: cachedGroup, fetching: true})
             this.fetchData(token, id)
           } catch (error) {
             console.log(error)
-            this
-              .props
-              .history
-              .push('/signin')
+            this.props.history.push('/signin')
           }
         } else {
-          this.setState({user, group})
+          this.setState({ user, group })
           this.token = token
         }
       }
 
       render() {
-        const {fetching, showHelp, showEdit, highlighted} = this.state
-        const {user, group} = this.props.location.state
-        const {pathname} = this.props.location
-        const {history} = this.props
+        const { history, match } = this.props
+        const { fetching, showHelp, showEdit, highlighted, user, group } = this.state
+        const { pathname } = this.props.match
         return (
-          <div>
-            <Header
-              fetching={fetching}
-              pathname={pathname}
-              history={history}
-              inputHandler={this.searchTasks}/>
+          <div> 
+            <Header fetching={ fetching } pathname={ pathname } history={ history } inputHandler={ this.searchTasks }/>
 
             <div className="section info">
               <div className="titles">
@@ -134,23 +97,15 @@ class Group extends Component {
 
                 <div className="container of-info">
                   <div className="avatar">
-                    <img
-                      src={group
-                      ? group.avatarUrl
-                      : ''}
-                      alt="avatar"/>
+                    <img src={ group ? group.avatarUrl : '' } alt="avatar"/>
                   </div>
                   <div className="container-main">
                     <div className="info equal-space">
                       <div className="name">
-                        <span className="">{group
-                            ? group.name
-                            : ''}</span>
+                        <span className="">{ group ? group.name: '' }</span>
                       </div>
                       <p className="bigger">Участников:
-                        <b>{group.users
-                            ? group.users.length
-                            : ''}</b>
+                        <b>{ group && group.users ? group.users : '' }</b>
                       </p>
                       <p className="lighten hover">Покинуть группу</p>
                     </div>
@@ -174,15 +129,15 @@ class Group extends Component {
                 <span className="title with-icon">Список заданий
                   <i
                     className="material-icons"
-                    onClick={this.toggleHelp}
-                    onBlur={this.toggleHelp}>help_outline</i>
+                    onClick= { this.toggleHelp }
+                    onBlur= { this.toggleHelp }>help_outline</i>
                 </span>
                 <span className="title">Редактор слов</span>
               </div>
 
               <div className="single-line">
                 <div className="containers task-list">
-                  {showHelp && (
+                  { showHelp && (
                     <div className="container of-help">
                       <p>Выберите задание, кликнув по нему.</p>
                       <p>Измените название задания, нажав на него и
@@ -190,12 +145,9 @@ class Group extends Component {
                       <p>введя новое. Отредактируйте пары слов, воспользовавшись редактором.</p>
                     </div>
                   )
-}
+ }
                   <div
-                    className={'container of-task' + (highlighted == 1
-                    ? ' highlighted'
-                    : '')}
-                    onClick={() => this.toggleEdit(1)}>
+                    className={ 'container of-task' + (highlighted == 1? ' highlighted': '') } onClick={() => this.toggleEdit(1)}>
                     <div className="info">
                       <p className="name">Любителям бананидзе посвящидзе</p>
                       <p className="task-info">Пар слов:
@@ -212,12 +164,12 @@ class Group extends Component {
                 </div>
 
                 <div className="containers edit-block">
-                  {showEdit && (
+                  { showEdit && (
                     <div className="container of-edit">
                       <p>джю</p>
                     </div>
                   )
-}
+                 }
                 </div>
               </div>
 
