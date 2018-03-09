@@ -224,7 +224,7 @@ class Group extends Component {
           
           {
                 currentTab == 'new-task' && (
-                  <div className="containers task-list">
+                <div className="containers task-list">
                     <div className="container of-task">
                       <div className="info">
                       <p className="name task-create">Как назвать задание?</p>
@@ -233,12 +233,27 @@ class Group extends Component {
                       <input className="line-based" placeholder="Дни"></input>
                       </div>
                     </div>
-                    <div className="">
+
+                    <div className="container of-repeat">
                       <div className="titles">
-                      <span className="title">Список заданий</span>
+                      <span className="title">Количество повторений</span>
                       </div>
+                      <div className="block-repeat">
+                          <div className="container game">
+                          <p className="gameName">Выучи слово</p>
+                          </div>
+                          <div className="container game">
+                          <p className="gameName">Найди пару</p>
+                          </div>
+                          <div className="container game">
+                          <p className="gameName">Введи слово</p>
+                          </div>
+                          <div className="container game">
+                          <p className="gameName">Скрэмбл</p>
+                          </div>                      
                     </div>
                   </div>
+                </div>
                 )
               }
 
