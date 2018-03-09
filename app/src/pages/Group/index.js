@@ -241,6 +241,9 @@ class Group extends Component {
                       <div className="block-repeat">
                           <div className="container game">
                           <p className="gameName">Выучи слово</p>
+                            <div className="game-repeats">
+                            <p className="game">кек</p>
+                            </div>
                           </div>
                           <div className="container game">
                           <p className="gameName">Найди пару</p>
