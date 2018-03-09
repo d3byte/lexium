@@ -14,6 +14,9 @@ async group (root, { token, id }) {
     return { error: 'Вы не состоите в данной группе' }
   return { group }
 },
+  groups(root, {}, context) {
+    return models.Group.findAll({}, context)
+  },
 async user (root, { token }) {
   const userId = await getUserId(token)
   return models.User.findById(userId)

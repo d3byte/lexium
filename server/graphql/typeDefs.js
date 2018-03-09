@@ -88,6 +88,7 @@ type Query {
   task(token: String!, id: ID!, groupId: ID!): QueryPayload!
   group(token: String!, id: ID!): QueryPayload!
   user(token: String!): User
+  groups: [Group]
 }
 
 type Mutation {
