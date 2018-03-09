@@ -227,10 +227,15 @@ class Group extends Component {
                   <div className="containers task-list">
                     <div className="container of-task">
                       <div className="info">
-                      <p className="name">Как назвать задание?</p>
+                      <p className="name task-create">Как назвать задание?</p>
                       <input className="line-based" placeholder="Название задания"></input>
-                      <p className="due-date">Сколько дней на выполнение?</p>
+                      <p className="due-date task-create">Сколько дней на выполнение?</p>
                       <input className="line-based" placeholder="Дни"></input>
+                      </div>
+                    </div>
+                    <div className="">
+                      <div className="titles">
+                      <span className="title">Список заданий</span>
                       </div>
                     </div>
                   </div>
