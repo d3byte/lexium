@@ -8,7 +8,7 @@ import { CacheManager } from '../../utils'
 
 import './style.css'
 
-export default class FlashCards extends Component {
+export default class FindPair extends Component {
   constructor() {
     super()
     this.state = {
@@ -43,7 +43,7 @@ export default class FlashCards extends Component {
           </div>
 
           <div className="game-bar">
-            <div className="game active">
+            <div className="game">
               <span className="name">Выучи слова</span>
               <span className="attempts">Пройдено <b>1/3</b></span>
               <div className="hint">
@@ -52,7 +52,7 @@ export default class FlashCards extends Component {
                 языке</p>
               </div>
             </div>
-            <div className="game">
+            <div className="game active">
               <span className="name">Найди пару</span>
               <span className="attempts">Пройдено <b>1/3</b></span>
               <div className="hint">
@@ -80,27 +80,15 @@ export default class FlashCards extends Component {
         </div>
 
         <div className="section">
-          <span className="title">Карточки со словами</span>
+          <span className="title">Выбор пар</span>
 
-            <div className="game-wrapper flash-cards">
-              <div className="words">
-                <div className="mobile-content">
-                  <div className="previous-word">Apple</div>
-                  <div className="next-word">Allergy</div>
-                </div>
-                <div className="previous-word">Apple</div>
-                <div className="current-word" onClick={this.toggleCard}>
-                  <span className="on-top">Осталось карточек: 8</span>
-                  {
-                    showKey ? 'Banana' : 'Банан'
-                  }
-                  <div className="controls">
-                    <Button clickHandler={() => console.log('Ура!')} classNameProp="regular" text="Знаю" />
-                    <Button clickHandler={() => console.log('Ура  !')} classNameProp ="regular gray" text="Не знаю" />
-                  </div>
-                </div>
-                <div className="next-word">Allergy</div>
-              </div>
+            <div className="game-wrapper find-pair">
+              <div className="word correct">Banana</div>
+              <div className="word incorrect">Аллергия</div>
+              <div className="word selected">Allergy</div>
+              <div className="word incorrect">Font</div>
+              <div className="word">Шрифт</div>
+              <div className="word correct">Банан</div>
             </div>
 
 

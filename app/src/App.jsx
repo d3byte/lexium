@@ -13,6 +13,7 @@ import Profile from './pages/Profile'
 import Group from './pages/Group'
 import Task from './pages/Task'
 import FlashCards from './pages/FlashCards'
+import FindPair from './pages/FindPair'
 
 export default class App extends Component {
   componentWillReceiveProps = props => {
@@ -30,6 +31,7 @@ export default class App extends Component {
             <Route exact path="/group/:id" component={Group} />
             <Route exact path="/task" component={Task} />
             <Route exact path="/task/learn" component={FlashCards} />
+            <Route exact path="/task/find" component={FindPair} />
             <Route exact path="*" component={Error404} />
           </Switch>
       </Router>
