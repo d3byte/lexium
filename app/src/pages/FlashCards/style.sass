@@ -92,22 +92,24 @@
 
         
 @media (max-width: 520px)
-    .game-wrapper .words
-        flex-direction: column !important
-        & > .previous-word, & > .next-word
-            display: none
-        .current-word
-            width: 100% !important
-        .mobile-content
-            display: flex
-            justify-content: space-between
-            align-items: center
-            width: 100% 
-            margin-bottom: 30px
-            & > .previous-word, & > .next-word
-                transform: rotate(0deg)
+    .game-wrapper.flash-cards 
+        width: 100%
+        .words
+            flex-direction: column !important
+            .current-word
+                width: 100% !important
+            .mobile-content
+                display: flex
+                justify-content: space-between
+                align-items: center
+                width: 100% 
+                margin-bottom: 30px
+                & > .previous-word, & > .next-word
+                    transform: rotate(0deg)
+                & ~ .previous-word, & ~ .next-word
+                    display: none
 
 @media (min-width: 521px)
-    .game-wrapper .words .mobile-content
+    .game-wrapper.flash-cards .words .mobile-content
         display: none
                 
