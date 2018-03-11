@@ -1,0 +1,47 @@
+.game-wrapper.type-in
+    display: flex
+    flex-direction: column
+    width: 50%
+    margin: 30px auto
+    .info
+        display: flex
+        align-items: center
+        justify-content: space-between
+        font-family: 'ProximaNova-Regular', sans-serif
+        color: #595959
+        opacity: 0.6
+        margin-bottom: 10px
+    .word-container
+        display: flex
+        flex-direction: column
+        align-items: center
+        background: white
+        border: 1px solid #E9E9E9
+        border-radius: 4px
+        min-height: 150px
+        padding: 20px
+        margin-bottom: 25px
+        &.incorrect
+            border-color: #CC4D4D
+        .key
+            font-family: 'ProximaNova-Semibold', sans-serif
+            font-size: 36px
+            color: #595959
+            margin-bottom: 25px
+        input
+            width: 70%
+    button
+        margin: 0 auto
+
+@media (max-width: 705px)
+    .game-wrapper.type-in
+        width: 90%
+
+@media (max-width: 480px)
+    .game-wrapper.type-in
+        width: 100%
+
+@media (max-width: 400px)
+    .game-wrapper.type-in .info
+        flex-direction: column
+        align-items: flex-start

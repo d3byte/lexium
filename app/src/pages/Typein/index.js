@@ -8,12 +8,21 @@ import { CacheManager } from '../../utils'
 
 import './style.css'
 
-export default class FindPair extends Component {
+export default class Typein extends Component {
   constructor() {
     super()
     this.state = {
     }
     this.cache = new CacheManager()
+  }
+
+  toggleCard = e => {
+    // Делегирую эвент и проверяю, чтобы место клика не было спаном, в котором
+    // показано кол-во оставшихся карточек
+    const { target } = e
+    if (target.nodeName !== 'SPAN' && !target.classList.contains('on-top')) {
+      this.setState({ showKey: !this.state.showKey })
+    }
   }
 
   render() {
@@ -42,7 +51,7 @@ export default class FindPair extends Component {
                 языке</p>
               </div>
             </div>
-            <div className="game active">
+            <div className="game">
               <span className="name">Найди пару</span>
               <span className="attempts">Пройдено <b>1/3</b></span>
               <div className="hint">
@@ -50,7 +59,7 @@ export default class FindPair extends Component {
                 Просто кликайте на карточку со словом и потом на карточку с предположительной парой</p>
               </div>
             </div>
-            <div className="game">
+            <div className="game active">
               <span className="name">Введи слово</span>
               <span className="attempts">Пройдено <b>1/3</b></span>
               <div className="hint">
@@ -70,17 +79,19 @@ export default class FindPair extends Component {
         </div>
 
         <div className="section">
-          <span className="title">Выбор пар</span>
+          <span className="title">Карточки со словами</span>
 
-            <div className="game-wrapper find-pair">
-              <div className="word correct">Banana</div>
-              <div className="word incorrect">Аллергия</div>
-              <div className="word selected">Allergy</div>
-              <div className="word incorrect">Font</div>
-              <div className="word">Шрифт</div>
-              <div className="word correct">Банан</div>
+            <div className="game-wrapper type-in">
+                <div className="info">
+                  <span>Процент выполнения: 71%</span>
+                  <span>Осталось карточек: 8</span>
+                </div>
+                <div className="word-container">
+                  <span className="key">Banana</span>
+                  <input type="text" className="line-based" placeholder="Слово" focused/>
+                </div>
+                <Button clickHandler={() => console.log('Ура!')} classNameProp="regular lighter" text="Проверить" />
             </div>
-
 
         </div>
 
