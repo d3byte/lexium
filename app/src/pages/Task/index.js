@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import { Link } from 'react-router-dom'
 import { withApollo } from 'react-apollo'
 
 import Button from '../../components/Button'
@@ -61,7 +62,7 @@ export default class componentName extends Component {
         <div className="section">
           <span className="title">Игры</span>
           <div className="game-bar">
-            <div className="game">
+            <Link to="/task/learn" className="game">
               <span className="name">Выучи слова</span>
               <span className="attempts">Пройдено <b>1/3</b></span>
               <div className="hint">
@@ -69,30 +70,30 @@ export default class componentName extends Component {
                 кликнув на неё, таким образом показав аналог на другом
                 языке</p>
               </div>
-            </div>
-            <div className="game">
+            </Link>
+            <Link to="/task/find" className="game">
               <span className="name">Найди пару</span>
               <span className="attempts">Пройдено <b>1/3</b></span>
               <div className="hint">
                 <p>В этой игре вам нужно искать слово на одном языке и его аналог на другом.
                 Просто кликайте на карточку со словом и потом на карточку с предположительной парой</p>
               </div>
-            </div>
-            <div className="game">
+            </Link>
+            <Link to="/task/typein" className="game">
               <span className="name">Введи слово</span>
               <span className="attempts">Пройдено <b>1/3</b></span>
               <div className="hint">
                 <p>Введите эквивалент предложенного слова на другом языке</p>
               </div>
-            </div>
-            <div className="game">
+            </Link>
+            <Link to="/task/scramble" className="game">
               <span className="name">Скрэмбл</span>
               <span className="attempts">Пройдено <b>1/3</b></span>
               <div className="hint">
                 <p>Составляйте целые слова из букв, разбросанных в случайном порядке. Просто перетягивайте
                 части слова на подходящее, по вашему мнению, место и проверьте ваши знания</p>
               </div>
-            </div>
+            </Link>
           </div>
         </div>
 

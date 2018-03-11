@@ -21,9 +21,14 @@
         background: white
         border: 1px solid #E0E0E0
         border-right: none
+        box-sizing: border-box
         margin-top: 15px
         &:hover
             cursor: pointer
+            .hint
+                display: block
+
+        &:active
             .hint
                 display: block
         &:first-of-type
@@ -113,6 +118,9 @@
     .game-bar
         .game
             width: 50%
+            &:hover
+                .hint
+                    display: none
 
     .word-table
         width: 100%
