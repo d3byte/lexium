@@ -1,0 +1,113 @@
+.task-game
+    padding-bottom: 40px
+    & > .section
+        .titles
+            a.return-link
+                display: inline-flex
+                align-items: center
+                font-size: 18px
+                color: #595959
+                i
+                    font-size: 20px
+                    opacity: 0.9
+                    margin-right: 5px
+
+    
+.game-wrapper
+    display: flex
+    flex-direction: column
+    align-items: center
+    margin: 30px auto
+    width: 70%
+    .words
+        display: inline-flex
+        flex-direction: row
+        align-items: center
+        justify-content: center
+        width: 100%
+        min-height: 150px
+        -moz-user-select: none
+        -webkit-user-select: none
+        -ms-user-select: none
+        user-select: none
+        & > div
+            background: white
+            border: 1px solid #E0E0E0
+            border-radius: 4px
+            font-family: 'ProximaNova-Regular', sans-serif
+            &.mobile-content
+                background: transparent
+                border: none
+                border-radius: 0
+        .previous-word, .next-word
+            display: inline-flex
+            align-items: center
+            justify-content: center
+            transform: rotate(270deg)
+            min-width: 100px
+            min-height: 50px
+            padding: 15px
+            color: #979797
+            font-size: 14px
+            background: white
+            border: 1px solid #E0E0E0
+            border-radius: 4px
+        .current-word
+            position: relative
+            display: inline-flex
+            align-items: center
+            justify-content: center
+            width: 50%
+            min-height: 150px
+            color: #595959
+            font-size: 36px
+            &:hover
+                cursor: pointer
+            span.on-top
+                position: absolute
+                right: 0
+                top: -25px
+                font-size: 14px
+                opacity: 0.6
+                &:hover
+                    cursor: default
+    .controls
+        position: absolute
+        left: 0
+        bottom: -50px
+        display: flex
+        align-items: center
+        justify-content: space-between
+        width: 100%
+        button
+            min-width: 48% !important
+
+@media (max-width: 1090px)
+    .game-wrapper .words .current-word
+        width: 80%
+
+@media (max-width: 790px)
+    .game-wrapper
+        width: 100%
+
+        
+@media (max-width: 520px)
+    .game-wrapper .words
+        flex-direction: column !important
+        & > .previous-word, & > .next-word
+            display: none
+        .current-word
+            width: 100% !important
+        .mobile-content
+            display: flex
+            justify-content: space-between
+            align-items: center
+            width: 100% 
+            margin-bottom: 30px
+            & > .previous-word, & > .next-word
+                transform: rotate(0deg)
+
+@media (min-width: 521px)
+    .game-wrapper .words .mobile-content
+        display: none
+                

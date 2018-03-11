@@ -54,30 +54,31 @@ class Signin extends Component {
     return { uncompletedTasks, completedTasks }
   }
 
-  submit = async () => {
+  submit = async e => {
     // Отправить форму
     const { username, password } = this.state
-    this.setState({ loading: true })
-    const data = await this.props.mutate({ variables: { username, password } })
-    const { error } = data.data.login
-    if(error) {
-      const errorInput = error == 'Неверный пароль' ? 'password' : 'username'
-      this.setState({ error, loading: false, errorInput })
-    } else {
-      let { user, token } = data.data.login
-      user.groups.map(group => {
-        group.superUsers = JSON.parse(group.superUsers)
-        if (group.tasks) {
-          const { uncompletedTasks, completedTasks } = this.handleTasks(group.tasks)
-          group.uncompletedTasks = uncompletedTasks
-          group.completedTasks = completedTasks
-        }
-      })
-      console.log(user, token)
-      this.cache.writeData('token', token)
-      this.cache.writeData('user', user)
-      this.cache.writeData('currentGroup', user.groups[0])
-      this.props.history.push({ pathname: '/profile', state: { user, token } })
+    if(username && password) {
+      this.setState({ loading: true })
+      const data = await this.props.mutate({ variables: { username, password } })
+      const { error } = data.data.login
+      if(error) {
+        const errorInput = (error == 'Неверный пароль' ? 'password' : 'username')
+        this.setState({ error: 'pidor', loading: false, errorInput: 'password' })
+      } else {
+        let { user, token } = data.data.login
+        user.groups.map(group => {
+          group.superUsers = JSON.parse(group.superUsers)
+          if (group.tasks) {
+            const { uncompletedTasks, completedTasks } = this.handleTasks(group.tasks, user.id)
+            group.uncompletedTasks = uncompletedTasks
+            group.completedTasks = completedTasks
+          }
+        })
+        this.cache.writeData('token', token)
+        this.cache.writeData('user', user)
+        this.cache.writeData('currentGroup', user.groups[0])
+        this.props.history.push({ pathname: '/profile', state: { user, token } })
+      }
     }
   }
 
@@ -103,8 +104,8 @@ class Signin extends Component {
               <div className="card rounded">
                   <div className="card-header">Авторизация</div>
                   <div className="card-body">
-                      <input type="text" onChange={e => this.inputHandler(e, 'username')} className={'line-based ' + (errorInput === 'username' ? 'error-input' : '')} placeholder="Логин"/>
-                      <input type="password" onChange={e => this.inputHandler(e, 'password')} className={'line-based ' + (errorInput === 'password' ? 'error-input' : '')} placeholder="Пароль"/>
+                      <input type="text" onChange={e => this.inputHandler(e, 'username')} className={'line-based ' + (errorInput === 'username' ? 'error-input' : '')} placeholder="Логин" required/>
+                      <input type="password" onChange={e => this.inputHandler(e, 'password')} className={'line-based ' + (errorInput === 'password' ? 'error-input' : '')} placeholder="Пароль" required/>
                   </div>
                   <div className="card-footer">
                       <Button clickHandler={this.submit} classNameProp="authorization" text="Войти" />
