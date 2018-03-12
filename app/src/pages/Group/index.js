@@ -5,6 +5,7 @@ import Button from '../../components/Button'
 import Header from '../../components/Header'
 import TaskList from '../../components/TaskList'
 import TaskCreate from '../../components/TaskCreate'
+import AddMember from '../../components/AddMember'
 
 import { CacheManager } from '../../utils'
 import { GROUP } from '../../graphql/queries'
@@ -181,6 +182,12 @@ class Group extends Component {
           {
             currentTab == 'new-task' && (
               <TaskCreate/>
+            )
+          }
+
+          {
+            currentTab == 'add-member' && (
+              <AddMember user={user}/>
             )
           }
 
