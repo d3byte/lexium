@@ -17,32 +17,9 @@ module.exports = {
             })
     },
 
-    setNewWordPair(root, { id, wordPair }, context) {
-        return models.Task.findById(id).then(task => {
-            let words = JSON.parse(task.words)
-            if (wordPair.id !== undefined) {
-                words = words.map(pair => {
-                    if (pair.id == wordPair.id) {
-                        return wordPair
-                    }
-                    return pair
-                })
-            } else {
-                wordPair.id = words.length
-                words.push(wordPair)
-            }
-            task.words = JSON.stringify(words)
-            return task.update({ name: task.name, deadline: task.deadline, words: task.words })
-        })
-    },
-
-    removeWordPair(root, { id, wordPairId }, context) {
-        return models.Task.findById(id).then(task => {
-            let words = JSON.parse(task.words)
-            words = words.filter(pair => pair.id != wordPairId)
-            task.words = JSON.stringify(words)
-            return task.update({ name: task.name, deadline: task.deadline, words: task.words })
-        })
+    updateTaskWordPairs(root, { id, words }, context) {
+        return models.Task.findById(id)
+            .then(task => task.update({ words: JSON.stringify(words) }))
     },
 
     setResult(root, { id, res, userId }, context) {
