@@ -86,7 +86,7 @@ class Settings extends Component {
                 <input type="file" onChange={this.uploadImage} name="image" accept="image/*" />
                 {
                   user.avatarUrl || image ? 
-                    <img src={user.avatarUrl || image} alt="user-avatar" /> :
+                    <img src={image || user.avatarUrl} alt="user-avatar" /> :
                     <i className="material-icons">file_upload</i>
                 }
               </div>
