@@ -91,6 +91,47 @@ mutation signup($username: String!, $name: String!, $email: String!, $password: 
 }
 `
 
+const UPDATE_AVATAR = gql`
+mutation updateUserAvatar($token: String!, $avatarUrl: String!) {
+    updateUserAvatar(token: $token, avatarUrl: $avatarUrl) {
+        id
+        name
+        username
+        email
+        wordsLearnt
+        groups {
+            id
+            name
+            users {
+                id
+                name
+                createdAt
+            }
+            tasks {
+                id
+                name
+                words
+                results {
+                    id
+                    wordsLearnt
+                    user {
+                        name
+                        wordsLearnt
+                    }
+                    percentage
+                }
+                deadline
+                createdAt
+            }
+            superUsers
+            createdAt
+        }
+        avatarUrl
+        createdAt
+    }
+}
+`
+
 const CREATE_GROUP = gql`
 mutation createGroup($name: String!, $usersIds: [ID!]!, $superUsers: [ID!]!) {
     createGroup(name: $name, usersIds: $usersIds, superUsers: $superUsers) {
@@ -150,5 +191,6 @@ mutation checkEmail($email: String!) {
 export {
     LOGIN, SIGN_UP,
     CREATE_GROUP, UPDATE_GROUP,
-    CHECK_USERNAME, CHECK_EMAIL
+    CHECK_USERNAME, CHECK_EMAIL,
+    UPDATE_AVATAR, 
 }
