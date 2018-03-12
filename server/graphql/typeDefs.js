@@ -23,6 +23,7 @@ type Mutation {
   removeTask(id: ID!): Task
 
   updateUser(id: ID!, input: UserInput!): User
+  updateUserAvatar(token: String!, avatarUrl: String!): User
   verifyPassword(userId: ID!, password: String!): VerifyPayload!
   changePassword(userId: ID!, password: String!): User
   removeUser(id: ID!): User
