@@ -12,7 +12,6 @@ module.exports = {
 
     async updateUserAvatar(root, { token, avatarUrl }) {
         const userId = await getUserId(token)
-        console.log(userId)
         const user = await models.User.findById(userId)
         return user.update({ avatarUrl })
     },

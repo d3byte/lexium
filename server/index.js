@@ -14,7 +14,8 @@ const app = express()
 
 app.use(cors())
 
-app.use(bodyParser.json())
+app.use(bodyParser.json({limit: '100mb'}))
+
 
 app.use('/graphql', graphqlRoutes)
 app.use(express.static(path.join(__dirname, 'public')))
