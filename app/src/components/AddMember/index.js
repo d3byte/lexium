@@ -35,7 +35,7 @@ export default class AddMember extends Component {
 
           <div className="container of-invited">
             <div className="invited-info">
-              <div className="avatar">
+              <div className="avatar invited-user">
                 <img src={user && user.avatarUrl} alt="avatar"/>
               </div>
               <div className="metadata">
