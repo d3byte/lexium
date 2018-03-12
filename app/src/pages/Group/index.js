@@ -3,6 +3,8 @@ import { withApollo } from 'react-apollo'
 
 import Button from '../../components/Button'
 import Header from '../../components/Header'
+import TaskList from '../../components/TaskList'
+import TaskCreate from '../../components/TaskCreate'
 
 import { CacheManager } from '../../utils'
 import { GROUP } from '../../graphql/queries'
@@ -185,80 +187,15 @@ class Group extends Component {
           <div className="single-line">
           {
             currentTab == 'task-list' && (
-              <div className="containers task-list">
-              { 
-                showHelp && (
-                  <div className="container of-help">
-                    <p>Выберите задание, кликнув по нему.</p>
-                    <p>Измените название задания, нажав на него и введя новое.</p>
-                    <p>Отредактируйте пары слов, воспользовавшись редактором.</p>
-                  </div>
-                )
-              }
-              <div className={ 'container of-task' + (highlighted == 1 ? ' highlighted': '') } onClick={() => this.toggleEdit(1)}>
-                <div className="info">
-                {
-                  highlighted !== 1 ? (
-                    <p className="name">Любителям бананов посвящяется</p>
-                  ) : (
-                    <input className="task task-name" placeholder="Любителям бананов посвящяется"></input>
-                  )
-                }
-                  <p className="task-info">Пар слов: <b>2</b></p>
-                  <p className="task-info">Пройдено раз: <b>3</b></p>
-                </div>
-                {
-                  highlighted !== 1 ? (
-                    <p className="lightest">Создано: 08.03.2018</p>
-                  ) : (
-                    <div className="meta-info">
-                    <p className="lightest">Редактирование</p>
-                    <p className="lightest">Создано: 08.03.2018</p>
-                    </div>
-                  )
-                }
-              </div>
-            </div>
+              <TaskList/>
             )
           }
           
           {
-                currentTab == 'new-task' && (
-                <div className="containers task-list">
-                    <div className="container of-task">
-                      <div className="info">
-                      <p className="name task-create">Как назвать задание?</p>
-                      <input className="line-based" placeholder="Название задания"></input>
-                      <p className="due-date task-create">Сколько дней на выполнение?</p>
-                      <input className="line-based" placeholder="Дни"></input>
-                      </div>
-                    </div>
-
-                    <div className="container of-repeat">
-                      <div className="titles">
-                      <span className="title">Количество повторений</span>
-                      </div>
-                      <div className="block-repeat">
-                          <div className="container game">
-                          <p className="gameName">Выучи слово</p>
-                            <div className="game-repeats">
-                            <p className="game">кек</p>
-                            </div>
-                          </div>
-                          <div className="container game">
-                          <p className="gameName">Найди пару</p>
-                          </div>
-                          <div className="container game">
-                          <p className="gameName">Введи слово</p>
-                          </div>
-                          <div className="container game">
-                          <p className="gameName">Скрэмбл</p>
-                          </div>                      
-                    </div>
-                  </div>
-                </div>
-                )
-              }
+            currentTab == 'new-task' && (
+              <TaskCreate/>
+            )
+          }
 
 
             <div className="containers edit-block">
