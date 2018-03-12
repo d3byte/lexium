@@ -9,6 +9,7 @@ header
     border-bottom: 1px solid #E0E0E0
     height: 60px
     padding: 0 160px
+    
 
     &.isNotLoggedIn
         justify-content: center
@@ -94,6 +95,86 @@ header
                 i
                     opacity: 0.8
                     margin-right: 5px
+    .sidebar
+        position: absolute
+        top: 0
+        right: 0
+        display: flex
+        flex-direction: column
+        width: 75%
+        height: 100vh
+        background: #E9E9EE
+        border-left: 2px solid #595959
+        z-index: 15000
+        .sidebar-header
+            display: flex
+            align-items: center
+            font-family: 'ProximaNova-Bold', sans-serif
+            font-size: 28px
+            color: #595959
+            margin: 60px 0 0 20px
+            i
+                font-size: 24px
+                margin-right: 10px
+        .sidebar-menu
+            display: flex
+            flex-direction: column
+            padding: 0
+            margin: 60px 0
+            background: white
+            border: 1px solid #D5D5D9
+            list-style-type: none
+            li
+                display: flex
+                align-items: center
+                position: relative
+                padding: 10px 20px
+                color: #595959
+                font-size: 18px
+                &:after
+                    content: ''
+                    position: absolute
+                    right: 0
+                    bottom: 0
+                    width: calc(100% - 55px)
+                    height: 1px
+                    background: #D5D5D9
+                &:last-of-type:after
+                    content: none
+                &.divider
+                    border-top: 1px solid #E0E0E0
+                &:hover
+                    background: #6B6DB8
+                    color: white
+                    cursor: pointer
+                    &:after
+                        content: none
+                    a
+                        color: white
+                a
+                    display: flex
+                    align-items: center
+                    border: none
+                    width: 100%
+                    height: 100%
+                    padding: 0
+                    color: #595959
+                i
+                    opacity: 0.8
+                    margin-right: 10px
+        button
+            width: calc(100% - 40px)
+            margin: 0 auto
+
+    .sidebar-overlay
+        position: absolute
+        left: 0
+        top: 0
+        width: 100%
+        height: 100vh
+        background: #595959
+        opacity: 0.7
+        z-index: 14999
 
             
 
@@ -102,3 +183,11 @@ header
         transform: rotate(360deg)
     to
         transform: rotate(0deg)
+
+@media (max-width: 450px)
+    .dropdown.menu
+        display: none !important
+
+@media (min-width: 451px)
+    .sidebar
+        display: none !important

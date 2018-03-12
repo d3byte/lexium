@@ -2,6 +2,8 @@ import React, { Component } from 'react'
 import anime from 'animejs'
 import { Link } from 'react-router-dom'
 
+import Button from '../Button'
+
 import './style.css'
 
 import logo from '../../assets/Lexium.png'
@@ -19,6 +21,7 @@ export default class Header extends Component {
       menuIsActive: false
     }
     this.cache = new CacheManager()
+    this.screenWidth = window.screen.innerWidth || document.clientWidth || document.body.clientWidth
   }
 
   componentWillReceiveProps = props => {
@@ -39,17 +42,40 @@ export default class Header extends Component {
     animation.finished.then(() => this.setState({ menuIsActive: false }))
   }
 
+  showSidebar = () => {
+    anime({
+      targets: `.sidebar`,
+      right: { value: 0, duration: 350 },
+      easing: 'linear'
+    })
+    document.getElementById('root').classList.add('no-scroll')
+  }
+
+  hideSidebar = () => {
+    const animation = anime({
+      targets: `.sidebar`,
+      right: { value: '-450', duration: 350 },
+      easing: 'linear'
+    })
+    animation.finished.then(() => this.setState({ menuIsActive: false }))
+    document.getElementById('root').classList.remove('no-scroll')
+  }
+
   toggleMenu = () => {
     const { menuIsActive } = this.state
     if (!menuIsActive) {
       this.setState({ menuIsActive: true })
-      anime({
-        targets: `.dropdown`,
-        top: { value: 55, duration: 1000 },
-        opacity: { value: 1, duration: 500 }
-      })
+      this.screenWidth > 450 ?
+        anime({
+          targets: `.dropdown`,
+          top: { value: 55, duration: 1000 },
+          opacity: { value: 1, duration: 500 }
+        }) : 
+        this.showSidebar()
     } else {
-      this.hideMenu()
+      this.screenWidth > 450 ?
+        this.hideMenu() :
+        this.hideSidebar()
     }
   }
 
@@ -126,6 +152,9 @@ export default class Header extends Component {
               </Link>
             </li>
             <li>
+              <i className="material-icons">add_box</i> Создать группу
+            </li>
+            <li>
               <Link to="/settings">
                 <i className="material-icons">settings</i> Настройки
               </Link>
@@ -135,6 +164,28 @@ export default class Header extends Component {
             </li>
           </ul>
         </div>
+        <div className={'sidebar ' + (menuIsActive ? '' : 'hide')} style={{ right: '-450px' }}>
+          <span className="sidebar-header" onClick={this.toggleMenu}>
+            <i className="material-icons">arrow_back</i> Меню
+          </span>
+          <ul className="sidebar-menu">
+            <li>
+              <Link to="/profile">
+                <i className="material-icons">account_circle</i> Профиль
+              </Link>
+            </li>
+            <li>
+              <i className="material-icons">add_box</i> Создать группу
+            </li>
+            <li>
+              <Link to="/settings">
+                <i className="material-icons">settings</i> Настройки
+              </Link>
+            </li>
+          </ul>
+          <Button clickHandler={this.logout} classNameProp="regular" text="Выход" />
+        </div>
+        <div className={'sidebar-overlay ' + (menuIsActive ? '' : 'hide')} onClick={this.toggleMenu}></div>
       </header>
     )
   }
