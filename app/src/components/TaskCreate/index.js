@@ -9,39 +9,80 @@ import { GROUP } from '../../graphql/queries'
 import './style.css'
 
 const TaskCreate = ({}) => (
+  <div className="single-line">
     <div className="containers task-list">
-                    <div className="container of-task">
-                      <div className="info">
-                      <p className="name task-create">Как назвать задание?</p>
-                      <input className="line-based" placeholder="Название задания"></input>
-                      <p className="due-date task-create">Сколько дней на выполнение?</p>
-                      <input className="line-based" placeholder="Дни"></input>
-                      </div>
-                    </div>
+      <div className="container of-task">
+        <div className="info">
+          <p className="name task-create">Как назвать задание?</p>
+          <input className="line-based" placeholder="Название задания"></input>
+          <p className="due-date task-create">Сколько дней на выполнение?</p>
+          <input className="line-based" placeholder="Дни"></input>
+        </div>
+      </div>
 
-                    <div className="container of-repeat">
-                      <div className="titles">
-                      <span className="title">Количество повторений</span>
-                      </div>
-                      <div className="block-repeat">
-                          <div className="container game">
-                          <p className="gameName">Выучи слово</p>
-                            <div className="game-repeats">
-                            <p className="game">кек</p>
-                            </div>
-                          </div>
-                          <div className="container game">
-                          <p className="gameName">Найди пару</p>
-                          </div>
-                          <div className="container game">
-                          <p className="gameName">Введи слово</p>
-                          </div>
-                          <div className="container game">
-                          <p className="gameName">Скрэмбл</p>
-                          </div>                      
-                    </div>
-                  </div>
-                </div>
+      <div className="container of-repeat">
+        <div className="titles">
+          <span className="title">Количество повторений</span>
+        </div>
+        <div className="block-repeat">
+          <div className="container game">
+            <div className="game-name">Выучи слово</div>
+            <div className="game-repeats">
+              <div className="game-repeats remove">-</div>
+              <div className="game-repeats number">4</div>
+              <div className="game-repeats add">+</div>
+            </div>
+          </div>
+          <div className="container game">
+            <div className="game-name">Найди пару</div>
+            <div className="game-repeats">
+              <div className="game-repeats remove">-</div>
+              <div className="game-repeats number">3</div>
+              <div className="game-repeats add">+</div>
+            </div>
+          </div>
+          <div className="container game">
+            <div className="game-name">Введи слово</div>
+            <div className="game-repeats">
+              <div className="game-repeats remove">-</div>
+              <div className="game-repeats number">2</div>
+              <div className="game-repeats add">+</div>
+            </div>
+          </div>
+          <div className="container game">
+            <div className="game-name">Скрэмбл</div>
+            <div className="game-repeats">
+              <div className="game-repeats remove">-</div>
+              <div className="game-repeats number">1</div>
+              <div className="game-repeats add">+</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div className="containers edit-block">
+      <div className="word-editor">
+        <div className="word-table">
+          <div className="table-row">
+            <div className="cell edit-heading">Слово</div>
+            <div className="cell edit-heading">Перевод</div>
+          </div>
+          <div className="table-row">
+            <div className="cell">Banana</div>
+            <div className="cell">Банан</div>
+          </div>
+          <div className="table-row">
+            <div className="cell">Allergy</div>
+            <div className="cell">Аллергия</div>
+          </div>
+        </div>
+        <button className="regular add-words">+</button>
+        <button className="regular save-words">Сохранить изменения</button>
+      </div>
+
+    </div>
+  </div>
 )
 
 export default TaskCreate

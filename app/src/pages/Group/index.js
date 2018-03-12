@@ -55,16 +55,6 @@ class Group extends Component {
     this.setState({ showEdit: true, highlighted: taskId })
   }
 
-  /*toggleCreate = () => {
-    const { showCreate, showHelp, showEdit, showAddMember, showAllmembers, showTaskList, highlighted } = this.state
-    if (!showCreate){
-      this.setState ({ showCreate: true, showTaskList: false, showHelp: false, showEdit: false, showAddMember: false, showAllmembers: false, highlighted: null })
-    } else {
-      this.setState ({ showCreate: false, showTaskList: true })
-    }
-  }*/
-
-
 
   componentDidMount = async () => {
     const { client, match, location } = this.props
@@ -157,23 +147,18 @@ class Group extends Component {
           {
             currentTab == 'task-list' && (
               <span className="title with-icon">Список заданий
-              <i
-                className="material-icons"
-                onClick={this.toggleHelp}
-                onBlur={this.toggleHelp}>help_outline</i>
-            </span>
+              <i className="material-icons" onClick={this.toggleHelp} onBlur={this.toggleHelp}>help_outline</i>
+              </span>
             )
           }
           {
             currentTab == 'new-task' && (
-              <span className="title with-icon">Информация о задании
-            </span>
+              <span className="title with-icon">Информация о задании</span>
             )
           }
           {
             currentTab == 'add-member' && (
-              <span className="title with-icon">Новый участник
-            </span>
+              <span className="title with-icon">Новый участник</span>
             )
           }
           {
@@ -183,6 +168,8 @@ class Group extends Component {
           }
             <span className="title reverse">Редактор слов</span>
           </div>
+
+          
 
           <div className="single-line">
           {
@@ -197,31 +184,6 @@ class Group extends Component {
             )
           }
 
-
-            <div className="containers edit-block">
-              {
-                ((showEdit && currentTab == 'task-list') || currentTab == 'new-task')  && (
-                  <div className="word-editor">
-                    <div className="word-table">
-                      <div className="table-row">
-                      <div className="cell edit-heading">Слово</div>
-                      <div className="cell edit-heading">Перевод</div>
-                    </div>
-                      <div className="table-row">
-                        <div className="cell">Banana</div>
-                        <div className="cell">Банан</div>
-                      </div>
-                      <div className="table-row">
-                        <div className="cell">Allergy</div>
-                        <div className="cell">Аллергия</div>
-                      </div>
-                    </div>
-                    <button className="regular add-words">+</button>
-                    <button className="regular save-words">Сохранить изменения</button>
-                  </div>
-                )
-              }
-            </div>
           </div>
 
         </div>

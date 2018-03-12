@@ -93,6 +93,7 @@
     display: flex
     justify-content: space-between
     flex-direction: row
+    width: 100%
 
 
 .container-main.menu
@@ -131,6 +132,7 @@
     flex-direction: column
     align-items: center
     min-height: 25vh
+    width: 100%
 
 .regular
     &.add-words
@@ -157,8 +159,34 @@ input.task
     .date
         align-self: flex-end !important
 
-.gameName
+.container.game
+    display: flex
+    align-items: center
+    justify-content: center
+
+    .game-name
     color: #979797
     font-size: 18px
+    margin: 0px
 
-.gameInfo
+    .game-repeats
+        display: flex
+        justify-content: center
+        align-items: center
+        font-size: 24px
+        height: 100% !important
+
+        &.add, &.remove, &.number
+            padding: 15px 10px 15px 10px
+            min-width: 40px
+        
+        &.number
+            margin-top: 0px
+            margin-bottom: 0px
+            border-left: 1px solid #E0E0E0
+            border-right: 1px solid #E0E0E0
+
+        &.remove
+            border-left: 1px solid #E0E0E0
+
+.game-info
