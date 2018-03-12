@@ -1,4 +1,8 @@
 @import url("fonts.css");
+input {
+  padding-left: 0px;
+}
+
 input:required, input:invalid {
   box-shadow: none;
 }
