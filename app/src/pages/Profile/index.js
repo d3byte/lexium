@@ -129,7 +129,7 @@ class Profile extends Component {
     const { currentGroup } = this.state
     user.groups.map(group => {
       if(group.id == currentGroup.id) {
-        this.setState({ currentGroup: group, fetching: false })
+        this.setState({ user, currentGroup: group, fetching: false })
         this.cache.writeData('currentGroup', group)
       } 
     })

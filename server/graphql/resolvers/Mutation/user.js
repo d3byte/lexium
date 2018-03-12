@@ -1,5 +1,6 @@
-const { models } = require('../../../models')
 const bcrypt = require('bcryptjs')
+const { models } = require('../../../models')
+const { getUserId } = require('../../../utils')
 
 module.exports = {
     updateUser(root, { id, input }, context) {
@@ -7,6 +8,13 @@ module.exports = {
             .then(user => {
                 return user.update(input)
             })
+    },
+
+    async updateUserAvatar(root, { token, avatarUrl }) {
+        const userId = await getUserId(token)
+        console.log(userId)
+        const user = await models.User.findById(userId)
+        return user.update({ avatarUrl })
     },
     
     verifyPassword(root, { userId, password }, context) {
