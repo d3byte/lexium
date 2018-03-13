@@ -1,5 +1,7 @@
+const Sequelize = require('sequelize')
 const { models } = require('../../models')
 const { getUserId } = require('../../utils')
+const Op = Sequelize.Op
 
 module.exports = {
 async group (root, { token, id }) {
@@ -20,6 +22,19 @@ async group (root, { token, id }) {
 async user (root, { token }) {
   const userId = await getUserId(token)
   return models.User.findById(userId)
+},
+async suitableUsers(root, { token, query }, context) {
+  const userId = await getUserId(token)
+  const validUser = await models.User.findById(userId)
+  if(validUser) {
+    const users = await models.User.findAll({
+      where: {
+        [Op.or]: [{ username: { [Op.like]: `%${query}%` } }, { name: { [Op.like]: `%${query}%` } }]
+      }
+    })
+    return users
+  }
+  return null
 },
 async task (root, { token, id, groupId }) {
   const userId = await getUserId(token)
