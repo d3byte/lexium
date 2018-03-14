@@ -38,7 +38,9 @@ class Settings extends Component {
         variables: { token: this.token, avatarUrl: e.target.result } 
       })
       this.cache.writeData('user', user)
-      this.setState({ fetching: false, updatedAvatar: true, savingAvatar: false})
+      if (user) {
+        this.setState({ fetching: false, updatedAvatar: true, savingAvatar: false })
+      }
     }
     reader.readAsDataURL(file)
   }
@@ -72,10 +74,10 @@ class Settings extends Component {
     const { history } = this.props
     return (
       <div className="settings">
-        <Header fetching={fetching} pathname={pathname} history={history} inputHandler={this.searchTasks} />
+        <Header fetching={fetching} pathname={pathname} history={history} />
         
         <div className="section">
-          <span className="">Аккаунт</span>
+          <span className="title">Аккаунт</span>
           <div className="containers">
 
             <div className="container-settings">
