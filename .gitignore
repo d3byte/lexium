@@ -4,6 +4,7 @@
 /client/node_modules
 /client/dist
 /server/dist
+/server/db.sqlite3
 /server/package-lock.json
 /server/node_modules
 /node
@@ -26,3 +27,4 @@
 *.njsproj
 *.sln
 *.log
+server/db.sqlite3
