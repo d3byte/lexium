@@ -54,7 +54,7 @@ const AllMembers = ({}) => (
                 <div className="members-info">23.02.2017</div>
                 <div className="members-info editing">
                     <div className="members-info user-status">
-                        <i className="material-icons">done_all</i>
+                        <i className="material-icons user">done_all</i>
                     </div>
                     <div className="members-info user-remove">
                         <i className="material-icons">clear</i>
