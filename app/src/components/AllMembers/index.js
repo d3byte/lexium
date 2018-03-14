@@ -12,10 +12,10 @@ const AllMembers = ({}) => (
     <div className="all-members">
         <div className="containers of-header">
             <div className="members-header">
-                <div className="members-info">Имя пользователя</div>
-                <div className="members-info">Пройдено заданий</div>
-                <div className="members-info">Вступил в группу</div>
-                <div className="members-info">Управление</div>
+                <div className="members-info head">Имя пользователя</div>
+                <div className="members-info head">Пройдено заданий</div>
+                <div className="members-info head">Вступил в группу</div>
+                <div className="members-info head">Управление</div>
             </div>
         </div>
 
