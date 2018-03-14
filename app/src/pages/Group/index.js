@@ -6,6 +6,7 @@ import Header from '../../components/Header'
 import TaskList from '../../components/TaskList'
 import TaskCreate from '../../components/TaskCreate'
 import AddMember from '../../components/AddMember'
+import AllMembers from '../../components/AllMembers'
 
 import { CacheManager } from '../../utils'
 import { GROUP } from '../../graphql/queries'
@@ -188,6 +189,12 @@ class Group extends Component {
           {
             currentTab == 'add-member' && (
               <AddMember user={user}/>
+            )
+          }
+
+          {
+            currentTab == 'all-members' && (
+              <AllMembers/>
             )
           }
 
