@@ -168,7 +168,11 @@ class Group extends Component {
               <span className="title with-icon">Список участников</span>
             )
           }
-            <span className="title reverse">Редактор слов</span>
+          {
+            ((currentTab == 'task-list') || (currentTab == 'new-task')) && (
+              <span className="title reverse">Редактор слов</span>
+            )
+          }
           </div>
 
           
