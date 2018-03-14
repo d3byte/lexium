@@ -13,8 +13,8 @@ type Mutation {
   createGroup(name: String!, usersIds: [ID!]!, superUsers: [ID!]!): Group
   updateGroup(id: ID!, input: GroupInput): Group
   addUserToGroup(id: ID!, userId: ID!): Group
-  removeUserFromGroup(id: ID!, userId: ID!): Group
-  removeGroup(id: ID!): Group
+  removeUserFromGroup(token: String!, id: ID!): ValidPayload!
+  removeGroup(id: ID!): ValidPayload!
 
   createTask(input: TaskInput!, words: [WordPairInput!]!): Task
   updateTask(id: ID!, input: TaskInput!): Task
@@ -25,11 +25,11 @@ type Mutation {
 
   updateUser(id: ID!, input: UserInput!): User
   updateUserAvatar(token: String!, avatarUrl: String!): User
-  verifyPassword(userId: ID!, password: String!): VerifyPayload!
+  verifyPassword(userId: ID!, password: String!): ValidPayload!
   changePassword(userId: ID!, password: String!): User
   removeUser(id: ID!): User
-  checkEmail(email: String!): VerifyPayload!
-  checkUsername(username: String!): VerifyPayload!
+  checkEmail(email: String!): ValidPayload!
+  checkUsername(username: String!): ValidPayload!
   signup(email: String!, password: String!, name: String!, username: String!): AuthPayload!
   login(username: String!, password: String!): AuthPayload!
 }
@@ -46,7 +46,7 @@ type AuthPayload {
   error: String
 }
 
-type VerifyPayload {
+type ValidPayload {
   valid: Boolean
   error: String
 }

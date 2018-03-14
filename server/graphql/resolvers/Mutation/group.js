@@ -1,4 +1,5 @@
 const { models } = require('../../../models')
+const { getUserId } = require('../../../utils')
 
 module.exports = {
     createGroup(root, { name, usersIds, superUsers }, context) {
@@ -23,14 +24,31 @@ module.exports = {
             .then(theGroup => models.Group.findById(id))
     },
     
-    removeUserFromGroup(root, { id, userId }, context) {
+    async removeUserFromGroup(root, { token, id }, context) {
+        const userId = await getUserId(token)
         return models.Group.findById(id)
-            .then(group => group.removeUser(userId))
-            .then(theGroup => models.Group.findById(id))
+            .then(group => {
+                let userIsInGroup = false
+                group.getUsers().then(users => {
+                    users.map(user => {
+                        if (user.id === userId) {
+                            userIsInGroup = true
+                        }
+                    })
+                    if (userIsInGroup) {
+                        return users.length === 1 ? 
+                            group.destroy() : 
+                            group.removeUser(userId)
+                    }
+                    return { error: 'Вы не состоите в данной группе!' }
+                })
+            })
+            .then(() => ({ valid: true }))
+            .catch(() => ({ error: 'Произошла ошибка во время покидания группы' }))
     },
 
-    removeGroup(root, { id }, context) {
-        return models.Group.findById(id)
-            .then(group => group.destroy())
+    async removeGroup(root, { id }, context) {
+        const group = await models.Group.findById(id)
+        return group.destroy()
     }
 }
