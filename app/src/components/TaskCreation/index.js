@@ -28,33 +28,33 @@ const TaskCreation = ({}) => (
           <div className="container game">
             <div className="game-name">Выучи слово</div>
             <div className="game-repeats">
-              <div className="game-repeats remove">-</div>
-              <div className="game-repeats number">4</div>
-              <div className="game-repeats add">+</div>
+              <span className="game-repeats remove">-</span>
+              <span className="game-repeats number">4</span>
+              <span className="game-repeats add">+</span>
             </div>
           </div>
           <div className="container game">
             <div className="game-name">Найди пару</div>
             <div className="game-repeats">
-              <div className="game-repeats remove">-</div>
-              <div className="game-repeats number">3</div>
-              <div className="game-repeats add">+</div>
+              <span className="game-repeats remove">-</span>
+              <span className="game-repeats number">3</span>
+              <span className="game-repeats add">+</span>
             </div>
           </div>
           <div className="container game">
             <div className="game-name">Введи слово</div>
             <div className="game-repeats">
-              <div className="game-repeats remove">-</div>
-              <div className="game-repeats number">2</div>
-              <div className="game-repeats add">+</div>
+              <span className="game-repeats remove">-</span>
+              <span className="game-repeats number">2</span>
+              <span className="game-repeats add">+</span>
             </div>
           </div>
           <div className="container game">
             <div className="game-name">Скрэмбл</div>
             <div className="game-repeats">
-              <div className="game-repeats remove">-</div>
-              <div className="game-repeats number">1</div>
-              <div className="game-repeats add">+</div>
+              <span className="game-repeats remove">-</span>
+              <span className="game-repeats number">1</span>
+              <span className="game-repeats add">+</span>
             </div>
           </div>
         </div>
