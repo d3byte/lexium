@@ -12,7 +12,7 @@ export default class AddMember extends Component {
   constructor() {
     super()
     this.state = {
-        user: {}
+        user: []
     }
   }
 
