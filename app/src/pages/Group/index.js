@@ -4,7 +4,7 @@ import { withApollo } from 'react-apollo'
 import Button from '../../components/Button'
 import Header from '../../components/Header'
 import TaskList from '../../components/TaskList'
-import TaskCreate from '../../components/TaskCreate'
+import TaskCreation from '../../components/TaskCreation'
 import AddMember from '../../components/AddMember'
 import AllMembers from '../../components/AllMembers'
 
@@ -18,20 +18,13 @@ class Group extends Component {
     super()
     this.state = {
       currentTab: 'task-list',
-      /*showTaskList: true,
-      showHelp: false,
-      showEdit: null,
-      showCreate: null,
-      showAddMember: null,
-      showAllMembers: null
-      */
     }
     this.client = {}
     this.cache = new CacheManager()
     this.token = ''
   }
 
-  fetchData = async(token, groupId) => {
+  fetchData = async (token, groupId) => {
     const { location } = this.props
     const response = await this.client.query({ query: GROUP, variables: { token, id: groupId } })
     let { group, error } = response.data
@@ -146,62 +139,18 @@ class Group extends Component {
 
         <div className="section tasks">
           <div className="titles">
-          {
-            currentTab == 'task-list' && (
-              <span className="title with-icon">Список заданий
-              <i className="material-icons" onClick={this.toggleHelp} onBlur={this.toggleHelp}>help_outline</i>
-              </span>
-            )
-          }
-          {
-            currentTab == 'new-task' && (
-              <span className="title with-icon">Информация о задании</span>
-            )
-          }
-          {
-            currentTab == 'add-member' && (
-              <span className="title with-icon">Новый участник</span>
-            )
-          }
-          {
-            currentTab == 'all-members' && (
-              <span className="title with-icon">Список участников</span>
-            )
-          }
-          {
-            ((currentTab == 'task-list') || (currentTab == 'new-task')) && (
-              <span className="title reverse">Редактор слов</span>
-            )
-          }
+          {currentTab == 'task-list' && ( <span className="title with-icon">Список заданий<i className="material-icons" onClick={this.toggleHelp} onBlur={this.toggleHelp}>help_outline</i></span>)}
+          {currentTab == 'new-task' && (<span className="title with-icon">Информация о задании</span>)}
+          {currentTab == 'add-member' && (<span className="title with-icon">Новый участник</span>)}
+          {currentTab == 'all-members' && (<span className="title with-icon">Список участников</span>)}
+          {((currentTab == 'task-list') || (currentTab == 'new-task')) && (<span className="title reverse">Редактор слов</span>)}
           </div>
-
           
-
           <div className="single-line">
-          {
-            currentTab == 'task-list' && (
-              <TaskList/>
-            )
-          }
-          
-          {
-            currentTab == 'new-task' && (
-              <TaskCreate/>
-            )
-          }
-
-          {
-            currentTab == 'add-member' && (
-              <AddMember user={user}/>
-            )
-          }
-
-          {
-            currentTab == 'all-members' && (
-              <AllMembers/>
-            )
-          }
-
+          {currentTab == 'task-list' && (<TaskList/>)}
+          {currentTab == 'new-task' && (<TaskCreation/>)}
+          {currentTab == 'add-member' && (<AddMember user={user}/>)}
+          {currentTab == 'all-members' && (<AllMembers/>)}
           </div>
 
         </div>
