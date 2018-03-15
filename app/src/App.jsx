@@ -36,7 +36,7 @@ export default class App extends Component {
             <Route exact path="/task/learn" component={FlashCards} />
             <Route exact path="/task/find" component={FindPair} />
             <Route exact path="/task/typein" component={Typein} />
-            <Route exact path="/task/typein" component={Scramble} />
+            <Route exact path="/task/scramble" component={Scramble} />
             <Route exact path="/settings" component={Settings} />
             <Route exact path="*" component={Error404} />
           </Switch>

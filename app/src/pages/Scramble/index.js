@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import { Link } from 'react-router-dom'
+import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd'
 
 import Button from '../../components/Button'
 import Header from '../../components/Header'
@@ -8,29 +9,75 @@ import { CacheManager } from '../../utils'
 
 import './style.css'
 
+const shuffle = array => {
+  let counter = array.length
+  const copy = array.slice(0)
+  while (counter > 0) {
+      let index = Math.floor(Math.random() * counter)
+      counter--
+      let temp = copy[counter]
+      copy[counter] = copy[index]
+      copy[index] = temp
+  }
+
+  return copy
+}
+
+const getLetters = word => {
+  let letters = word.split('').map((letter, index) => ({ id: index, letter }))
+  return letters
+}
+
+const reorder = (list, startIndex, endIndex) => {
+  const result = Array.from(list)
+  const [removed] = result.splice(startIndex, 1)
+  result.splice(endIndex, 0, removed)
+
+  console.log(result)
+
+  return result
+}
+
 export default class Typein extends Component {
   constructor() {
     super()
     this.state = {
+      word: 'Banana',
+      splittedWord: []
     }
     this.cache = new CacheManager()
   }
 
-  toggleCard = e => {
-    // Делегирую эвент и проверяю, чтобы место клика не было спаном, в котором
-    // показано кол-во оставшихся карточек
-    const { target } = e
-    if (target.nodeName !== 'SPAN' && !target.classList.contains('on-top')) {
-      this.setState({ showKey: !this.state.showKey })
+  onDragEnd = result => {
+    // dropped outside the list
+    if (!result.destination) {
+      return
     }
+
+    const splittedWord = reorder(
+      this.state.splittedWord,
+      result.source.index,
+      result.destination.index
+    )
+
+    this.setState({
+      splittedWord,
+    })
+  }
+
+  componentDidMount = () => {
+    const { word } = this.state
+    let letters = getLetters(word)
+    console.log(letters)
+    this.setState({ splittedWord: shuffle(letters) })
   }
 
   render() {
     const { history } = this.props
     const { pathname } = this.props.location
-    const { showKey } = this.state
+    const { word, splittedWord } = this.state
     return (
-      <div className="task-game">
+      <div className="scramble-game">
         <Header fetching={false} pathname={pathname} history={history} />
         <div className="section">
 
@@ -81,7 +128,35 @@ export default class Typein extends Component {
         <div className="section">
           <span className="title">Карточки со словами</span>
 
-            
+          <span className="word">{word}</span>
+
+          <DragDropContext onDragEnd={this.onDragEnd}>
+            <Droppable droppableId="droppable" direction="horizontal">
+              {(provided, snapshot) => (
+                <div
+                  className="letters"
+                  ref={provided.innerRef}
+                  {...provided.droppableProps}
+                >
+                  {splittedWord.map((item, index) => (
+                    <Draggable key={item.id} draggableId={item.id} index={index}>
+                      {(provided, snapshot) => (
+                        <div
+                          ref={provided.innerRef}
+                          {...provided.draggableProps}
+                          {...provided.dragHandleProps}
+                        >
+                          {item.letter}
+                        </div>
+                      
+                      )}
+                    </Draggable>
+                  ))}
+                  {provided.placeholder}
+                </div>
+              )}
+            </Droppable>
+          </DragDropContext>
 
         </div>
 
