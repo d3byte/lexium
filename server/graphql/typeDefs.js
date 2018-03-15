@@ -58,6 +58,7 @@ type Group {
   superUsers: String!
   tasks: [Task]
   avatarUrl: String!
+  isPersonal: Boolean!
   createdAt: Date!
 }
 

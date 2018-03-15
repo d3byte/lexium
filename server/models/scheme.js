@@ -21,6 +21,7 @@ module.exports = function (sequelize) {
     name: Sequelize.STRING,
     superUsers: Sequelize.STRING,
     avatarUrl: Sequelize.STRING,
+    isPersonal: Sequelize.BOOLEAN
   })
 
   const Task = sequelize.define('Task', {
