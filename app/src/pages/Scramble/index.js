@@ -5,79 +5,110 @@ import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd'
 import Button from '../../components/Button'
 import Header from '../../components/Header'
 
-import { CacheManager } from '../../utils'
+import { CacheManager, shuffle } from '../../utils'
 
 import './style.css'
-
-const shuffle = array => {
-  let counter = array.length
-  const copy = array.slice(0)
-  while (counter > 0) {
-      let index = Math.floor(Math.random() * counter)
-      counter--
-      let temp = copy[counter]
-      copy[counter] = copy[index]
-      copy[index] = temp
-  }
-
-  return copy
-}
-
-const getLetters = word => {
-  let letters = word.split('').map((letter, index) => ({ id: index, letter }))
-  return letters
-}
-
-const reorder = (list, startIndex, endIndex) => {
-  const result = Array.from(list)
-  const [removed] = result.splice(startIndex, 1)
-  result.splice(endIndex, 0, removed)
-
-  console.log(result)
-
-  return result
-}
 
 export default class Typein extends Component {
   constructor() {
     super()
     this.state = {
-      word: 'Banana',
-      splittedWord: []
+      currentWord: 'Банан',
+      currentKey: '',
+      splittedWord: [],
+      correct: false,
+      currentLetter: null
     }
     this.cache = new CacheManager()
+    this.screenWidth = window.screen.innerWidth || document.clientWidth || document.body.clientWidth
   }
 
-  onDragEnd = result => {
-    // dropped outside the list
-    if (!result.destination) {
-      return
+  getLetters = currentWord => {
+    let letters = currentWord.split('').map((letter, index) => ({ id: index, letter }))
+    return letters
+  }
+
+  keyDownHandler = e => {
+    const { keyCode } = e
+    switch (keyCode) {
+      case 37:
+        this.moveLetter('left')
+        break
+      case 39:
+        this.moveLetter('right')
+        break 
+      case 13:
+        this.stopMoving()
+        break
+      default:
+        return
     }
+  }
 
-    const splittedWord = reorder(
-      this.state.splittedWord,
-      result.source.index,
-      result.destination.index
-    )
+  chooseLetter = id => {
+    const { currentLetter } = this.state
+    if (currentLetter === null) {
+      this.setState({ currentLetter: id })
+      // Включить слушание клавиш, если на десктопе
+      if (this.screenWidth >= 800) {
+        window.addEventListener('keydown', this.keyDownHandler)
+      }
+    }
+  }
 
-    this.setState({
-      splittedWord,
-    })
+  moveLetter = direction => {
+    const { splittedWord, currentLetter } = this.state
+    if (currentLetter === null) 
+      return
+    switch (direction) {
+      case 'right':
+        this.changeLetterOrder(currentLetter, splittedWord.indexOf(currentLetter) + 1)
+        break
+      case 'left':
+        this.changeLetterOrder(currentLetter, splittedWord.indexOf(currentLetter) - 1)
+        break
+      default:
+        return
+    }
+  }
+
+  changeLetterOrder = (letter, index) => {
+    const { splittedWord } = this.state
+    let newIndex = index
+    if (newIndex > splittedWord.length - 1)
+      newIndex = 0
+    if (newIndex < 0)
+      newIndex = splittedWord.length - 1
+    let copy = splittedWord.slice(0)
+    const previousLetter = copy[newIndex],
+      oldIndex = copy.indexOf(letter)
+    copy[newIndex] = letter
+    copy[oldIndex] = previousLetter
+    this.setState({ splittedWord: copy })
+  }
+
+  stopMoving = () => {
+    const { splittedWord, currentKey } = this.state
+    const joinedCurrentWord = splittedWord.map(item => item.letter).join('')
+    let correct = false
+    if(joinedCurrentWord === currentKey)
+      correct = true
+    this.setState({ currentLetter: null, correct })
   }
 
   componentDidMount = () => {
-    const { word } = this.state
-    let letters = getLetters(word)
-    console.log(letters)
-    this.setState({ splittedWord: shuffle(letters) })
+    const { currentWord } = this.state
+    const key = 'Banana'
+    let letters = this.getLetters(key)
+    this.setState({ splittedWord: shuffle(letters), currentKey: key })
   }
 
   render() {
     const { history } = this.props
     const { pathname } = this.props.location
-    const { word, splittedWord } = this.state
+    const { currentWord, splittedWord, currentKey, correct, currentLetter } = this.state
     return (
-      <div className="scramble-game">
+      <div ref={ref => this.instance = ref} className="task-game">
         <Header fetching={false} pathname={pathname} history={history} />
         <div className="section">
 
@@ -128,35 +159,44 @@ export default class Typein extends Component {
         <div className="section">
           <span className="title">Карточки со словами</span>
 
-          <span className="word">{word}</span>
+          <div className={'currentWord ' + (correct ? 'lighter' : '')} >{currentWord}</div>
 
-          <DragDropContext onDragEnd={this.onDragEnd}>
-            <Droppable droppableId="droppable" direction="horizontal">
-              {(provided, snapshot) => (
-                <div
-                  className="letters"
-                  ref={provided.innerRef}
-                  {...provided.droppableProps}
-                >
-                  {splittedWord.map((item, index) => (
-                    <Draggable key={item.id} draggableId={item.id} index={index}>
-                      {(provided, snapshot) => (
-                        <div
-                          ref={provided.innerRef}
-                          {...provided.draggableProps}
-                          {...provided.dragHandleProps}
-                        >
-                          {item.letter}
-                        </div>
-                      
-                      )}
-                    </Draggable>
-                  ))}
-                  {provided.placeholder}
+          {
+            correct ? (
+              <div className="correct-word">
+                  <span className="words-left">Осталось слов: 8</span>
+                  <div className="word-container">
+                    <span className="key">{currentKey}</span>
+                  </div>
+                  <Button clickHandler={() => console.log('Ура!')} classNameProp="regular lighter" text="Следующее слово" />
+              </div>
+            ) : (
+              <div className="letters-wrapper">
+                <div className="letters">
+                  {
+                    splittedWord.map(item => (
+                      <div 
+                        key={item.id} 
+                        className={'letter ' + (currentLetter && currentLetter.id === item.id ? 'selected' : '') }
+                        onClick={() => this.chooseLetter(item)}
+                      >
+                        {item.letter}
+                      </div>
+                    ))
+                  }
                 </div>
-              )}
-            </Droppable>
-          </DragDropContext>
+              </div>
+            )
+          }
+          {
+            !correct && (
+              <div className={'controls ' + (currentLetter !== null ? 'active' : '')}>
+                <i onClick={() => this.moveLetter('left')} className="material-icons">keyboard_arrow_left</i>
+                <i onClick={this.stopMoving} className="material-icons">done</i>
+                <i onClick={() => this.moveLetter('right')} className="material-icons">keyboard_arrow_right</i>
+              </div>
+            )
+          }
 
         </div>
 

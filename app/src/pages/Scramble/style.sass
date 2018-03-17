@@ -1,22 +1,108 @@
-.letters
+.scramble-game
+    padding-bottom: 40px
+
+.letters-wrapper
     display: flex
+    
+.letters
+    display: inline-flex
+    flex-flow: row wrap
     align-items: center
-    justify-content: center
-    width: 100%
     list-style-type: none
-    div
+    margin-top: -30px
+    margin: -30px auto 0 auto
+    div.letter
         display: flex
         align-items: center
         justify-content: center
-        width: 40px
-        height: 40px
+        width: 50px
+        height: 50px
         border-radius: 4px
         background: white
         border: 1px solid #E9E9E9
         font-family: 'ProximaNova-Semibold', sans-serif
         font-size: 36px
         color: #595959
-        margin-right: 20px
+        margin: 30px 20px 0 0
+        transition: 0.3s
         &:last-of-type
             margin-right: 0
+        &:hover
+            cursor: pointer
+            border-color: #6B6DB8
+        &.selected
+            border-color: #8A8CE6
+
     
+div.controls
+    display: flex
+    align-items: center
+    justify-content: space-between
+    margin: 30px auto
+    padding: 0px 5px
+    bottom: -60px
+    width: 140px
+    height: 100x
+    transition: 0.3s
+    background: #A9A9A9
+    border-radius: 4px
+    border: 1px solid E9E9E9
+    color: white
+    i
+        font-size: 36px !important
+        opacity: 0.4
+        &:hover
+            cursor: default
+    &.active
+        background: #6B6DB8
+        border-color: #595959
+        i
+            opacity: 1
+            &:hover
+                cursor: pointer
+
+
+.currentWord
+    font-family: 'ProximaNova-Bold', sans-serif
+    font-size: 48px
+    color: #595959
+    margin: 30px 0
+    text-align: center
+    &.lighter
+        opacity: 0.6
+
+.correct-word
+    position: relative
+    display: flex
+    align-items: center
+    justify-content: center
+    width: 70%
+    min-height: 120px
+    margin: 0 auto 30px auto
+    background: white
+    border: 1px solid #06D6A0
+    font-family: 'ProximaNova-Bold', sans-serif
+    font-size: 48px
+    color: #595959
+    & > button
+        position: absolute
+        bottom: -60px
+    & > .words-left
+        position: absolute
+        top: -25px
+        right: 0
+        font-family: 'ProximaNova-Regular', sans-serif
+        font-size: 16px
+        color: #595959
+        opacity: 0.8
+
+@media (max-width: 705px)
+    .correct-word
+        width: 90%
+
+@media (max-width: 480px)
+    .correct-word
+        width: 100%
+
+
+
