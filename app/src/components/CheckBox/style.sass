@@ -1,0 +1,21 @@
+label.lexium-radio
+    display: flex
+    input[type="radio"]
+        display: none
+        &:checked ~ .input
+            background: #8A8CE6
+            i
+                font-size: 14px !important
+                color: white
+                opacity: 1
+
+    .input
+        margin-right: 10px
+        width: 16px
+        height: 16px
+        background: white
+        border: 1px solid #979797
+        border-radius: 50%
+        transition: 0.3s
+        i
+            opacity: 0
