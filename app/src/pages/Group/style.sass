@@ -106,12 +106,18 @@
         align-items: center
         justify-content: center
         transition: 0.3s
+        &:first-of-type
+            border-right: 1px solid #E0E0E0
+            border-bottom: 1px solid #E0E0E0
+        &:nth-of-type(2)
+            border-bottom: 1px solid #E0E0E0
+        &:nth-of-type(3)
+            border-right: 1px solid #E0E0E0
         &:hover
             cursor: pointer
             color: white
-            background: #8A8CE6
+            background: #6B6DB8
         &.selected
-            cursor: pointer
             color: white
             background: #8A8CE6
 
