@@ -13,7 +13,7 @@ export default class Test extends Component {
   constructor() {
     super()
     this.state = {
-      completed: true,
+      completed: false,
     }
     this.cache = new CacheManager()
   }
