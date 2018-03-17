@@ -59,9 +59,9 @@ export default class Typein extends Component {
               <div className="word-group">
                 <label>Аллергия</label>
                 <div className="variants">
-                  <RadioButton label="Mango" name="Манго" value="Cucumber" />
-                  <RadioButton label="Allergy" name="Манго" value="Allergy" />
-                  <RadioButton label="KFC" name="Манго" value="Chicken" />
+                  <RadioButton label="Mango" name="Аллергия" value="Cucumber" />
+                  <RadioButton label="Allergy" name="Аллергия" value="Allergy" />
+                  <RadioButton label="KFC" name="Аллергия" value="Chicken" />
                 </div>
               </div>
             </div>
