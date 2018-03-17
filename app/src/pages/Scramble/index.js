@@ -108,7 +108,7 @@ export default class Typein extends Component {
     const { pathname } = this.props.location
     const { currentWord, splittedWord, currentKey, correct, currentLetter } = this.state
     return (
-      <div ref={ref => this.instance = ref} className="task-game">
+      <div className="task-game">
         <Header fetching={false} pathname={pathname} history={history} />
         <div className="section">
 
