@@ -1,24 +1,22 @@
 .DS_Store
-/app/node_modules
-/app/src/**/*.css
-/app/src/**/style.css.map
-/app/public/style/style.css.map
-/app/public/style/fonts.css.map
-/server/dist
-/server/db.sqlite3
-/server/package-lock.json
-/server/node_modules
-/node
-/example
+app/node_modules
+app/src/**/*.css
+app/src/**/style.css.map
+app/public/style/style.css.map
+app/public/style/fonts.css.map
+server/dist
+server/db.sqlite3
+server/package-lock.json
+server/node_modules
 
 # local env files
 .env.local
 .env.*.local
 
 # Log files
-/client/npm-debug.log*
-/client/yarn-debug.log*
-/client/yarn-error.log*
+app/npm-debug.log*
+app/yarn-debug.log*
+app/yarn-error.log*
 
 # Editor directories and files
 .idea
@@ -28,4 +26,3 @@
 *.njsproj
 *.sln
 *.log
-server/db.sqlite3
