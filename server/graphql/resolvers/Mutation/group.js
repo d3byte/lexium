@@ -11,6 +11,21 @@ module.exports = {
             }).then(theGroup => models.Group.findById(id))
     },
 
+    async updateGroupAvatar(root, { token, avatarUrl, id }) {
+        const userId = await getUserId(token)
+        const group = await models.Group.findById(id)
+        let userInGroup = false
+        group.users.map(user => {
+            if(user.id === userId) {
+                userInGroup = true
+            }
+        })
+        if (userInGroup) {
+            return group.update({ avatarUrl })
+        }
+        return { error: 'Пользователь не состоит в группе' }
+    },
+
     updateGroup(root, { id, input }, context) {
         let { name, superUsers } = input
         superUsers = JSON.stringify(superUsers[0])
