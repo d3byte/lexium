@@ -18,6 +18,7 @@ mutation login($username: String!, $password: String!) {
                     id
                     name
                     createdAt
+                    avatarUrl
                 }
                 tasks {
                     id
@@ -29,6 +30,7 @@ mutation login($username: String!, $password: String!) {
                         user {
                             name
                             wordsLearnt
+                            avatarUrl
                         }
                         percentage
                     }
@@ -70,6 +72,7 @@ mutation signup($username: String!, $name: String!, $email: String!, $password: 
                             id
                             name
                             wordsLearnt
+                            avatarUrl
                         }
                         percentage
                     }
@@ -80,6 +83,7 @@ mutation signup($username: String!, $name: String!, $email: String!, $password: 
                     id
                     name
                     createdAt
+                    avatarUrl
                 }
                 superUsers
                 createdAt
@@ -106,6 +110,7 @@ mutation updateUserAvatar($token: String!, $avatarUrl: String!) {
                 id
                 name
                 createdAt
+                avatarUrl
             }
             tasks {
                 id
@@ -115,8 +120,10 @@ mutation updateUserAvatar($token: String!, $avatarUrl: String!) {
                     id
                     wordsLearnt
                     user {
+                        id
                         name
                         wordsLearnt
+                        avatarUrl
                     }
                     percentage
                 }
@@ -144,8 +151,10 @@ mutation createGroup($name: String!, $usersIds: [ID!]!, $superUsers: [ID!]!) {
         users {
             id
             name
+            avatarUrl
         }
         superUsers
+        avatarUrl
         createdAt
     }
 }
@@ -156,13 +165,29 @@ mutation updateGroup($id: ID!, $input: GroupInput!) {
     updateGroup(id: $id, input: $input) {
         id
         name
-        tasks {
-            id
-            name
-        }
         users {
             id
             name
+            createdAt
+            avatarUrl
+        }
+        tasks {
+            id
+            name
+            words
+            results {
+                id
+                wordsLearnt
+                user {
+                    id
+                    name
+                    wordsLearnt
+                    avatarUrl
+                }
+                percentage
+            }
+            deadline
+            createdAt
         }
         superUsers
         createdAt
