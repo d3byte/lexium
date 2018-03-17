@@ -12,11 +12,12 @@ export default class componentName extends Component {
     super()
     this.state = {
       fetching: false,
+      testAvailable: false
     }
   }
 
   render() {
-    const { fetching } = this.state
+    const { fetching, testAvailable } = this.state
     const { history } = this.props
     const { pathname } = this.props.location
     return (
@@ -95,6 +96,16 @@ export default class componentName extends Component {
               </div>
             </Link>
           </div>
+          {
+            testAvailable && (
+              <center>
+                <div className="test-proposal">
+                  <span>Вы можете пройти тест!</span>
+                  <Button clickHandler={() => history.push('/task/test')} classNameProp="regular lighter" text="Перейти к тесту" />
+                </div>
+              </center>
+            )
+          }
         </div>
 
         <div className="section">
