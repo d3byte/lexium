@@ -2,13 +2,16 @@ label.lexium-radio
     display: flex
     input[type="radio"]
         display: none
-        &:checked ~ .input
-            background: #8A8CE6
-            i
-                font-size: 14px !important
-                color: white
+        &:checked
+            & ~ .input
+                background: #8A8CE6
+                i
+                    font-size: 14px !important
+                    color: white
+                    opacity: 1
+            & ~ span
                 opacity: 1
-
+            
     .input
         margin-right: 10px
         width: 16px
@@ -19,3 +22,5 @@ label.lexium-radio
         transition: 0.3s
         i
             opacity: 0
+    span
+        opacity: 0.8
