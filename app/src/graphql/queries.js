@@ -22,6 +22,7 @@ query user($token: String!) {
                         id
                         name
                         wordsLearnt
+                        avatarUrl
                     }
                     percentage
                 }
@@ -58,6 +59,7 @@ query group($token: String!, $id: ID!) {
                     id
                     name
                     wordsLearnt
+                    avatarUrl
                 }
                 percentage
             }
@@ -76,6 +78,18 @@ query group($token: String!, $id: ID!) {
 }
 `
 
+const SUITABLE_USERS = gql`
+query suitableUsers($token: String!, $query: String!) {
+    query suitableUsers(token: $token, query: $query) {
+        id
+        name
+        username
+        avatarUrl
+    }
+}
+`
+
 export {
-    USER, GROUP
+    USER, GROUP,
+    SUITABLE_USERS, 
 }
