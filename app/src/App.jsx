@@ -17,6 +17,7 @@ import FindPair from './pages/FindPair'
 import Typein from './pages/Typein'
 import Settings from './pages/Settings'
 import Scramble from './pages/Scramble'
+import Test from './pages/Test'
 
 export default class App extends Component {
   componentWillReceiveProps = props => {
@@ -37,6 +38,7 @@ export default class App extends Component {
             <Route exact path="/task/find" component={FindPair} />
             <Route exact path="/task/typein" component={Typein} />
             <Route exact path="/task/scramble" component={Scramble} />
+            <Route exact path="/task/test" component={Test} />
             <Route exact path="/settings" component={Settings} />
             <Route exact path="*" component={Error404} />
           </Switch>
