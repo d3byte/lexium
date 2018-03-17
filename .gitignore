@@ -1,8 +1,9 @@
 .DS_Store
 /app/node_modules
 /app/src/**/*.css
-/client/node_modules
-/client/dist
+/app/src/**/style.css.map
+/app/public/style/style.css.map
+/app/public/style/fonts.css.map
 /server/dist
 /server/db.sqlite3
 /server/package-lock.json
