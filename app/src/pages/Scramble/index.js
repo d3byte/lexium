@@ -1,6 +1,5 @@
 import React, { Component } from 'react'
 import { Link } from 'react-router-dom'
-import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd'
 
 import Button from '../../components/Button'
 import Header from '../../components/Header'
