@@ -18,6 +18,8 @@ class Group extends Component {
     super()
     this.state = {
       currentTab: 'new-task',
+      user: {},
+      group: {}
     }
     this.client = {}
     this.cache = new CacheManager()
@@ -93,6 +95,7 @@ class Group extends Component {
     } else {
       this.setState({ user, group })
       this.token = token
+      this.fetchData(token, id)
     }
   }
 
@@ -140,12 +143,9 @@ class Group extends Component {
         </div>
 
         { currentTab == 'new-task' && <NewTask groupId={group ? group.id : null} client={this.client} /> }
-        
-        <div className="section">
-          { currentTab == 'task-list' && <TaskList/> }
-          { currentTab == 'add-member' && <AddMember user={user}/> }
-          { currentTab == 'all-members' && <AllMembers/> }
-        </div>
+        { currentTab == 'task-list' && <TaskList/> }
+        { currentTab == 'add-member' && <AddMember user={user} token={this.token} group={group} client={this.client} /> }
+        { currentTab == 'all-members' && <AllMembers/> }
 
       </div>
     )

@@ -1,40 +1,56 @@
-.containers
-    &.of-members
-        width: 100%
-
+.add-member
     .container
-        &.of-newmember, &.of-invited
-            padding: 20px
-            width: 48%
+        padding: 10px 20px !important
+        &.new-member
+            padding: 20px 30px !important
+        &.suitable
+            &:hover
+                cursor: pointer
+    button
+        margin: 30px auto 0 auto
+        width: 200px
+    .containers
+        justify-content: flex-start !important
 
-.tip
-    font-size: 18px
-    // margin: 10px 0 0 0
-    color: #595959
+.container.empty
+    background: transparent !important
+    border: none !important
+    padding: 0 !important
 
 input
     margin-top: 10px
     padding-left: 0px !important
 
-.invited-info
+.container.suitable
     display: flex
-    flex-direction: row
     align-items: center
-    justify-content: center
-    width: 100%
-
+    flex-direction: row !important
+    font-family: 'ProximaNova-Light', sans-serif
+    font-size: 18px
+    &.invited
+        justify-content: space-between
     .name
         color: #595959
-        font-size: 18px
-
-    .metadata
+        margin-right: 10px
+    .username
+        font-family: 'ProximaNova-Regular', sans-serif
+        color: #6B6DB8
+        margin-left: 10px
+    .member-info
         display: flex
-        width: 100%
-        justify-content: space-between
+        align-items: center
 
-.avatar.invited-user
-        img
-            width: 60px !important
-            height: 60px !important
-            border: 1px solid #E0E0E0
-            margin: 0px 20px 0px 10px
+    
+.avatar.member
+    display: flex
+    align-items: center
+    justify-content: center
+    width: 40px
+    height: 40px
+    margin-right: 10px
+    background: #E9E9E9
+    border: 1px solid #AEAEAE
+    i
+        font-size: 24px
+        color: #595959
+        opacity: 0.8
