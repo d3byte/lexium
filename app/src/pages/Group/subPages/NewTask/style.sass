@@ -1,0 +1,70 @@
+.group-subpage
+    display: flex
+    justify-content: space-between
+    padding-bottom: 40px
+    & > div
+        width: 48%
+
+    .container
+        width: 100%
+        margin-top: 30px
+
+    .left 
+        display: flex
+        flex-direction: column
+        .container
+            padding: 25px 40px
+            flex-direction: column 
+            .word-group
+                font-family: 'ProximaNova-Regular', sans-serif
+                margin-bottom: 15px
+                &:last-of-type
+                    margin-bottom: 0
+                label
+                    font-size: 20px
+                    color: #979797
+                input
+                    font-size: 16px
+                    margin-top: 10px
+                    padding: 0
+            &.attempts
+                padding: 0
+                margin-top: 60px
+                background: transparent
+                border: none
+                .attempt-input
+                    display: flex
+                    align-items: center
+                    justify-content: space-between
+                    border: 1px solid #E0E0E0
+                    border-radius: 4px
+                    background: white
+                    width: 100%
+                    padding-left: 30px
+                    margin-top: 15px
+                    &:first-of-type
+                        margin-top: 0
+                    .name
+                        font-family: 'ProximaNova-Regular', sans-serif
+                        font-size: 18px
+                        color: #979797
+    .right
+        display: flex
+        flex-direction: column
+        .container.editor
+            background: transparent
+            border: none
+
+@media (max-width: 750px)
+    .group-subpage
+        flex-direction: column
+        justify-content: flex-start
+        padding-bottom: 40px
+        & > div
+            width: 100%
+        .right
+            padding-bottom: 40px
+            .container.editor
+                margin-top: 45px
+                .title.right
+                    text-align: left !important
