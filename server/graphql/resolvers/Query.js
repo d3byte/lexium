@@ -8,12 +8,16 @@ async group (root, { token, id }) {
   const userId = await getUserId(token)
   const group = await models.Group.findById(id)
   let valid = false
-  group.users.map(user => {
-    if (user.id == userId)
+  const users = await group.getUsers()
+  users.map(user => {
+    console.log(user.id)
+    if (user.id === userId)
       valid = true
   })
+  console.log('Valid:', valid)
   if (!valid)
     return { error: 'Вы не состоите в данной группе' }
+  console.log(group)
   return { group }
 },
   groups(root, {}, context) {

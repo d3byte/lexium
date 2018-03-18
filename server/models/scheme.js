@@ -20,8 +20,8 @@ module.exports = function (sequelize) {
   const Group = sequelize.define('Group', {
     name: Sequelize.STRING,
     superUsers: Sequelize.STRING,
-    avatarUrl: Sequelize.STRING,
-    isPersonal: Sequelize.BOOLEAN
+    avatarUrl: { type: Sequelize.STRING, defaultValue: '' },
+    isPersonal: { type: Sequelize.BOOLEAN, defaultValue: false }
   })
 
   const Task = sequelize.define('Task', {
