@@ -4,6 +4,7 @@ import { withApollo } from 'react-apollo'
 import anime from 'animejs'
 
 import Button from '../../components/Button'
+import MaterialSwitch from '../../components/MaterialSwitch'
 import Header from '../../components/Header'
 
 import { CacheManager } from '../../utils/index'
@@ -251,15 +252,7 @@ class Profile extends Component {
         </div>
 
         <div className="section tasks">
-          <span className="title switch">
-            Показать выполненные задания
-            <div className="switch">
-              <label>
-                <input type="checkbox" onChange={this.toggleCompletedTasks} />
-                <span className="lever"></span>
-              </label>
-            </div>
-          </span>
+          <MaterialSwitch titleProp="Показать выполненные задания" onChange={this.toggleCompletedTasks}/>
           <div className={'containers ' + (!showCompleted ? 'hide' : '')}>
 
             {
