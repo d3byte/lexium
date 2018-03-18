@@ -3,9 +3,9 @@ import { withApollo } from 'react-apollo'
 
 import Button from '../../components/Button'
 import Header from '../../components/Header'
-import AddMember from '../../components/AddMember'
-import { AllMembers } from '../../components/AllMembers'
-import { TaskList } from '../../components/TaskList'
+import AddMember from './subPages/AddMember'
+import { AllMembers } from './subPages/AllMembers'
+import { TaskList } from './subPages/TaskList'
 import NewTask from './subPages/NewTask'
 
 import { CacheManager } from '../../utils'
