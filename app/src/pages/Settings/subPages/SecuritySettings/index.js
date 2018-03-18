@@ -8,7 +8,7 @@ import { USER } from '../../../../graphql/queries'
 
 import './style.css'
 
-export default class Security extends Component {
+export default class SecuritySettings extends Component {
     constructor(){
         super()
         this.state = {
