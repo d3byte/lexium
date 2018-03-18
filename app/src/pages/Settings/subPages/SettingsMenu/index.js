@@ -12,8 +12,7 @@ export default class SettingsMenu extends Component {
     constructor(){
         super()
         this.state = {
-            user: {},
-            image: ''
+            currentTab: 'account-subpage'
         }
     }
 
@@ -23,12 +22,12 @@ export default class SettingsMenu extends Component {
     }
 
     render(){
-        const user = this.state
+        const { currentTab }  = this.state
         return(
             <div className="menu-subpage container">
                 <span className="menu-header">Настройки</span>
                 <div className="menu-setting-list">
-                    <span className="menu-setting">Аккаунт</span>
+                    <span className={'menu-setting ' + (currentTab == 'account-subpage' ? 'menu-highlighted' : '')} onClick={() => console.log('debug')}>Аккаунт</span>
                     <span className="menu-setting">Безопасность</span>
                     <span className="menu-setting">Личная информация</span>
                     <span className="menu-setting">Управление группами</span>
