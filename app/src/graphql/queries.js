@@ -13,6 +13,7 @@ query user($token: String!) {
             name
             tasks {
                 id
+                groupId
                 name
                 words
                 results {
@@ -26,6 +27,7 @@ query user($token: String!) {
                     }
                     percentage
                 }
+                attempts
                 deadline
                 createdAt
             }
@@ -55,6 +57,7 @@ query group($token: String!, $id: ID!) {
             name
             tasks {
                 id
+                groupId
                 name
                 words
                 results {
@@ -68,6 +71,7 @@ query group($token: String!, $id: ID!) {
                     }
                     percentage
                 }
+                attempts
                 deadline
                 createdAt
             }
