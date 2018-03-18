@@ -33,6 +33,7 @@ query user($token: String!) {
                 id
                 name
                 createdAt
+                avatarUrl
             }
             isPersonal
             avatarUrl
