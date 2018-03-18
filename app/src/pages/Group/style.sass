@@ -22,7 +22,9 @@
             &:hover
                 cursor: pointer
                 opacity: 1
-                
+
+.containers.margin-top .container
+        margin-top: 30px                
 
 .containers.task-create
     flex-direction: column
@@ -88,24 +90,80 @@
 .containers.edit-block
     flex-direction: column
     width: 48%
+.containers.task-list
+    flex-direction: column
+    width: 48%
+    
+    .container
+        &.of-task, &.of-help, &.of-edit
+            width: 100%
+            input
+                padding-left: 0px
+                margin-top: 10px
+        &.of-help
+            display: block
+            margin-bottom: 10px
+            padding: 15px
+        .lightest
+            align-self: flex-end
+            font-size: 18px
+            opacity: 0.6
+        &.of-task
+            .info
+                .name
+                    font-size: 24px
+                    &.task-create
+                        font-size: 22px
+                        color: #979797
+                        opacity: 1
+                .due-date
+                    padding-top: 20px
+                    margin: 0
+                    font-size: 22px
+                    color: #979797
+                    opacity: 1
+                .task-info
+                    font-size: 18px
+    
+    .container
+        &.of-edit
+            display: flex
+            align-items: center !important
+        &.of-repeat
+            width: 100%
+            display: flex
+            flex-direction: column
+            padding-top: 5px
+            min-height: 150px
+            margin-top: 10px
+            background: transparent
+            border: none
+        &.game
+            margin-top: 10px
+            padding: 0px 0px 0px 30px
+            width: 100%
 
-.single-line
-    display: flex
-    justify-content: space-between
-    flex-direction: row
-    width: 100%
+.container span.leave
+    font-family: 'ProximaNova-Regular', sans-serif
+    text-transform: none !important
+    opacity: 0.3
+    transition: 0.3s
+    &:hover
+        cursor: pointer
+        opacity: 1
 
 
 .container-main.menu
     flex-flow: wrap row !important
     width: 100% !important
-    
+    font-family: 'ProximaNova-Regular', sans-serif
     .menu-item
         display: flex
         width: 50%
         align-items: center
         justify-content: center
         transition: 0.3s
+        text-align: center
         &:first-of-type
             border-right: 1px solid #E0E0E0
             border-bottom: 1px solid #E0E0E0
@@ -124,29 +182,45 @@
 .highlighted
     border: 1px solid #8A8CE6 !important
 
-
-.word-table
+.editor .word-table
     margin-top: 0px !important
     width: 100% !important
     .table-row
+        position: relative
+        margin-top: 15px !important
+        font-family: 'ProximaNova-Regular', sans-serif
+        color: #595959
+        &:first-of-type
+            margin-top: 0 !important
+            .cell
+                opacity: 0.8
         .cell
-            &.edit-heading
-                margin-bottom: 10px
+            input
+                border: none
+                text-align: center
+                color: #595959
+                width: 100%
+                background: transparent
+                &:focus
+                    outline: none
+
+.single-line
+    display: flex
+    justify-content: space-between
+    flex-direction: row
+    width: 100%
 
 .word-editor
     display: flex
     flex-direction: column
     align-items: center
-    min-height: 25vh
     width: 100%
 
-.regular
+button
     &.add-words
-        margin-top: 20px
+        margin: 30px 0 15px 0
         min-width: 40px
         font-size: 20px
-    &.save-words
-        margin-top: 10px
 
 input.task
     border-bottom: none

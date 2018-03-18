@@ -3,6 +3,10 @@ import { withApollo } from 'react-apollo'
 
 import Button from '../../components/Button'
 import Header from '../../components/Header'
+import AddMember from '../../components/AddMember'
+import { AllMembers } from '../../components/AllMembers'
+import { TaskList } from '../../components/TaskList'
+import NewTask from './subPages/NewTask'
 
 import { CacheManager } from '../../utils'
 import { GROUP } from '../../graphql/queries'
@@ -13,7 +17,7 @@ class Group extends Component {
   constructor() {
     super()
     this.state = {
-      currentTab: 'task-list',
+      currentTab: 'new-task',
     }
     this.client = {}
     this.cache = new CacheManager()
@@ -123,7 +127,7 @@ class Group extends Component {
             </div>
 
             <div className="container of-info">
-              <span className="title leave right">Покинуть группу</span>
+              { group && !group.isPersonal && <span className="title leave right">Покинуть группу</span> }
               <div className="container-main menu">
                 <div className={'menu-item ' + (currentTab == 'new-task' ? 'selected' : '')} onClick={() => this.changeTab('new-task')}>Новое задание</div>
                 <div className={'menu-item ' + (currentTab == 'task-list' ? 'selected' : '')} onClick={() => this.changeTab('task-list')}>Все задания</div>
@@ -135,12 +139,13 @@ class Group extends Component {
           </div>
         </div>
 
-        {/* <div className="single-line">
+        { currentTab == 'new-task' && <NewTask/> }
+        
+        <div className="section">
           { currentTab == 'task-list' && <TaskList/> }
-          { currentTab == 'new-task' && <TaskCreation/> }
           { currentTab == 'add-member' && <AddMember user={user}/> }
           { currentTab == 'all-members' && <AllMembers/> }
-        </div> */}
+        </div>
 
       </div>
     )
