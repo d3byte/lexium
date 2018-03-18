@@ -13,7 +13,6 @@ async group (root, { token, id }) {
     if (user.id === userId)
       valid = true
   })
-  console.log('Valid:', valid)
   if (!valid)
     return { error: 'Вы не состоите в данной группе' }
   return { group }
@@ -25,14 +24,25 @@ async user (root, { token }) {
   const userId = await getUserId(token)
   return models.User.findById(userId)
 },
-async suitableUsers(root, { token, query }, context) {
+async suitableUsers(root, { token, query, groupId }, context) {
   const userId = await getUserId(token)
   const validUser = await models.User.findById(userId)
   if(validUser) {
-    const users = await models.User.findAll({
+    let users = await models.User.findAll({
       where: {
         [Op.or]: [{ username: { [Op.like]: `%${query}%` } }, { name: { [Op.like]: `%${query}%` } }]
       }
+    }, context)
+    const group = await models.Group.findById(groupId)
+    const groupUsers = await group.getUsers()
+    users = users.map(user => {
+      let valid = true
+      groupUsers.map(groupUser => {
+        if (groupUser.id === user.id)
+          valid = false
+      })
+      if (valid)
+        return user
     })
     return users
   }

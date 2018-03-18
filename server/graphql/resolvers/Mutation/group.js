@@ -38,6 +38,26 @@ module.exports = {
             .then(group => group.addUser(userId))
             .then(theGroup => models.Group.findById(id))
     },
+
+    async addUsersToGroup(root, { token, id, users }, context) {
+        const userId = await getUserId(token)
+        const group = await models.Group.findById(id)
+        let userInGroup = false
+        const groupUsers = await group.getUsers()
+        groupUsers.map(user => {
+            if(user.id === userId) {
+                userInGroup = true
+            }
+        })
+        if (userInGroup) {
+            users.map(async userId => {
+                const user = await models.User.findById(userId)
+                return user.addGroup(id)
+            })
+            return group.addUsers(users).then(() => group)
+        }
+        return { error: 'Пользователь не состоит в группе' }
+    },
     
     async removeUserFromGroup(root, { token, id }, context) {
         const userId = await getUserId(token)

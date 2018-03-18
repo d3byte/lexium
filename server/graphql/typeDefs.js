@@ -5,7 +5,7 @@ type Query {
   task(token: String!, id: ID!, groupId: ID!): QueryPayload!
   group(token: String!, id: ID!): QueryPayload!
   user(token: String!): User
-  suitableUsers(token: String!, query: String!): [User]
+  suitableUsers(token: String!, query: String!, groupId: ID!): [User]
   groups: [Group]
 }
 
@@ -14,6 +14,7 @@ type Mutation {
   updateGroup(id: ID!, input: GroupInput): Group
   updateGroupAvatar(token: String!, avatarUrl: String!, id: ID!): Group
   addUserToGroup(id: ID!, userId: ID!): Group
+  addUsersToGroup(token: String!, id: ID!, users: [ID!]!): Group
   removeUserFromGroup(token: String!, id: ID!): ValidPayload!
   removeGroup(id: ID!): ValidPayload!
 
