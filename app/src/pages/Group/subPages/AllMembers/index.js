@@ -50,7 +50,7 @@ export const AllMembers = ({}) => (
                 <div className="members-info">0 заданий</div>
                 <div className="members-info editing">
                     <div className="members-info user-status">
-                        <i className="material-icons user">done_all</i>
+                        <i className="material-icons user">done</i>
                     </div>
                     <div className="members-info user-remove">
                         <i className="material-icons">clear</i>
