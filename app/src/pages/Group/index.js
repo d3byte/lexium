@@ -3,10 +3,6 @@ import { withApollo } from 'react-apollo'
 
 import Button from '../../components/Button'
 import Header from '../../components/Header'
-import TaskList from '../../components/TaskList'
-import TaskCreation from '../../components/TaskCreation'
-import AddMember from '../../components/AddMember'
-import AllMembers from '../../components/AllMembers'
 
 import { CacheManager } from '../../utils'
 import { GROUP } from '../../graphql/queries'
@@ -25,12 +21,16 @@ class Group extends Component {
   }
 
   fetchData = async (token, groupId) => {
-    const { location } = this.props
+    const { location, history } = this.props
     const response = await this.client.query({ query: GROUP, variables: { token, id: groupId } })
-    let { group, error } = response.data
-    if (error && error.length > 0) { this.props.history.push('/profile') }
-    group.superUsers = JSON.parse(group.superUsers)
-    this.setState({ group, fetching: false })
+    let { group, error } = response.data.group
+    if (error && error.length > 0) {
+      history.push('/profile') 
+    }
+    this.setState({ 
+      group: { ...group, superUsers: JSON.parse(group.superUsers) }, 
+      fetching: false 
+    })
   }
 
   changeTab = (tabName) => {
@@ -98,17 +98,14 @@ class Group extends Component {
     const { fetching, showHelp, showEdit, highlighted, user, group, currentTab } = this.state
     return (
       <div> 
-        <Header fetching={fetching} pathname={pathname} history={history} inputHandler={this.searchTasks}/>
+        <Header fetching={fetching} pathname={pathname} history={history} />
 
         <div className="section info">
-          <div className="titles">
-            <span className="title">Информация</span>
-            <span className="title">Управление группой</span>
-          </div>
 
-          <div className="containers">
+          <div className="containers margin-top">
 
             <div className="container of-info">
+              <span className="title">Информация</span>
               <div className="avatar">
                 <img src={group ? group.avatarUrl : ''} alt="avatar"/>
               </div>
@@ -126,6 +123,7 @@ class Group extends Component {
             </div>
 
             <div className="container of-info">
+              <span className="title leave right">Покинуть группу</span>
               <div className="container-main menu">
                 <div className={'menu-item ' + (currentTab == 'new-task' ? 'selected' : '')} onClick={() => this.changeTab('new-task')}>Новое задание</div>
                 <div className={'menu-item ' + (currentTab == 'task-list' ? 'selected' : '')} onClick={() => this.changeTab('task-list')}>Все задания</div>
@@ -137,23 +135,13 @@ class Group extends Component {
           </div>
         </div>
 
-        <div className="section tasks">
-          <div className="titles">
-          {currentTab == 'task-list' && ( <span className="title with-icon">Список заданий<i className="material-icons" onClick={this.toggleHelp} onBlur={this.toggleHelp}>help_outline</i></span>)}
-          {currentTab == 'new-task' && (<span className="title with-icon">Информация о задании</span>)}
-          {currentTab == 'add-member' && (<span className="title with-icon">Новый участник</span>)}
-          {currentTab == 'all-members' && (<span className="title with-icon">Список участников</span>)}
-          {((currentTab == 'task-list') || (currentTab == 'new-task')) && (<span className="title reverse">Редактор слов</span>)}
-          </div>
-          
-          <div className="single-line">
-          {currentTab == 'task-list' && (<TaskList/>)}
-          {currentTab == 'new-task' && (<TaskCreation/>)}
-          {currentTab == 'add-member' && (<AddMember user={user}/>)}
-          {currentTab == 'all-members' && (<AllMembers/>)}
-          </div>
+        {/* <div className="single-line">
+          { currentTab == 'task-list' && <TaskList/> }
+          { currentTab == 'new-task' && <TaskCreation/> }
+          { currentTab == 'add-member' && <AddMember user={user}/> }
+          { currentTab == 'all-members' && <AllMembers/> }
+        </div> */}
 
-        </div>
       </div>
     )
   }
