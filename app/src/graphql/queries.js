@@ -91,8 +91,8 @@ query group($token: String!, $id: ID!) {
 `
 
 const SUITABLE_USERS = gql`
-query suitableUsers($token: String!, $query: String!) {
-    query suitableUsers(token: $token, query: $query) {
+query suitableUsers($token: String!, $query: String!, $groupId: ID!) {
+    suitableUsers(token: $token, query: $query, groupId: $groupId) {
         id
         name
         username

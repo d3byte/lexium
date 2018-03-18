@@ -243,10 +243,20 @@ mutation checkEmail($email: String!) {
 }
 `
 
+const ADD_USERS_TO_GROUP = gql`
+mutation addUsersToGroup($token: String!, $id: ID!, $users: [ID!]!) {
+    addUsersToGroup(token: $token, id: $id, users: $users) {
+        id
+        name
+        createdAt
+    }
+}
+`
+
 export {
     LOGIN, SIGN_UP,
     CREATE_GROUP, UPDATE_GROUP,
     CHECK_USERNAME, CHECK_EMAIL,
     UPDATE_AVATAR, CREATE_TASK,
-
+    ADD_USERS_TO_GROUP, 
 }
