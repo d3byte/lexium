@@ -17,7 +17,7 @@ type Mutation {
   removeUserFromGroup(token: String!, id: ID!): ValidPayload!
   removeGroup(id: ID!): ValidPayload!
 
-  createTask(input: TaskInput!, words: [WordPairInput!]!): Task
+  createTask(input: TaskInput!, words: [WordPairInput!]!, groupId: ID!, attempts: Attempts!): Task
   updateTask(id: ID!, input: TaskInput!): Task
   updateTaskWordPairs(id: ID!, words: [WordPairInput!]!): Task
   setResult(id: ID!, res: ResultInput!, userId: ID!): Task
@@ -89,9 +89,11 @@ input UserInput {
 
 type Task {
   id: ID!
+  groupId: ID!
   name: String!
   words: String!
-  results: [Result!]!
+  results: [Result]
+  attempts: String!
   deadline: Date!
   createdAt: Date!
 }
@@ -101,15 +103,23 @@ input TaskInput {
   deadline: Date!
 }
 
+input Attempts {
+  learnWords: Int!
+  findPair: Int!
+  typeIn: Int!
+  scramble: Int!
+}
+
 type WordPair {
   id: ID!
-  word: String!
-  translation: String!
+  key: String!
+  value: String!
 }
 
 input WordPairInput {
-  word: String!
-  translation: String!
+  id: ID!
+  key: String!
+  value: String!
 }
 
 type Result {

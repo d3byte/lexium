@@ -90,13 +90,24 @@ class Profile extends Component {
   }
 
   determineRemainingDays = task => {
-    const deadline = this.splitDate(task.deadline).day,
-      today = new Date().getDate,
-      difference = deadline - today
-    if (difference < 0) {
+    let deadline = this.splitDate(task.deadline),
+      date = new Date(),
+      year = date.getFullYear(),
+      today = date.getDate(),
+      month = date.getMonth(),
+      maxDays = new Date(year, month, 0).getDate(),
+      daysCount = 0
+    
+    while (parseInt(deadline.month) - 1 > month) {
+      month += 1
+      maxDays = new Date(year, month, 0).getDate()
+      daysCount += maxDays
+    }
+    daysCount += parseInt(deadline.day) - today
+    if (daysCount < 0) {
       return 'время вышло'
     }
-    return difference
+    return daysCount
   }
 
   getUserResult = task => {
@@ -124,12 +135,22 @@ class Profile extends Component {
   }
 
   fetchData = async token => {
+    this.setState({ fetching: true })
     const response = await this.client.query({ query: USER, variables: { token } })
     const { user } = response.data
-    this.cache.writeData('user', user)
+    const groups = user.groups.map(group => {
+      const { uncompletedTasks, completedTasks } = this.splitTasks(group.tasks, user.id)
+      const tasks = group.tasks.map(task => {
+        return { ...task, attempts: JSON.parse(task.attempts), words: JSON.parse(task.words) }
+      })
+      return { ...group, superUsers: JSON.parse(group.superUsers), tasks, uncompletedTasks, completedTasks }
+    })
+    const newUser = Object.assign({}, { ...user, groups })
+    this.cache.writeData('user', newUser)
     const { currentGroup } = this.state
-    user.groups.map(group => {
-      if(group.id == currentGroup.id) {
+    newUser.groups.map(group => {
+      if(group.id === currentGroup.id) {
+        console.log(true)
         this.setState({ user, currentGroup: group, fetching: false })
         this.cache.writeData('currentGroup', group)
       } 
@@ -150,7 +171,7 @@ class Profile extends Component {
         const currentGroup = await this.cache.readData('currentGroup')
         const token = await this.cache.readData('token')
         this.token = token
-        this.setState({ user: cachedUser, currentGroup, fetching: true })
+        this.setState({ user: cachedUser, currentGroup })
         this.fetchData(token)
       } catch (error) {
         console.log(error)
@@ -221,7 +242,7 @@ class Profile extends Component {
 
         <div className="section tasks">
           <span className="title">Задания</span>
-          <div className="containers">
+          <div className="containers tasks">
 
             {
               query.completedTasks || query.uncompletedTasks ?

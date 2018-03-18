@@ -20,9 +20,12 @@
         margin-top: 10px
         display: flex
         justify-content: space-between
+        flex-wrap: wrap
         &.hide
             display: none
-        
+        &.tasks
+            justify-content: flex-start
+
         .container
             position: relative
             background: white
@@ -106,9 +109,11 @@
                 padding: 15px
                 min-height: 150px
                 margin-top: 10px
+                margin-right: 5%
                 &:nth-of-type(1), &:nth-of-type(2), &:nth-of-type(3)
-                    margin: 0
-
+                    margin-top: 0
+                &:nth-of-type(3n)
+                    margin-right: 0
                 .info
                     font-family: 'ProximaNova-Regular', sans-serif
                     p
@@ -236,6 +241,7 @@ p.no-tasks
             width: 100%
             &:not(:last-of-type)
                 margin-bottom: 10px
+        
 
     .section .containers .container.of-info .container-main .info .name span:first-of-type.right-lined:after
         content: ''
@@ -258,11 +264,13 @@ p.no-tasks
             &:nth-of-type(2)
              margin-top: 20px
 
-@media (max-width: 850px)
     .section.tasks .containers
         flex-wrap: wrap
         .container.of-task
             width: 48%
+            margin-right: 0
+            &:nth-of-type(2n)
+                margin-left: 4%
             &:nth-of-type(3)
                 margin-top: 10px
 
@@ -270,6 +278,7 @@ p.no-tasks
     .section.tasks .containers
         .container.of-task
             width: 100%
+            margin-left: 0 !important
             &:nth-of-type(2)
                 margin-top: 10px        
         
@@ -291,6 +300,8 @@ p.no-tasks
 @media (max-width: 395px)
     .section .title
         flex-direction: column
+        &.switch
+            align-items: flex-start
         .switch
             margin: 5px 0 0 -15px
 

@@ -63,7 +63,7 @@ class Signin extends Component {
       const { error } = data.data.login
       if(error) {
         const errorInput = (error == 'Неверный пароль' ? 'password' : 'username')
-        this.setState({ error: 'pidor', loading: false, errorInput: 'password' })
+        this.setState({ error, loading: false, errorInput: 'password' })
       } else {
         let { user, token } = data.data.login
         user.groups.map(group => {

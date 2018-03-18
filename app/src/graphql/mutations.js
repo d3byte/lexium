@@ -22,6 +22,7 @@ mutation login($username: String!, $password: String!) {
                 }
                 tasks {
                     id
+                    groupId
                     name
                     words
                     results {
@@ -63,6 +64,7 @@ mutation signup($username: String!, $name: String!, $email: String!, $password: 
                 name
                 tasks {
                     id
+                    groupId
                     name
                     words
                     results {
@@ -114,6 +116,7 @@ mutation updateUserAvatar($token: String!, $avatarUrl: String!) {
             }
             tasks {
                 id
+                groupId
                 name
                 words
                 results {
@@ -146,6 +149,7 @@ mutation createGroup($name: String!, $usersIds: [ID!]!, $superUsers: [ID!]!) {
         name
         tasks {
             id
+            groupId
             name
         }
         users {
@@ -173,6 +177,7 @@ mutation updateGroup($id: ID!, $input: GroupInput!) {
         }
         tasks {
             id
+            groupId
             name
             words
             results {
@@ -190,6 +195,31 @@ mutation updateGroup($id: ID!, $input: GroupInput!) {
             createdAt
         }
         superUsers
+        createdAt
+    }
+}
+`
+
+const CREATE_TASK = gql`
+mutation createTask($input: TaskInput!, $words: [WordPairInput!]!, $groupId: ID!, $attempts: Attempts!) {
+    createTask(input: $input, words: $words, groupId: $groupId, attempts: $attempts) {
+        id
+        groupId
+        name
+        words
+        results {
+            id
+            wordsLearnt
+            user {
+                id
+                name
+                wordsLearnt
+                avatarUrl
+            }
+            percentage
+        }
+        attempts
+        deadline
         createdAt
     }
 }
@@ -217,5 +247,6 @@ export {
     LOGIN, SIGN_UP,
     CREATE_GROUP, UPDATE_GROUP,
     CHECK_USERNAME, CHECK_EMAIL,
-    UPDATE_AVATAR, 
+    UPDATE_AVATAR, CREATE_TASK,
+
 }
