@@ -27,7 +27,9 @@ module.exports = function (sequelize) {
   const Task = sequelize.define('Task', {
     name: Sequelize.STRING,
     deadline: Sequelize.DATE,
-    words: Sequelize.STRING
+    words: Sequelize.STRING,
+    attempts: Sequelize.STRING,
+    groupId: Sequelize.STRING
   })
 
   const Result = sequelize.define('Result', {

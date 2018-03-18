@@ -2,12 +2,13 @@ const { models } = require('../../../models')
 
 module.exports = {
     // User
-    createTask(root, { input, words }, context) {
-        words = words.map((pair, index) => {
-            pair.id = index.toString()
-            return pair
+    async createTask(root, { input, words, groupId, attempts }, context) {
+        const task = await models.Task.create({ 
+            ...input, words: JSON.stringify(words), 
+            groupId, attempts: JSON.stringify(attempts)
         })
-        return models.Task.create({ ...input, words: JSON.stringify(words) })
+        const group = await models.Group.findById(groupId)
+        return group.addTask(task.id).then(() => task)
     },
 
     updateTask(root, { id, input }, context) {
