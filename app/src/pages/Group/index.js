@@ -139,7 +139,7 @@ class Group extends Component {
           </div>
         </div>
 
-        { currentTab == 'new-task' && <NewTask/> }
+        { currentTab == 'new-task' && <NewTask groupId={group ? group.id : null} client={this.client} /> }
         
         <div className="section">
           { currentTab == 'task-list' && <TaskList/> }
