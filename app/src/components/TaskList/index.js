@@ -8,7 +8,7 @@ import { GROUP } from '../../graphql/queries'
 
 import './style.css'
 
-const TaskList = ({}) => (
+export const TaskList = ({}) => (
     <div className="containers task-list">
         <div className="container of-task">
             <div className="info">
@@ -20,5 +20,3 @@ const TaskList = ({}) => (
         </div>
     </div>
 )
-
-export default TaskList

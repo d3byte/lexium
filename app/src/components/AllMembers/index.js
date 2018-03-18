@@ -8,7 +8,7 @@ import { GROUP } from '../../graphql/queries'
 
 import './style.css'
 
-const AllMembers = ({}) => (
+export const AllMembers = ({}) => (
     <div className="all-members">
         <div className="containers of-header">
             <div className="members-header">
@@ -64,5 +64,3 @@ const AllMembers = ({}) => (
         </div>
     </div>
 )
-
-export default AllMembers
