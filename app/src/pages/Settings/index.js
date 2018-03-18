@@ -4,8 +4,11 @@ import { withApollo } from 'react-apollo'
 import Button from '../../components/Button'
 import Header from '../../components/Header'
 import SettingsMenu from './subPages/SettingsMenu'
-import AccountSettings from './subPages/Account'
-import Security from './subPages/Security'
+import AccountSettings from './subPages/AccountSettings'
+import SecuritySettings from './subPages/SecuritySettings'
+import PersonalSettings from './subPages/PersonalSettings'
+import GroupSettings from './subPages/GroupSettings'
+import SubscriptionSettings from './subPages/SubscriptionSettings'
 
 import './style.css'
 
@@ -80,7 +83,10 @@ class Settings extends Component {
       <div className="settings section group-subpage">
           <div className="left containers subpage-container">
           <AccountSettings user={user}/>
-          <Security user={user}/>
+          <SecuritySettings user={user}/>
+          <PersonalSettings user={user}/>
+          <GroupSettings user={user}/>
+          <SubscriptionSettings user={user}/>
         </div>
 
         <div className="right containers menu-container">
