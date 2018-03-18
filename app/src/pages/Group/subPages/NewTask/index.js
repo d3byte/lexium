@@ -180,7 +180,8 @@ export default class NewTask extends Component {
               <label>Сколько дней на выполнение?</label>
               <input 
                 type="number" className="line-based" 
-                placeholder="Дни" name="deadline" 
+                placeholder="Дни" name="deadline"
+                min="1"
                 onChange={this.infoInput} required
               />
             </div>
@@ -242,7 +243,7 @@ export default class NewTask extends Component {
                 }
               </div>
               <button className="regular add-words" onClick={this.addWordPair}>+</button>
-              <button className="regular save-words">Сохранить изменения</button>
+              <button className="regular save-words">Создать</button>
               { success && <p className="success-msg">Задание успешно создано</p> }
             </div>
 
