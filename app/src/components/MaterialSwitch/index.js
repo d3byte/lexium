@@ -1,8 +1,8 @@
 import React from 'react'
 import './style.css'
 
-const MaterialSwitch = ({ titleProp, changeHandler, addClasses}) => (
-    <span className={'title switch ' + addClasses}>
+const MaterialSwitch = ({ titleProp, changeHandler, extraClasses}) => (
+    <span className={'title switch ' + extraClasses}>
             {titleProp}
             <div className="switch">
               <label>

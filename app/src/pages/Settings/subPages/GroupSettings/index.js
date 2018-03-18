@@ -33,7 +33,7 @@ export default class GroupSettings extends Component {
                     <div className="container-settings security-menu">
                         <div className="container-main group-settings">
                         <MaterialSwitch titleProp="Показывать список групп другим пользователям" addClasses='fullWidthSwitch'/>
-                        <MaterialSwitch titleProp="Разрешать приглашать меня в группы" addClasses='fullWidthSwitch'/>
+                        <MaterialSwitch titleProp="Разрешать приглашать меня в группы" extraClasses='fullWidthSwitch'/>
                         <button className="regular personal-button">Сохранить</button>
                         </div>
                     </div>
