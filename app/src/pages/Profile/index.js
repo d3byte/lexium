@@ -44,7 +44,17 @@ class Profile extends Component {
   }
 
   changeGroup = group => {
-    this.setState({ currentGroup: group })
+    const { user } = this.state
+    const { uncompletedTasks, completedTasks } = this.splitTasks(group.tasks, user.id)
+    const tasks = group.tasks.map(task => {
+      return { ...task, attempts: JSON.parse(task.attempts), words: JSON.parse(task.words) }
+    })
+    this.setState({ 
+      currentGroup: {
+        ...group, superUsers: JSON.parse(group.superUsers), 
+        tasks, uncompletedTasks, completedTasks
+      } 
+    })
     this.cache.writeData('currentGroup', group)
     this.hideGroupList()
   }
@@ -179,6 +189,7 @@ class Profile extends Component {
     } else {
       this.setState({ user, currentGroup: user.groups[0] })
       this.token = token
+      this.fetchData(token)
     }
   }
   
