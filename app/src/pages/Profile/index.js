@@ -89,13 +89,24 @@ class Profile extends Component {
   }
 
   determineRemainingDays = task => {
-    const deadline = parseInt(this.splitDate(task.deadline).day),
-      today = new Date().getDate(),
-      difference = deadline - today
-    if (difference < 0) {
+    let deadline = this.splitDate(task.deadline),
+      date = new Date(),
+      year = date.getFullYear(),
+      today = date.getDate(),
+      month = date.getMonth(),
+      maxDays = new Date(year, month, 0).getDate(),
+      daysCount = 0
+    
+    while (parseInt(deadline.month) - 1 > month) {
+      month += 1
+      maxDays = new Date(year, month, 0).getDate()
+      daysCount += maxDays
+    }
+    daysCount += parseInt(deadline.day) - today
+    if (daysCount < 0) {
       return 'время вышло'
     }
-    return difference
+    return daysCount
   }
 
   getUserResult = task => {
@@ -126,8 +137,6 @@ class Profile extends Component {
     this.setState({ fetching: true })
     const response = await this.client.query({ query: USER, variables: { token } })
     const { user } = response.data
-    console.log(this.client)
-    console.log(user)
     const groups = user.groups.map(group => {
       const { uncompletedTasks, completedTasks } = this.splitTasks(group.tasks, user.id)
       const tasks = group.tasks.map(task => {
