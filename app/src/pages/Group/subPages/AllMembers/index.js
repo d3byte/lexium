@@ -8,8 +8,24 @@ import { GROUP } from '../../../../graphql/queries'
 
 import './style.css'
 
-export const AllMembers = ({}) => (
-    <div className="all-members">
+export default class AllMembers extends Component {
+    constructor() {
+      super()
+      this.state = {
+          user: []
+      }
+    }
+  
+    componentDidMount = () => {
+      const { user } = this.props
+      this.setState({ user })
+    }
+
+
+    render() {
+        const user = this.state
+        return (
+            <div className="all-members">
         <div className="containers of-header">
             <div className="members-header">
                 <div className="members-info head">Имя пользователя</div>
@@ -59,4 +75,6 @@ export const AllMembers = ({}) => (
             </div>
         </div>
     </div>
-)
+        )
+    }
+}
