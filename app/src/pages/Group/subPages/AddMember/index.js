@@ -18,7 +18,7 @@ export default class AddMember extends Component {
       query: '',
       suitableUsers: [],
       invitedUsers: [],
-      success: false
+      success: true
     }
     this.client = null
     this.cache = new CacheManager()
@@ -27,7 +27,7 @@ export default class AddMember extends Component {
   
   handler = e => {
     const { value } = e.target
-    this.setState({ query: value })
+    this.setState({ query: value, success: false })
     if (value.length === 0) {
       this.setState({ suitableUsers: [] })
     }
@@ -155,7 +155,7 @@ export default class AddMember extends Component {
           {
             invitedUsers.length > 0 && <button className="regular save-words" onClick={this.save}>Пригласить</button>
           }
-          { success && <p className="success-msg">Пользователи успешно добавлены</p> }
+          { success && <p className="successful-message">Пользователи успешно добавлены</p> }
         </div>
 
 

@@ -40,7 +40,12 @@ input
         display: flex
         align-items: center
 
-    
+.successful-message
+    font-family: 'ProximaNova-Regular', sans-serif
+    font-size: 18px
+    color: #595959
+    text-align: right
+
 .avatar.member
     display: flex
     align-items: center
@@ -54,3 +59,7 @@ input
         font-size: 24px
         color: #595959
         opacity: 0.8
+
+@media (max-width: 750px)
+    .successful-message
+        text-align: center
