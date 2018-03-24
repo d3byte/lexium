@@ -55,6 +55,36 @@
             background: transparent
             border: none
 
+    .successful-process
+        flex-direction: column !important
+        justify-content: flex-start !important
+        margin: 0 auto
+        font-family: 'ProximaNova-Regular', sans-serif
+        color: #595959
+        padding-bottom: 40px
+        & > p
+            font-size: 24px
+            text-align: center
+        .container
+            display: inline-flex
+            min-width: 150px !important
+            width: auto !important
+            padding: 30px
+            margin: 0
+            flex-direction: column !important
+            p
+                margin: 15px 0 0 0
+                &:first-of-type
+                    margin: 0
+                & ~ p
+                    font-size: 18px
+            .task-name
+                font-family: 'ProximaNova-Semibold', sans-serif
+                font-size: 26px
+        button
+            margin: 30px auto 0 auto
+            width: 200px
+
 @media (max-width: 750px)
     .group-subpage
         flex-direction: column
