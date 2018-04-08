@@ -5,7 +5,7 @@ import Button from '../../components/Button'
 import Header from '../../components/Header'
 import AddMember from './subPages/AddMember'
 import AllMembers from './subPages/AllMembers'
-import { TaskList } from './subPages/TaskList'
+import TaskList from './subPages/TaskList'
 import NewTask from './subPages/NewTask'
 
 import { CacheManager } from '../../utils'
@@ -143,7 +143,7 @@ class Group extends Component {
         </div>
 
         { currentTab == 'new-task' && <NewTask groupId={group ? group.id : null} client={this.client} /> }
-        { currentTab == 'task-list' && <TaskList/> }
+        { currentTab == 'task-list' && <TaskList tasks={group.tasks}/> }
         { currentTab == 'add-member' && <AddMember user={user} token={this.token} group={group} client={this.client} /> }
         { currentTab == 'all-members' && <AllMembers/> }
 
