@@ -232,7 +232,8 @@ export default class NewTask extends Component {
                         <div className="table-row" key={item.id}>
                           <div className="cell">
                             <input 
-                              type="text" placeholder="Banana" 
+                              type="text" placeholder="Banana"
+                              className="clear"
                               name="key" onChange={e => this.editWordPair(e, item)}
                               onKeyDown={e => this.removeWordPair(e, item, index)}
                               ref={ref => this.inputTofocus = ref}
@@ -241,7 +242,8 @@ export default class NewTask extends Component {
                           </div>
                           <div className="cell">
                             <input 
-                              type="text" placeholder="Банан" 
+                              type="text" placeholder="Банан"
+                              className="clear"
                               name="value" onChange={e => this.editWordPair(e, item)}
                               onKeyDown={e => this.hotKeyAddWordPair(e, index)}
                               required

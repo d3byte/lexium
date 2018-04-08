@@ -18,7 +18,7 @@ export default class AddMember extends Component {
       query: '',
       suitableUsers: [],
       invitedUsers: [],
-      success: true
+      success: false
     }
     this.client = null
     this.cache = new CacheManager()
@@ -68,15 +68,12 @@ export default class AddMember extends Component {
       mutation: ADD_USERS_TO_GROUP,
       variables: { token: this.token, id: group.id, users }
     })
-    console.log(newUser)
     Array.prototype.push.apply(invitedUsers, newGroup.users)
-    console.log(newGroup)
     newUser.groups.map(group => {
       if(group.id === newGroup.id) {
         group = newGroup
       }
     })
-    console.log('djuu')
     this.cache.writeData('user', newUser)
     this.setState({ 
       group: newGroup, user: newUser, 
