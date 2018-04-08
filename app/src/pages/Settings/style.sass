@@ -1,13 +1,32 @@
 .settings
     .container-settings
-        display: flex
-        flex-direction: row-reverse
-        justify-content: space-between
+        display: flex !important
+        flex-direction: row-reverse !important
+        justify-content: space-between !important
         width: 100%
         min-height: 50px
         background: white
         border: 1px solid #e9e9e9
         border-radius: 4px
+        padding: 0 !important
+    .form
+        display: flex
+        flex-direction: column
+        justify-content: space-between
+        width: 100%
+        height: 100%
+        padding: 20px 30px
+        overflow: hidden
+        input
+            min-width: 100%
+        .form-group
+            display: flex
+            flex-direction: column
+            margin-bottom: 10px
+            label
+                margin-bottom: 5px
+        button
+            margin-top: 20px
 .avatar
     position: relative
     display: flex
@@ -41,24 +60,6 @@
         top: -20px
         color: #595959
         opacity: 0.6
-    .form
-        display: flex
-        flex-direction: column
-        justify-content: space-between
-        width: 100%
-        height: 100%
-        padding: 20px 30px
-        overflow: hidden
-        input
-            min-width: 100%
-        .form-group
-            display: flex
-            flex-direction: column
-            margin-bottom: 10px
-            label
-                margin-bottom: 5px
-        button
-            margin-top: 20px
 
     .menu-container
         width: 20% !important

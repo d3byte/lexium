@@ -4,11 +4,6 @@ import { withApollo } from 'react-apollo'
 import Button from '../../components/Button'
 import Header from '../../components/Header'
 import SettingsMenu from './subPages/SettingsMenu'
-import AccountSettings from './subPages/AccountSettings'
-import SecuritySettings from './subPages/SecuritySettings'
-import PersonalSettings from './subPages/PersonalSettings'
-import GroupSettings from './subPages/GroupSettings'
-import SubscriptionSettings from './subPages/SubscriptionSettings'
 
 import './style.css'
 
@@ -81,14 +76,35 @@ class Settings extends Component {
       <div className="">
       <Header fetching={fetching} pathname={pathname} history={history} />
       <div className="settings section group-subpage">
-          <div className="left containers subpage-container">
-          <AccountSettings user={user}/>
-          <SecuritySettings user={user}/>
-          <PersonalSettings user={user}/>
-          <GroupSettings user={user}/>
-          <SubscriptionSettings user={user}/>
+        <div className="left containers">
+          <div className="container container-settings">
+            <span className="title">Аккаунт</span>
+            <div className="avatar">
+                {
+                  updatedAvatar && <span className="loading-status">Изображение загружено</span>
+                }
+                <input type="file" onChange={this.uploadImage} name="image" accept="image/*" />
+                {
+                  user.avatarUrl || image ? 
+                    <img src={image || user.avatarUrl} alt="user-avatar" /> :
+                    <i className="material-icons">file_upload</i>
+                }
+              </div>
+              <div className="container-main">
+                <div className="form">
+                  <div className="form-group">
+                    <label>Логин</label>
+                    <input type="text" className="line-based" placeholder={user && user.username} />
+                  </div>
+                  <div className="form-group">
+                    <label>Почта</label>
+                    <input type="text" className="line-based" placeholder={user && user.email} />
+                  </div>
+                <Button clickHandler={() => console.log('Ура!')} classNameProp="regular lighter" text="Сохранить" />
+                </div>
+              </div>
+          </div>
         </div>
-
         <div className="right containers menu-container">
           <SettingsMenu/>
         </div>

@@ -54,7 +54,7 @@ class Group extends Component {
   }
 
   cacheNewGroup = group => {
-    const { user } = this.state
+    const user = Object.assign({}, this.state.user)
     user.groups = user.groups.map(item => {
       if (item.id === group.id)
         return group
