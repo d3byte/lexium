@@ -4,7 +4,7 @@ import { withApollo } from 'react-apollo'
 import Button from '../../components/Button'
 import Header from '../../components/Header'
 import AddMember from './subPages/AddMember'
-import AllMembers from './subPages/AllMembers'
+import Settings from './subPages/Settings'
 import TaskList from './subPages/TaskList'
 import NewTask from './subPages/NewTask'
 
@@ -40,6 +40,11 @@ class Group extends Component {
   }
 
   changeTab = (tabName) => {
+    const { user, group } = this.state
+    if (tabName === 'settings' && !group.superUsers.includes(parseInt(user.id)))
+      return
+    else if (tabName === 'add-member' && group.isPersonal)
+      return
     this.setState({ currentTab: tabName })
   }
 
@@ -102,7 +107,7 @@ class Group extends Component {
   render() {
     const { history } = this.props
     const { pathname } = this.props.location
-    const { fetching, showHelp, showEdit, highlighted, user, group, currentTab } = this.state
+    const { fetching, user, group, currentTab } = this.state
     return (
       <div> 
         <Header fetching={fetching} pathname={pathname} history={history} />
@@ -124,7 +129,6 @@ class Group extends Component {
                   <p className="bigger">
                     Участников: <b>{group && group.users ? group.users.length : ''}</b>
                   </p>
-                  <p className="lighten hover">Покинуть группу</p>
                 </div>
               </div>
             </div>
@@ -132,20 +136,49 @@ class Group extends Component {
             <div className="container of-info">
               { group && !group.isPersonal && <span className="title leave right">Покинуть группу</span> }
               <div className="container-main menu">
-                <div className={'menu-item ' + (currentTab == 'new-task' ? 'selected' : '')} onClick={() => this.changeTab('new-task')}>Новое задание</div>
-                <div className={'menu-item ' + (currentTab == 'task-list' ? 'selected' : '')} onClick={() => this.changeTab('task-list')}>Все задания</div>
-                <div className={'menu-item ' + (currentTab == 'add-member' ? 'selected' : '')} onClick={() => this.changeTab('add-member')}>Добавить участника</div>
-                <div className={'menu-item ' + (currentTab == 'all-members' ? 'selected' : '')} onClick={() => this.changeTab('all-members')}>Все участники</div>
+                <div 
+                  className={'menu-item ' + (currentTab === 'new-task' ? 'selected ' : '')} 
+                  onClick={() => this.changeTab('new-task')}
+                >
+                  Новое задание
+                </div>
+                <div 
+                  className={'menu-item ' + (currentTab === 'task-list' ? 'selected' : '')} 
+                  onClick={() => this.changeTab('task-list')}
+                >
+                  Все задания
+                </div>
+                <div 
+                  className={'menu-item ' + (currentTab === 'add-member' ? 'selected ' : '') + (group && group.isPersonal ? 'disabled' : '')} 
+                  onClick={() => this.changeTab('add-member')}
+                >
+                  Добавить участника
+                </div>
+                <div 
+                  className={
+                    'menu-item ' + (currentTab === 'settings' ? 'selected ' : '') +
+                    (group.superUsers && !group.superUsers.includes(parseInt(user.id)) ? 'disabled' : '')
+                  }
+                  onClick={() => this.changeTab('settings')}
+                >
+                  Настройки
+                </div>
               </div>
             </div>
 
           </div>
         </div>
 
-        { currentTab == 'new-task' && <NewTask groupId={group ? group.id : null} client={this.client} /> }
-        { currentTab == 'task-list' && <TaskList tasks={group.tasks}/> }
-        { currentTab == 'add-member' && <AddMember user={user} token={this.token} group={group} client={this.client} /> }
-        { currentTab == 'all-members' && <AllMembers/> }
+        { currentTab === 'new-task' && <NewTask groupId={group ? group.id : null} client={this.client} /> }
+        { currentTab === 'task-list' && (
+            <TaskList 
+              tasks={group.tasks} 
+              userIsAdmin={group.superUsers && group.superUsers.includes(parseInt(user.id)) ? true : false} 
+            />
+          ) 
+        }
+        { currentTab === 'add-member' && <AddMember user={user} token={this.token} group={group} client={this.client} /> }
+        { currentTab === 'settings' && <Settings/> }
 
       </div>
     )

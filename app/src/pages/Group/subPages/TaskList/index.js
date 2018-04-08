@@ -15,7 +15,8 @@ class TaskList extends Component {
       tasks: props.tasks,
       tasksBackup: props.tasks,
       selected: null,
-      success: false
+      success: false,
+      userIsAdmin: props.userIsAdmin
     }
     this.client = props.client
   }
@@ -115,7 +116,7 @@ class TaskList extends Component {
   }
 
   render() {
-    const { tasks, selected, success } = this.state
+    const { tasks, selected, success, userIsAdmin } = this.state
     return (
       <div className="section group-subpage">
         <div className="left containers">
@@ -128,7 +129,11 @@ class TaskList extends Component {
               >
                 { index === 0 && <span className="title">Список заданий</span> }
                 <p className="name">
-                  <input className="clear" name="name" value={task.name} onChange={this.inputHandler}/>
+                {
+                  userIsAdmin ? 
+                    <input className="clear" name="name" value={task.name} onChange={this.inputHandler}/>
+                    : task.name
+                }
                 </p>
                 <p className="task-info">Пар слов: <b>{task && JSON.parse(task.words).length}</b></p>
                 <p className="task-info">Пройдено раз: <b>{task && task.results.length}</b></p>
@@ -139,7 +144,7 @@ class TaskList extends Component {
         </div>
 
         {
-          selected && (
+          selected && userIsAdmin && (
             <div className="right containers">
               <div className="container editor">
                 <span className="title right">Редактор слов</span>
