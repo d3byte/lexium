@@ -20,7 +20,6 @@ type Mutation {
 
   createTask(input: TaskInput!, words: [WordPairInput!]!, groupId: ID!, attempts: Attempts!): Task
   updateTask(id: ID!, input: TaskInput!): Task
-  updateTaskWordPairs(id: ID!, words: [WordPairInput!]!): Task
   setResult(id: ID!, res: ResultInput!, userId: ID!): Task
   updateResult(id: ID!, taskId: ID!, result: ResultInput!, userId: ID!): Task
   removeTask(id: ID!): Task
@@ -101,7 +100,8 @@ type Task {
 
 input TaskInput {
   name: String!
-  deadline: Date!
+  deadline: Date
+  words: String!
 }
 
 input Attempts {

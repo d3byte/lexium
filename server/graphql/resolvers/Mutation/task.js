@@ -1,4 +1,5 @@
 const { models } = require('../../../models')
+const { getUserId } = require('../../../utils')
 
 module.exports = {
     // User
@@ -13,14 +14,9 @@ module.exports = {
 
     updateTask(root, { id, input }, context) {
         return models.Task.findById(id)
-            .then(task => {
-                return task.update(input)
-            })
-    },
-
-    updateTaskWordPairs(root, { id, words }, context) {
-        return models.Task.findById(id)
-            .then(task => task.update({ words: JSON.stringify(words) }))
+        .then(task => {
+            return task.update(input)
+        })
     },
 
     setResult(root, { id, res, userId }, context) {
