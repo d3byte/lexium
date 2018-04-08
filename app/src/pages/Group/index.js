@@ -178,7 +178,7 @@ class Group extends Component {
           ) 
         }
         { currentTab === 'add-member' && <AddMember user={user} token={this.token} group={group} client={this.client} /> }
-        { currentTab === 'settings' && <Settings/> }
+        { currentTab === 'settings' && <Settings group={group}/> }
 
       </div>
     )

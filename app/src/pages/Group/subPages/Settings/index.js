@@ -8,22 +8,17 @@ import { GROUP } from '../../../../graphql/queries'
 
 import './style.css'
 
-export default class Settings extends Component {
-    constructor() {
-      super()
+class Settings extends Component {
+    constructor(props) {
+      super(props)
       this.state = {
-          user: []
+          group: props.group,
       }
+      this.client = props.client
     }
-  
-    componentDidMount = () => {
-      const { user } = this.props
-      this.setState({ user })
-    }
-
 
     render() {
-        const user = this.state
+        const { group } = this.state
         return (
           <div className="section group-subpage all-members">
             <div className="containers">
@@ -35,3 +30,5 @@ export default class Settings extends Component {
         )
     }
 }
+
+export default withApollo(Settings)
