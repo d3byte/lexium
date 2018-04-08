@@ -44,7 +44,7 @@ class Settings extends Component {
       })
       this.cache.writeData('user', user)
       if (user) {
-        this.setState({ fetching: false, updatedAvatar: true, savingAvatar: false })
+        this.setState({ fetching: false, updatedAvatar: true })
       }
     }
     reader.readAsDataURL(file)

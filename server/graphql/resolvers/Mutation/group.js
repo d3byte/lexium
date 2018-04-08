@@ -15,7 +15,8 @@ module.exports = {
         const userId = await getUserId(token)
         const group = await models.Group.findById(id)
         let userInGroup = false
-        group.users.map(user => {
+        const users = await group.getUsers()
+        users.map(user => {
             if(user.id === userId) {
                 userInGroup = true
             }

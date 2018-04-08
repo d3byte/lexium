@@ -10,6 +10,7 @@ import NewTask from './subPages/NewTask'
 
 import { CacheManager } from '../../utils'
 import { GROUP } from '../../graphql/queries'
+import { UPDATE_GROUP_AVATAR } from '../../graphql/mutations'
 
 import './style.css'
 
@@ -19,11 +20,47 @@ class Group extends Component {
     this.state = {
       currentTab: 'new-task',
       user: {},
-      group: {}
+      group: {},
+      image: '',
+      updatedAvatar: false
     }
     this.client = {}
     this.cache = new CacheManager()
     this.token = ''
+  }
+
+  uploadImage = e => {
+    const { group } = this.state
+    const file = e.target.files[0]
+    if (!file) {
+      return
+    }
+    this.setState({ fetching: true })
+    const reader = new FileReader()
+    reader.onload = async e => {
+      this.setState({ image: e.target.result })
+      const { data } = await this.client.mutate({
+        mutation: UPDATE_GROUP_AVATAR, 
+        variables: { token: this.token, id: group.id, avatarUrl: e.target.result } 
+      })
+      const newGroup = data.updateGroupAvatar
+      console.log(newGroup)
+      this.cacheNewGroup(newGroup)
+      if (newGroup) {
+        this.setState({ group: newGroup, fetching: false, updatedAvatar: true })
+      }
+    }
+    reader.readAsDataURL(file)
+  }
+
+  cacheNewGroup = group => {
+    const { user } = this.state
+    user.groups = user.groups.map(item => {
+      if (item.id === group.id)
+        return group
+      return item
+    })
+    this.cache.writeData('user', user)
   }
 
   fetchData = async (token, groupId) => {
@@ -37,6 +74,7 @@ class Group extends Component {
       group: { ...group, superUsers: JSON.parse(group.superUsers) }, 
       fetching: false 
     })
+    this.cacheNewGroup(group)
   }
 
   changeTab = (tabName) => {
@@ -107,7 +145,7 @@ class Group extends Component {
   render() {
     const { history } = this.props
     const { pathname } = this.props.location
-    const { fetching, user, group, currentTab } = this.state
+    const { fetching, user, group, currentTab, image, updatedAvatar } = this.state
     return (
       <div> 
         <Header fetching={fetching} pathname={pathname} history={history} />
@@ -119,7 +157,12 @@ class Group extends Component {
             <div className="container of-info">
               <span className="title">Информация</span>
               <div className="avatar">
-                <img src={group ? group.avatarUrl : ''} alt="avatar"/>
+              <input type="file" onChange={this.uploadImage} name="image" accept="image/*" />
+              {
+                group.avatarUrl || image ? 
+                  <img src={image || group.avatarUrl} alt="user-avatar" /> :
+                  <i className="material-icons">file_upload</i>
+              }
               </div>
               <div className="container-main">
                 <div className="info equal-space">

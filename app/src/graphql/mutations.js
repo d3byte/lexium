@@ -277,11 +277,47 @@ mutation updateTask($id: ID!, $input: TaskInput!) {
 }
 `
 
+const UPDATE_GROUP_AVATAR = gql`
+mutation updateGroupAvatar($token: String!, $id: ID!, $avatarUrl: String!) {
+    updateGroupAvatar(token: $token, id: $id, avatarUrl: $avatarUrl) {
+        id
+        name
+        users {
+            id
+            name
+            createdAt
+            avatarUrl
+        }
+        tasks {
+            id
+            groupId
+            name
+            words
+            results {
+                id
+                wordsLearnt
+                user {
+                    id
+                    name
+                    wordsLearnt
+                    avatarUrl
+                }
+                percentage
+            }
+            deadline
+            createdAt
+        }
+        superUsers
+        createdAt
+    }
+}
+`
+
 export {
     LOGIN, SIGN_UP,
     CREATE_GROUP, UPDATE_GROUP,
     CHECK_USERNAME, CHECK_EMAIL,
     UPDATE_AVATAR, CREATE_TASK,
     ADD_USERS_TO_GROUP, UPDATE_TASK,
-    
+    UPDATE_GROUP_AVATAR, 
 }
