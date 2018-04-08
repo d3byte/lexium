@@ -54,7 +54,14 @@ class TaskList extends Component {
     }, () => this.inputTofocus.focus())
   }
 
-  removeWordPair = (e, item, index) => { 
+  removeWordPair = (item, index) => { 
+    const { selected } = this.state
+    let newWordPairs = selected.words.slice(0)
+    newWordPairs = newWordPairs.filter(pair => pair.id !== item.id)
+    this.setState({ selected: { ...selected, words: newWordPairs } })
+  }
+
+  hotkeyRemoveWordPair = (e, item, index) => {
     const { selected } = this.state
     const { keyCode } = e
     if(keyCode !== 8) {
@@ -63,9 +70,7 @@ class TaskList extends Component {
     }
     if ((this.keyCode === 17 || this.keyCode === 224 || this.keyCode === 91) && keyCode === 8 && index !== 0) {
       this.keyCode = null
-      let newWordPairs = this.state.selected.words.slice(0)
-      newWordPairs = newWordPairs.filter(pair => pair.id !== item.id)
-      this.setState({ selected: { ...selected, words: newWordPairs } })
+      this.removeWordPair(item, index)
     }
   }
 
@@ -148,12 +153,18 @@ class TaskList extends Component {
                       selected.words.map((item, index) => (
                         <div className="table-row" key={item.id}>
                           <div className="cell">
+                            <i 
+                              className="material-icons" 
+                              onClick={() => this.removeWordPair(item, index)}
+                            >
+                              close
+                            </i>
                             <input 
                               type="text" placeholder="Banana" 
                               value={item.key} name="key"
                               className="clear"
                               onChange={e => this.editWordPair(e, item)}
-                              onKeyDown={e => this.removeWordPair(e, item, index)}
+                              onKeyDown={e => this.hotkeyRemoveWordPair(e, item, index)}
                               ref={ref => this.inputTofocus = ref}
                               required
                             />

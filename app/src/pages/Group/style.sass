@@ -194,6 +194,13 @@
             margin-top: 0 !important
             .cell
                 opacity: 0.8
+        .cell 
+            position: relative
+            i
+                position: absolute !important
+                font-size: 14px !important
+                right: 5px !important
+                top: 5px !important
 
 input.clear
     border: none
@@ -276,4 +283,6 @@ input.task
         &.remove
             border-left: 1px solid #E0E0E0
 
-.game-info
+@media (min-width: 751px)
+    .cell i
+        display: none
