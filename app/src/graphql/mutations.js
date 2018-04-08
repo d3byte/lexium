@@ -253,10 +253,35 @@ mutation addUsersToGroup($token: String!, $id: ID!, $users: [ID!]!) {
 }
 `
 
+const UPDATE_TASK = gql`
+mutation updateTask($id: ID!, $input: TaskInput!) {
+    updateTask(id: $id, input: $input) {
+        id
+        groupId
+        name
+        words
+        results {
+            id
+            wordsLearnt
+            user {
+                id
+                name
+                wordsLearnt
+                avatarUrl
+            }
+            percentage
+        }
+        deadline
+        createdAt
+    }
+}
+`
+
 export {
     LOGIN, SIGN_UP,
     CREATE_GROUP, UPDATE_GROUP,
     CHECK_USERNAME, CHECK_EMAIL,
     UPDATE_AVATAR, CREATE_TASK,
-    ADD_USERS_TO_GROUP, 
+    ADD_USERS_TO_GROUP, UPDATE_TASK,
+    
 }
