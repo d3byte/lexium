@@ -38,6 +38,7 @@ mutation login($username: String!, $password: String!) {
                     deadline
                     createdAt
                 }
+                isPersonal
                 superUsers
                 createdAt
             }
@@ -87,6 +88,7 @@ mutation signup($username: String!, $name: String!, $email: String!, $password: 
                     createdAt
                     avatarUrl
                 }
+                isPersonal
                 superUsers
                 createdAt
             }
@@ -133,6 +135,7 @@ mutation updateUserAvatar($token: String!, $avatarUrl: String!) {
                 deadline
                 createdAt
             }
+            isPersonal
             superUsers
             createdAt
         }
@@ -157,6 +160,7 @@ mutation createGroup($name: String!, $usersIds: [ID!]!, $superUsers: [ID!]!) {
             name
             avatarUrl
         }
+        isPersonal
         superUsers
         avatarUrl
         createdAt
@@ -194,6 +198,7 @@ mutation updateGroup($id: ID!, $input: GroupInput!) {
             deadline
             createdAt
         }
+        isPersonal
         superUsers
         createdAt
     }
@@ -201,8 +206,8 @@ mutation updateGroup($id: ID!, $input: GroupInput!) {
 `
 
 const CREATE_TASK = gql`
-mutation createTask($input: TaskInput!, $words: [WordPairInput!]!, $groupId: ID!, $attempts: Attempts!) {
-    createTask(input: $input, words: $words, groupId: $groupId, attempts: $attempts) {
+mutation createTask($input: TaskInput!, $groupId: ID!, $attempts: Attempts!) {
+    createTask(input: $input, groupId: $groupId, attempts: $attempts) {
         id
         groupId
         name
@@ -307,6 +312,7 @@ mutation updateGroupAvatar($token: String!, $id: ID!, $avatarUrl: String!) {
             deadline
             createdAt
         }
+        isPersonal
         superUsers
         createdAt
     }

@@ -18,7 +18,7 @@ type Mutation {
   removeUserFromGroup(token: String!, id: ID!): ValidPayload!
   removeGroup(id: ID!): ValidPayload!
 
-  createTask(input: TaskInput!, words: [WordPairInput!]!, groupId: ID!, attempts: Attempts!): Task
+  createTask(input: TaskInput!, groupId: ID!, attempts: Attempts!): Task
   updateTask(id: ID!, input: TaskInput!): Task
   setResult(id: ID!, res: ResultInput!, userId: ID!): Task
   updateResult(id: ID!, taskId: ID!, result: ResultInput!, userId: ID!): Task

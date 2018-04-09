@@ -44,7 +44,6 @@ class Group extends Component {
         variables: { token: this.token, id: group.id, avatarUrl: e.target.result } 
       })
       const newGroup = data.updateGroupAvatar
-      console.log(newGroup)
       this.cacheNewGroup(newGroup)
       if (newGroup) {
         this.setState({ group: newGroup, fetching: false, updatedAvatar: true })

@@ -130,8 +130,7 @@ export default class NewTask extends Component {
       const response = await this.client.mutate({ 
         mutation: CREATE_TASK, 
         variables: { 
-          input: { name, deadline: deadlineDate },
-          words: wordPairs,
+          input: { name, deadline: deadlineDate, words: JSON.stringify(wordPairs) },
           groupId,
           attempts: { learnWords, findPair, typeIn, scramble }
         }

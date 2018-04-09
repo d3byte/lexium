@@ -3,10 +3,10 @@ const { getUserId } = require('../../../utils')
 
 module.exports = {
     // User
-    async createTask(root, { input, words, groupId, attempts }, context) {
+    async createTask(root, { input, groupId, attempts }, context) {
+        console.log(input, groupId, attempts)
         const task = await models.Task.create({ 
-            ...input, words: JSON.stringify(words), 
-            groupId, attempts: JSON.stringify(attempts)
+            ...input, groupId, attempts: JSON.stringify(attempts)
         })
         const group = await models.Group.findById(groupId)
         return group.addTask(task.id).then(() => task)
