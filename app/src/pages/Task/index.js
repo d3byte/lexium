@@ -115,7 +115,7 @@ export default class componentName extends Component {
         <div className="section">
           <span className="title">Игры</span>
           <div className="game-bar">
-            <Link to="/task/learn" className="game">
+            <Link to={{ pathname: '/task/learn', state: { task } }} className="game">
               <span className="name">Выучи слова</span>
               <span className="attempts">Пройдено <b>{ takenAttempts.learnWords + '/' + (task.attempts && task.attempts.learnWords) }</b></span>
               <div className="hint">
@@ -124,7 +124,7 @@ export default class componentName extends Component {
                 языке</p>
               </div>
             </Link>
-            <Link to="/task/find" className="game">
+            <Link to={{ pathname: '/task/find', state: { task } }} className="game">
               <span className="name">Найди пару</span>
               <span className="attempts">Пройдено <b>{ takenAttempts.findPair + '/' + (task.attempts && task.attempts.findPair) }</b></span>
               <div className="hint">
@@ -132,14 +132,14 @@ export default class componentName extends Component {
                 Просто кликайте на карточку со словом и потом на карточку с предположительной парой</p>
               </div>
             </Link>
-            <Link to="/task/typein" className="game">
+            <Link to={{ pathname: '/task/typein', state: { task } }} className="game">
               <span className="name">Введи слово</span>
               <span className="attempts">Пройдено <b>{ takenAttempts.typeIn + '/' + (task.attempts && task.attempts.typeIn) }</b></span>
               <div className="hint">
                 <p>Введите эквивалент предложенного слова на другом языке</p>
               </div>
             </Link>
-            <Link to="/task/scramble" className="game">
+            <Link to={{ pathname: '/task/scramble', state: { task } }} className="game">
               <span className="name">Скрэмбл</span>
               <span className="attempts">Пройдено <b>{ takenAttempts.scramble + '/' + (task.attempts && task.attempts.learnWords) }</b></span>
               <div className="hint">
