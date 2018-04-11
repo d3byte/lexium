@@ -34,7 +34,13 @@ export default class componentName extends Component {
     const { location, history } = this.props
     const task = ((location || {}).state || {}).task
     !task && (history.push('/profile'))
-    this.setState({ task: { ...task, words: JSON.parse(task.words), attempts: JSON.parse(task.attempts) } })
+    this.setState({ 
+      task: { 
+        ...task,
+        words: (typeof task.words === 'string' ? JSON.parse(task.words) : task.words), 
+        attempts: (typeof task.attempts === 'string' ? JSON.parse(task.attempts) : task.attempts), 
+      } 
+    })
     try {
       const cachedAttempts = await this.cache.readData(`task-${task.id}`)
       this.setState({ takenAttempts: cachedAttempts })

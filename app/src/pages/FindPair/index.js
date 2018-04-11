@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import { Link } from 'react-router-dom'
 
 import Button from '../../components/Button'
 import Header from '../../components/Header'
@@ -28,9 +29,9 @@ export default class FindPair extends Component {
         <div className="section">
 
           <div className="titles">
-            <span className="return-link" onClick={() => history.goBack()}>
+            <Link className="return-link" to={{ pathname: '/task', state: { task } }}>
               <i className="material-icons">arrow_back</i> Вернуться
-            </span>
+            </Link>
             <span className="title">Игры</span>
           </div>
           <Gamebar task={task} currentTab="find" attempts={task.attempts} takenAttempts={takenAttempts} />
