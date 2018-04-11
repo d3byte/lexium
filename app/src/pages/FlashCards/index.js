@@ -95,7 +95,7 @@ export default class FlashCards extends Component {
                   {
                     showKey ? 'Banana' : 'Банан'
                   }
-                  <div className="controls">
+                  <div className="control-buttons">
                     <Button clickHandler={() => console.log('Ура!')} classNameProp="regular" text="Знаю" />
                     <Button clickHandler={() => console.log('Ура  !')} classNameProp ="regular gray" text="Не знаю" />
                   </div>
