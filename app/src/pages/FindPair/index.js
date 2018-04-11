@@ -8,6 +8,7 @@ import { Gamebar } from '../../components/Gamebar'
 import { CacheManager, shuffle } from '../../utils'
 
 import './style.css'
+import { walkTree } from 'react-apollo';
 
 export default class FindPair extends Component {
   constructor(props) {
@@ -19,21 +20,37 @@ export default class FindPair extends Component {
       correct: [],
       incorrect: [],
       highlighted: [],
-      selected: []
+      selected: [],
+      errorCounter: 0,
+      percentage: null
     }
     this.cache = new CacheManager()
   }
 
+  incrementAttempt = () => {
+    const { takenAttempts, task } = this.state
+    const newTakenAttempts = { ...takenAttempts, findPair: takenAttempts.findPair + 1 }
+    this.cache.writeData(`task-${task.id}`, newTakenAttempts)
+    this.setState({ takenAttempts: newTakenAttempts })
+  }
+
   checkPair = selected => {
     if (selected[0].pairId === selected[1].pairId) {
+      const { task, errorCounter } = this.state
       let correct = this.state.correct.slice(0)
       correct.push(selected[0].id, selected[1].id)
       this.setState({ selected: [], highlighted: [], correct })
+      const percentage = 100 - Math.floor(errorCounter * 100 / task.words.length)
+      if (correct.length / 2 === task.words.length && percentage > 75) {
+        this.incrementAttempt()
+      }
+      this.setState({ percentage })
       return
     }
     this.setState({ 
       selected: [], highlighted: [], 
-      incorrect: [selected[0].id, selected[1].id]
+      incorrect: [selected[0].id, selected[1].id],
+      errorCounter: this.state.errorCounter + 1
     })
   }
 
