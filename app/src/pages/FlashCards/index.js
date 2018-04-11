@@ -28,9 +28,10 @@ export default class FlashCards extends Component {
   }
 
   render() {
-    const { history } = this.props
+    const { history, task } = this.props
     const { pathname } = this.props.location
     const { showKey } = this.state
+    console.log(task)
     return (
       <div className="task-game">
         <Header fetching={false} pathname={pathname} history={history} />
