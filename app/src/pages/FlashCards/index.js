@@ -10,11 +10,11 @@ import { CacheManager } from '../../utils'
 import './style.css'
 
 export default class FlashCards extends Component {
-  constructor(props) {
-    super(props)
+  constructor() {
+    super()
     this.state = {
-      task: props.location.state.task,
-      takenAttempts: props.location.state.takenAttempts
+      task: {},
+      takenAttempts: {}
     }
     this.cache = new CacheManager()
   }
@@ -28,6 +28,15 @@ export default class FlashCards extends Component {
       this.setState({ showKey: !this.state.showKey })
     }
   }
+
+  componentDidMount = () => {
+    const { location, history } = this.props
+    const task = ((location || {}).state || {}).task
+    const takenAttempts = ((location || {}).state || {}).takenAttempts
+    !task && (history.push('/profile'))
+    this.setState({ task, takenAttempts })
+  }
+  
 
   render() {
     const { history } = this.props

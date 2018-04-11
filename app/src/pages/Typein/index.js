@@ -10,11 +10,11 @@ import { CacheManager } from '../../utils'
 import './style.css'
 
 export default class Typein extends Component {
-  constructor(props) {
-    super(props)
+  constructor() {
+    super()
     this.state = {
-      task: props.location.state.task,
-      takenAttempts: props.location.state.takenAttempts
+      task: {},
+      takenAttempts: {}
     }
     this.cache = new CacheManager()
   }
@@ -26,6 +26,14 @@ export default class Typein extends Component {
     if (target.nodeName !== 'SPAN' && !target.classList.contains('on-top')) {
       this.setState({ showKey: !this.state.showKey })
     }
+  }
+
+  componentDidMount = () => {
+    const { location, history } = this.props
+    const task = ((location || {}).state || {}).task
+    const takenAttempts = ((location || {}).state || {}).takenAttempts
+    !task && (history.push('/profile'))
+    this.setState({ task, takenAttempts })
   }
 
   render() {
@@ -56,7 +64,7 @@ export default class Typein extends Component {
                 </div>
                 <div className="word-container">
                   <span className="key">Banana</span>
-                  <input type="text" className="line-based" placeholder="Слово" focused/>
+                  <input type="text" className="line-based" placeholder="Слово" focused={true} />
                 </div>
                 <Button clickHandler={() => console.log('Ура!')} classNameProp="regular lighter" text="Проверить" />
             </div>

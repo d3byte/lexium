@@ -11,11 +11,11 @@ import './style.css'
 import { walkTree } from 'react-apollo';
 
 export default class FindPair extends Component {
-  constructor(props) {
-    super(props)
+  constructor() {
+    super()
     this.state = {
-      task: props.location.state.task,
-      takenAttempts: props.location.state.takenAttempts,
+      task: {},
+      takenAttempts: {},
       words: [],
       correct: [],
       incorrect: [],
@@ -70,10 +70,10 @@ export default class FindPair extends Component {
     this.setState({ selected, highlighted, incorrect: [] })
   }
 
-  componentDidMount = () => {
-    const { task } = this.state
+  prepareWords = task => {
     let words = [], index = 0
-    task.words.map(pair => {
+    
+    task && ((task || {}).words || []).map(pair => {
       const key = {
         pairId: pair.id,
         id: ++index,
@@ -87,8 +87,17 @@ export default class FindPair extends Component {
       words.push(key, value)
       return pair
     })
-    this.setState({ words: shuffle(words) })
+    return shuffle(words)
   }
+
+  componentDidMount = () => {
+    const { location, history } = this.props
+    const task = ((location || {}).state || {}).task
+    const takenAttempts = ((location || {}).state || {}).takenAttempts
+    !task && (history.push('/profile'))
+    this.setState({ task, takenAttempts, words: this.prepareWords(task) })
+  }
+  
 
   render() {
     const { history } = this.props

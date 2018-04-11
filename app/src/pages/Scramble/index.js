@@ -10,11 +10,11 @@ import { CacheManager, shuffle } from '../../utils'
 import './style.css'
 
 export default class Typein extends Component {
-  constructor(props) {
-    super(props)
+  constructor() {
+    super()
     this.state = {
-      task: props.location.state.task,
-      takenAttempts: props.location.state.takenAttempts,
+      task: {},
+      takenAttempts: {},
       currentWord: 'Банан',
       currentKey: '',
       splittedWord: [],
@@ -99,6 +99,12 @@ export default class Typein extends Component {
   }
 
   componentDidMount = () => {
+    const { location, history } = this.props
+    const task = ((location || {}).state || {}).task
+    const takenAttempts = ((location || {}).state || {}).takenAttempts
+    !task && (history.push('/profile'))
+    this.setState({ task, takenAttempts })
+    // Поменять ниже
     const { currentWord } = this.state
     const key = 'Banana'
     let letters = this.getLetters(key)
