@@ -112,9 +112,9 @@ export default class Typein extends Component {
         <div className="section">
 
           <div className="titles">
-            <Link className="return-link" to="/task">
+            <span className="return-link" onClick={() => history.goBack()}>
               <i className="material-icons">arrow_back</i> Вернуться
-            </Link>
+            </span>
             <span className="title">Игры</span>
           </div>
 

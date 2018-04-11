@@ -31,9 +31,9 @@ export default class Test extends Component {
         {
           !completed ? (
             <div className="section">
-              <Link className="return-link" to="/task">
+              <span className="return-link" onClick={() => history.goBack()}>
                 <i className="material-icons">arrow_back</i> Вернуться
-              </Link>
+              </span>
               <div className="test-title">Тест</div>
 
               <div className="containers">
