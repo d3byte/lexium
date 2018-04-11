@@ -5,19 +5,46 @@ import { withApollo } from 'react-apollo'
 import Button from '../../components/Button'
 import Header from '../../components/Header'
 
+import { CacheManager } from '../../utils/index'
+import { USER } from '../../graphql/queries'
+
 import './style.css'
 
 export default class componentName extends Component {
   constructor() {
     super()
     this.state = {
+      task: {},
+      takenAttempts: {
+        learnWords: 0,
+        findPair: 0,
+        typeIn: 0,
+        scramble: 0
+      },
       fetching: false,
       testAvailable: false
     }
+    this.cache = new CacheManager()
+    this.client = {}
+    this.token = ''
   }
 
+  componentDidMount = async () => {
+    const { location, history } = this.props
+    const task = ((location || {}).state || {}).task
+    !task && (history.push('/profile'))
+    this.setState({ task: { ...task, words: JSON.parse(task.words), attempts: JSON.parse(task.attempts) } })
+    try {
+      const cachedAttempts = await this.cache.readData(`task-${task.id}`)
+      this.setState({ takenAttempts: cachedAttempts })
+    } catch(error) {
+      this.cache.writeData(`task-${task.id}`, this.state.takenAttempts)
+    }
+  }
+  
+
   render() {
-    const { fetching, testAvailable } = this.state
+    const { fetching, testAvailable, task, takenAttempts } = this.state
     const { history } = this.props
     const { pathname } = this.props.location
     return (
@@ -30,26 +57,51 @@ export default class componentName extends Component {
               <div className="container-main full-width">
                 <div className="info equal-space">
                   <div className="name">
-                    <span>Модальный глагол cut</span>
+                    <span>{task.name}</span>
                   </div>
-                  <p>Пар слов: <b>8</b></p>
-                  <p>Уже прошёл <b>Иван Сергеев</b> и <span class="underlined">12 других людей</span></p>
+                  <p>Пар слов: <b>{task.words && task.words.length}</b></p>
+                  {
+                    (task.results || []).length > 0 ? (
+                      <p>
+                        Уже прошёл <b>{((task.results[0] || {}).user || {}).name}</b> и
+                        {
+                          (task.results || []).length > 1 && <span className="underlined"> {task.results.length - 1} других людей</span>
+                        }
+                      </p>
+                    ) : <p>Никто ещё не прошёл это задание</p>
+                  }
                 </div>
                 <div className="naming"></div>
               </div>
             </div>
             
             <div className="container of-info reverse">
-              <div className="avatar">
-                <img src={''} alt="user-avatar" />
-              </div>
+              {
+                <div className={'avatar ' + ((task.results || []).length > 0 ? '' : 'transparent')}>
+                  <img src={''} alt="user-avatar" />
+                </div>
+              }
               <div className="container-main">
                 <div className="info">
-                  <div className="name">
-                    <span>Сергей Савтыра</span>
-                  </div>
-                  <p>Процент выполнения: <b>80%</b></p>
-                  <p>Выучено слов: <b>6</b></p>
+                  {
+                    (task.results || []).length > 0 ? (
+                      <div className="name">
+                        <span>
+                        {task.results[task.results.length - 1].user.name}
+                        </span>
+                      </div>
+                    ) : <span className="no-results">Результатов пока нет</span>
+                  }
+                  {
+                    (task.results || []).length > 0 && (
+                      <p>Процент выполнения: <b>{task.results[task.results.length - 1].percentage}%</b></p>
+                    )
+                  }
+                  {
+                    (task.results || []).length > 0 && (
+                      <p>Выучено слов: <b>{task.results[task.results.length - 1].wordsLearnt}</b></p>
+                    )
+                  }
                 </div>
                 <div className="naming">
                   Последний результат
@@ -65,7 +117,7 @@ export default class componentName extends Component {
           <div className="game-bar">
             <Link to="/task/learn" className="game">
               <span className="name">Выучи слова</span>
-              <span className="attempts">Пройдено <b>1/3</b></span>
+              <span className="attempts">Пройдено <b>{ takenAttempts.learnWords + '/' + (task.attempts && task.attempts.learnWords) }</b></span>
               <div className="hint">
                 <p>В этой игре вам предстоит познакомиться со словами, пользуясь карточками. Вы можете перевернуть карточку,
                 кликнув на неё, таким образом показав аналог на другом
@@ -74,7 +126,7 @@ export default class componentName extends Component {
             </Link>
             <Link to="/task/find" className="game">
               <span className="name">Найди пару</span>
-              <span className="attempts">Пройдено <b>1/3</b></span>
+              <span className="attempts">Пройдено <b>{ takenAttempts.findPair + '/' + (task.attempts && task.attempts.findPair) }</b></span>
               <div className="hint">
                 <p>В этой игре вам нужно искать слово на одном языке и его аналог на другом.
                 Просто кликайте на карточку со словом и потом на карточку с предположительной парой</p>
@@ -82,14 +134,14 @@ export default class componentName extends Component {
             </Link>
             <Link to="/task/typein" className="game">
               <span className="name">Введи слово</span>
-              <span className="attempts">Пройдено <b>1/3</b></span>
+              <span className="attempts">Пройдено <b>{ takenAttempts.typeIn + '/' + (task.attempts && task.attempts.typeIn) }</b></span>
               <div className="hint">
                 <p>Введите эквивалент предложенного слова на другом языке</p>
               </div>
             </Link>
             <Link to="/task/scramble" className="game">
               <span className="name">Скрэмбл</span>
-              <span className="attempts">Пройдено <b>1/3</b></span>
+              <span className="attempts">Пройдено <b>{ takenAttempts.scramble + '/' + (task.attempts && task.attempts.learnWords) }</b></span>
               <div className="hint">
                 <p>Составляйте целые слова из букв, разбросанных в случайном порядке. Просто перетягивайте
                 части слова на подходящее, по вашему мнению, место и проверьте ваши знания</p>
@@ -117,14 +169,14 @@ export default class componentName extends Component {
               <div className="cell heading">Слово</div>
               <div className="cell heading">Перевод</div>
             </div>
-            <div className="table-row">
-              <div className="cell">Banana</div>
-              <div className="cell">Банан</div>
-            </div>
-            <div className="table-row">
-              <div className="cell">Allergy</div>
-              <div className="cell">Аллергия</div>
-            </div>
+            {
+              task.words && task.words.map(pair => (
+                <div className="table-row" key={pair.id}>
+                  <div className="cell">{pair.key}</div>
+                  <div className="cell">{pair.value}</div>
+                </div>
+              ))
+            }
           </div>
         </div>
 

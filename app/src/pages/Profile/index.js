@@ -167,6 +167,11 @@ class Profile extends Component {
     })
   }
 
+  routeToTask = task => {
+    const { history } = this.props
+    history.push({ pathname: '/task', state: { task } })
+  }
+
   componentDidMount = async () => {
     const { client, location } = this.props
     let user, token
@@ -264,7 +269,7 @@ class Profile extends Component {
                         <p className="name">{task.name}</p>
                         <p className="deadline">Осталось дней: <b>{this.determineRemainingDays(task)}</b></p>
                       </div>
-                      <Button clickHandler={() => console.log('Ура!')} classNameProp="regular fluid" text="Выполнить" />
+                      <Button clickHandler={() => this.routeToTask(task)} classNameProp="regular fluid" text="Выполнить" />
                     </div>
                     )
                   ) : <p className="no-tasks">Не найдено подходящих заданий</p> :
@@ -275,7 +280,7 @@ class Profile extends Component {
                       <p className="name">{task.name}</p>
                       <p className="deadline">Осталось дней: <b>{this.determineRemainingDays(task)}</b></p>
                     </div>
-                    <Button clickHandler={() => console.log('Ура!')} classNameProp="regular fluid" text="Выполнить" />
+                    <Button clickHandler={() => this.routeToTask(task)} classNameProp="regular fluid" text="Выполнить" />
                   </div>
                 )) : <p className="no-tasks">Нет невыполненных заданий</p>
             }
@@ -297,7 +302,7 @@ class Profile extends Component {
                         <p className="deadline">Осталось дней: <b>{this.determineRemainingDays(task)}</b></p>
                         <p className="deadline">Ваш результат: <b>{this.getUserResult(task)}%</b></p>
                       </div>
-                      <Button clickHandler={() => console.log('Ура!')} classNameProp="regular fluid" text="Улучшить результат" />
+                      <Button clickHandler={() => this.routeToTask(task)} classNameProp="regular fluid" text="Улучшить результат" />
                     </div>
                   )) : <p className="no-tasks">Не найдено подходящих заданий</p> :
                 currentGroup.completedTasks && currentGroup.completedTasks.length > 0 ?
@@ -308,7 +313,7 @@ class Profile extends Component {
                       <p className="deadline">Осталось дней: <b>{this.determineRemainingDays(task)}</b></p>
                       <p className="deadline">Ваш результат: <b>{this.getUserResult(task)}%</b></p>
                     </div>
-                    <Button clickHandler={() => console.log('Ура!')} classNameProp="regular fluid" text="Улучшить результат" />
+                    <Button clickHandler={() => this.routeToTask(task)} classNameProp="regular fluid" text="Улучшить результат" />
                   </div>
                 )) : <p className="no-tasks">Нет выполненных заданий</p>
             }
