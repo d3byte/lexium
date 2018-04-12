@@ -14,7 +14,9 @@ export default class Typein extends Component {
     super()
     this.state = {
       task: {},
-      takenAttempts: {}
+      takenAttempts: {},
+      rightWords: 0,
+      value: ''
     }
     this.cache = new CacheManager()
   }
@@ -39,7 +41,9 @@ export default class Typein extends Component {
   render() {
     const { history } = this.props
     const { pathname } = this.props.location
-    const { task, takenAttempts } = this.state
+    const { task, takenAttempts, rightWords, value } = this.state
+
+    if (Object.keys(task).length == 0) return ''
     return (
       <div className="task-game">
         <Header fetching={false} pathname={pathname} history={history} />
@@ -59,14 +63,20 @@ export default class Typein extends Component {
 
             <div className="game-wrapper type-in">
                 <div className="info">
-                  <span>Процент выполнения: 71%</span>
-                  <span>Осталось карточек: 8</span>
+                  <span>Процент выполнения: {rightWords == 0 ? 0 : Math.round(rightWords * (100 / task.words.length))}%</span>
+                  <span>Осталось карточек: {rightWords == 0 ? task.words.length : task.words.length - rightWords}</span>
                 </div>
                 <div className="word-container">
-                  <span className="key">Banana</span>
-                  <input type="text" className="line-based" placeholder="Слово" focused={true} />
+                  <span className="key">{rightWords >= task.words.length ? '' : task.words[rightWords].key}</span>
+                  <input type="text" className="line-based" placeholder="Слово" focused={true} value={value} onChange={e => this.setState({value: e.target.value})} />
                 </div>
-                <Button clickHandler={() => console.log('Ура!')} classNameProp="regular lighter" text="Проверить" />
+                <Button clickHandler={() => {
+                  if (value == task.words[rightWords].value) {
+                    this.setState({rightWords: rightWords+1, value: ''})
+                  } else {
+                    console.log("Слово неверное")
+                  }
+                }} classNameProp="regular lighter" text="Проверить" />
             </div>
 
         </div>
