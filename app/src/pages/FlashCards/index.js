@@ -14,7 +14,10 @@ export default class FlashCards extends Component {
     super()
     this.state = {
       task: {},
-      takenAttempts: {}
+      takenAttempts: {},
+      know: [],
+      dontKnow: [],
+      numberWords: 0
     }
     this.cache = new CacheManager()
   }
@@ -37,12 +40,16 @@ export default class FlashCards extends Component {
     this.setState({ task, takenAttempts })
   }
   
-
   render() {
     const { history } = this.props
     const { pathname } = this.props.location
-    const { showKey, task, takenAttempts } = this.state
-    console.log(task)
+    const { showKey, task, takenAttempts, numberWords, know, dontKnow } = this.state
+    
+    // console.log(dontKnow)
+    
+    // console.log(know)
+    // console.log(task.words)
+    if (Object.keys(task).length == 0) return ''
     return (
       <div className="task-game">
         <Header fetching={false} pathname={pathname} history={history} />
@@ -61,31 +68,62 @@ export default class FlashCards extends Component {
 
         <div className="section">
           <span className="title">Карточки со словами</span>
-
             <div className="game-wrapper flash-cards">
               <div className="words">
                 <div className="mobile-content">
-                  <div className="previous-word">Apple</div>
-                  <div className="next-word">Allergy</div>
-                </div>
-                <div className="previous-word">Apple</div>
-                <div className="current-word" onClick={this.toggleCard}>
-                  <span className="on-top">Осталось карточек: 8</span>
+                  <div className="previous-word">
                   {
-                    showKey ? 'Banana' : 'Банан'
+                    numberWords >= task.words.length-1 ? '' : task.words[numberWords+1].key
                   }
-                  <div className="control-buttons">
-                    <Button clickHandler={() => console.log('Ура!')} classNameProp="regular" text="Знаю" />
-                    <Button clickHandler={() => console.log('Ура  !')} classNameProp ="regular gray" text="Не знаю" />
+                  </div>
+                  <div className="next-word">
+                  {
+                    numberWords < 1 ? '' : task.words[numberWords-1].key
+                  }
                   </div>
                 </div>
-                <div className="next-word">Allergy</div>
+                <div className="previous-word">
+                {
+                  numberWords >= task.words.length-1 ? '' : task.words[numberWords+1].key
+                }
+                </div>
+                <div className="current-word" onClick={this.toggleCard}>
+                  <span className="on-top">Осталось карточек: { numberWords == 0 ? task.words.length : task.words.length - numberWords }</span>
+                  {
+                    numberWords == task.words.length ? (numberWords == task.words.length ? 'Результат ' + Math.round(know.length * (100 / task.words.length)) +'%' : '') : showKey ? task.words[numberWords].value : task.words[numberWords].key
+                  }
+                  <div className="control-buttons">
+                    { numberWords != task.words.length ? 
+                    <Button clickHandler={() => {
+                      let knowData = know.slice(0)
+                      knowData.push(task.words[numberWords])
+                      this.setState({ 
+                        numberWords: numberWords+1,
+                        know: knowData
+                      })
+                    }} classNameProp="regular" text="Знаю" />
+                    : ''}
+                    { numberWords != task.words.length ?
+                    <Button clickHandler={() => { 
+                      let dontKnowData = dontKnow.slice(0)
+                      dontKnowData.push(task.words[numberWords])
+                      this.setState({ 
+                        numberWords: numberWords+1,
+                        dontKnow: dontKnowData
+                      })
+                    }} classNameProp ="regular gray" text="Не знаю" />
+                    : ''}
+                  </div>
+                </div>
+                <div className="next-word">
+                {
+                  numberWords < 1 ? '' : task.words[numberWords-1].key
+                }
+                </div>
               </div>
             </div>
-
-
+            
         </div>
-
       </div>
     )
   }
