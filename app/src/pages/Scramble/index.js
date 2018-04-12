@@ -15,8 +15,7 @@ export default class Typein extends Component {
     this.state = {
       task: {},
       takenAttempts: {},
-      currentWord: 'Банан',
-      currentKey: '',
+      currentWordPair: {},
       splittedWord: [],
       correct: false,
       currentLetter: null
@@ -98,23 +97,32 @@ export default class Typein extends Component {
     this.setState({ currentLetter: null, correct })
   }
 
+  nextWord = () => {
+    const { currentWordPair, task } = this.state
+    const index = task.words.indexOf(currentWordPair)
+    if (index === task.words.length - 1) {
+      return
+    }
+    this.setState({ currentWordPair: task.words[index + 1] })
+  }
+
   componentDidMount = () => {
     const { location, history } = this.props
     const task = ((location || {}).state || {}).task
     const takenAttempts = ((location || {}).state || {}).takenAttempts
     !task && (history.push('/profile'))
     this.setState({ task, takenAttempts })
-    // Поменять ниже
-    const { currentWord } = this.state
-    const key = 'Banana'
-    let letters = this.getLetters(key)
-    this.setState({ splittedWord: shuffle(letters), currentKey: key })
+    // Ставлю первое слово в игру
+    const currentWordPair = shuffle(task.words)[0]
+    const { key, value } = currentWordPair
+    const letters = this.getLetters(key)
+    this.setState({ splittedWord: shuffle(letters), currentWordPair })
   }
 
   render() {
     const { history } = this.props
     const { pathname } = this.props.location
-    const { currentWord, splittedWord, currentKey, correct, currentLetter, task, takenAttempts } = this.state
+    const { currentWordPair, splittedWord, correct, currentLetter, task, takenAttempts } = this.state
     return (
       <div className="task-game">
         <Header fetching={false} pathname={pathname} history={history} />
@@ -132,14 +140,14 @@ export default class Typein extends Component {
         <div className="section">
           <span className="title">Карточки со словами</span>
 
-          <div className={'currentWord ' + (correct ? 'lighter' : '')} >{currentWord}</div>
+          <div className={'currentWord ' + (correct ? 'lighter' : '')} >{currentWordPair.value}</div>
 
           {
             correct ? (
               <div className="correct-word">
                   <span className="words-left">Осталось слов: 8</span>
                   <div className="word-container">
-                    <span className="key">{currentKey}</span>
+                    <span className="key">{currentWordPair.key}</span>
                   </div>
                   <Button clickHandler={() => console.log('Ура!')} classNameProp="regular lighter" text="Следующее слово" />
               </div>
