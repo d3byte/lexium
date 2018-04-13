@@ -45,10 +45,6 @@ export default class FlashCards extends Component {
     const { pathname } = this.props.location
     const { showKey, task, takenAttempts, numberWords, know, dontKnow } = this.state
     
-    // console.log(dontKnow)
-    
-    // console.log(know)
-    // console.log(task.words)
     if (Object.keys(task).length == 0) return ''
     return (
       <div className="task-game">
@@ -67,8 +63,13 @@ export default class FlashCards extends Component {
         </div>
 
         <div className="section">
-          <span className="title">Карточки со словами</span>
+          <span className="title">
+          {
+            numberWords == task.words.length ? (Math.round(know.length * (100 / task.words.length)) < 75 ? 'Неудачное прохождение' : 'Успешное прохождение') : 'Карточки со словами'
+          }
+          </span>
             <div className="game-wrapper flash-cards">
+            {numberWords != task.words.length ? (
               <div className="words">
                 <div className="mobile-content">
                   <div className="previous-word">
@@ -121,6 +122,20 @@ export default class FlashCards extends Component {
                 }
                 </div>
               </div>
+            ) : (Math.round(know.length * (100 / task.words.length)) < 75) ? (
+              <div className="result_game">
+                <h1>Попробуйте ещё раз</h1>
+                <p>Ваш результат: {Math.round(know.length * (100 / task.words.length))}% из 75% необходимых</p>
+                <Button clickHandler={() => console.log('petuch')} classNameProp="regular" text="Пройти ещё раз" />
+              </div>
+            ) : 
+            (
+              <div className="result_game">
+                <h1>Вы успешно прошли игру!</h1>
+                <p>Необходимо ещё <b>{task.attempts.learnWords}</b> {task.attempts.learnWords == 1 ? 'прохождение' : 'прохождения'}</p>
+                <Button clickHandler={() => console.log('petuch')} classNameProp="regular" text="Пройти ещё раз" />
+              </div>
+            )}
             </div>
             
         </div>
