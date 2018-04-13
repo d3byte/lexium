@@ -41,7 +41,7 @@ export default class FindPair extends Component {
       correct.push(selected[0].id, selected[1].id)
       this.setState({ selected: [], highlighted: [], correct })
       const percentage = 100 - Math.floor(errorCounter * 100 / task.words.length)
-      if (correct.length / 2 === task.words.length && percentage > 75) {
+      if (correct.length / 2 === task.words.length && percentage >= 75) {
         this.incrementAttempt()
       }
       this.setState({ percentage })
@@ -90,12 +90,18 @@ export default class FindPair extends Component {
     return shuffle(words)
   }
 
-  componentDidMount = () => {
+  componentDidMount = async () => {
     const { location, history } = this.props
     const task = ((location || {}).state || {}).task
     const takenAttempts = ((location || {}).state || {}).takenAttempts
     !task && (history.push('/profile'))
     this.setState({ task, takenAttempts, words: this.prepareWords(task) })
+    try {
+      const cachedAttempts = await this.cache.readData(`task-${task.id}`)
+      this.setState({ takenAttempts: cachedAttempts })
+    } catch(error) {
+      this.cache.writeData(`task-${task.id}`, this.state.takenAttempts)
+    }
   }
   
 
