@@ -11,7 +11,7 @@ import { USER } from '../../graphql/queries'
 
 import './style.css'
 
-export default class componentName extends Component {
+export default class Task extends Component {
   constructor() {
     super()
     this.state = {
@@ -49,7 +49,7 @@ export default class componentName extends Component {
         words: (typeof task.words === 'string' ? JSON.parse(task.words) : task.words), 
         attempts: (typeof task.attempts === 'string' ? JSON.parse(task.attempts) : task.attempts), 
       } 
-    })
+    }, this.checkAttempts)
     try {
       const cachedAttempts = await this.cache.readData(`task-${task.id}`)
       this.setState({ takenAttempts: cachedAttempts })
@@ -137,7 +137,7 @@ export default class componentName extends Component {
               <center>
                 <div className="test-proposal">
                   <span>Вы можете пройти тест!</span>
-                  <Button clickHandler={() => history.push('/task/test')} classNameProp="regular lighter" text="Перейти к тесту" />
+                  <Button clickHandler={() => history.push({ pathname: '/task/test', state: { task } })} classNameProp="regular lighter" text="Перейти к тесту" />
                 </div>
               </center>
             )
