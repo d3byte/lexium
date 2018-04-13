@@ -80,9 +80,9 @@ export default class Task extends Component {
                   {
                     (task.results || []).length > 0 ? (
                       <p>
-                        Уже прошёл <b>{((task.results[0] || {}).user || {}).name}</b> и
+                        Уже прошёл <b>{((task.results[0] || {}).user || {}).name}</b>
                         {
-                          (task.results || []).length > 1 && <span className="underlined"> {task.results.length - 1} других людей</span>
+                          (task.results || []).length > 1 && <span className="underlined">и {task.results.length - 1} других людей</span>
                         }
                       </p>
                     ) : <p>Никто ещё не прошёл это задание</p>
