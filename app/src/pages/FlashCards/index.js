@@ -65,7 +65,11 @@ export default class FlashCards extends Component {
         <div className="section">
           <span className="title">
           {
-            numberWords == task.words.length ? (Math.round(know.length * (100 / task.words.length)) < 75 ? 'Неудачное прохождение' : 'Успешное прохождение') : 'Карточки со словами'
+            numberWords === task.words.length ? 
+              (Math.round(know.length * (100 / task.words.length)) < 75 ? 
+                'Неудачное прохождение' 
+                : 'Успешное прохождение') 
+              : 'Карточки со словами'
           }
           </span>
             <div className="game-wrapper flash-cards">
@@ -73,20 +77,20 @@ export default class FlashCards extends Component {
               <div className="words">
                 <div className="mobile-content">
                   <div className="previous-word">
-                  {
-                    numberWords >= task.words.length-1 ? '' : task.words[numberWords+1].key
-                  }
+                    {
+                      numberWords < 1 ? '' : task.words[numberWords-1].key
+                    }
                   </div>
                   <div className="next-word">
-                  {
-                    numberWords < 1 ? '' : task.words[numberWords-1].key
-                  }
+                    {
+                      numberWords >= task.words.length - 1 ? '' : task.words[numberWords+1].key
+                    }
                   </div>
                 </div>
                 <div className="previous-word">
-                {
-                  numberWords >= task.words.length-1 ? '' : task.words[numberWords+1].key
-                }
+                  {
+                    numberWords < 1 ? '' : task.words[numberWords-1].key
+                  }
                 </div>
                 <div className="current-word" onClick={this.toggleCard}>
                   <span className="on-top">Осталось карточек: { numberWords == 0 ? task.words.length : task.words.length - numberWords }</span>
@@ -118,7 +122,7 @@ export default class FlashCards extends Component {
                 </div>
                 <div className="next-word">
                 {
-                  numberWords < 1 ? '' : task.words[numberWords-1].key
+                  numberWords >= task.words.length - 1 ? '' : task.words[numberWords+1].key
                 }
                 </div>
               </div>
