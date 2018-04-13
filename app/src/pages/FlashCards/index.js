@@ -96,6 +96,7 @@ export default class FlashCards extends Component {
     const attemptsLeft = task.attempts.learnWords - takenAttempts.learnWords > 0 ? 
       task.attempts.learnWords - takenAttempts.learnWords 
       : 0
+      
     return (
       <div className="task-game">
         <Header fetching={false} pathname={pathname} history={history} />
