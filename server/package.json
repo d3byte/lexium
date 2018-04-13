@@ -12,6 +12,7 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "lint": "semistandard",
     "reset-db": "rm -f ./db.sqlite3 && node create-mock-data.js",
+    "reset-db-win": "DEL /F /S /Q /A db.sqlite3 && node create-mock-data.js",
     "dev": "nodemon index.js"
   },
   "dependencies": {
