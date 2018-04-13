@@ -30,6 +30,15 @@ export default class componentName extends Component {
     this.token = ''
   }
 
+  checkAttempts = () => {
+    const { takenAttempts, task } = this.state
+    const { attempts } = task
+    if (takenAttempts.learnWords >= attempts.learnWords && takenAttempts.findPair >= attempts.findPair 
+      && takenAttempts.typeIn >= attempts.typeIn && takenAttempts.scramble >= attempts.scramble) {
+        this.setState({ testAvailable: true })
+    }
+  }
+
   componentDidMount = async () => {
     const { location, history } = this.props
     const task = ((location || {}).state || {}).task
@@ -44,6 +53,7 @@ export default class componentName extends Component {
     try {
       const cachedAttempts = await this.cache.readData(`task-${task.id}`)
       this.setState({ takenAttempts: cachedAttempts })
+      this.checkAttempts()
     } catch(error) {
       this.cache.writeData(`task-${task.id}`, this.state.takenAttempts)
     }
