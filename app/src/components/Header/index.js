@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import anime from 'animejs'
 import { Link } from 'react-router-dom'
+import { graphql } from 'react-apollo'
 
 import Button from '../Button'
 
@@ -8,9 +9,10 @@ import './style.css'
 
 import logo from '../../assets/Lexium.png'
 
+import { CREATE_GROUP } from '../../graphql/mutations'
 import { CacheManager } from '../../utils/index'
 
-export default class Header extends Component {
+class Header extends Component {
   constructor() {
     super()
     this.state = {
@@ -18,7 +20,9 @@ export default class Header extends Component {
       pathname: '',
       fetching: false,
       searching: false,
-      menuIsActive: false
+      menuIsActive: false,
+      isGroupCreationActive: false,
+      groupName: ''
     }
     this.cache = new CacheManager()
     this.screenWidth = window.screen.innerWidth || document.clientWidth || document.body.clientWidth
@@ -27,6 +31,20 @@ export default class Header extends Component {
   componentWillReceiveProps = props => {
     const { fetching } = props
     this.setState({ fetching })
+  }
+
+  toggleGroupCreation = () => {
+    this.setState({ isGroupCreationActive: !this.state.isGroupCreationActive })
+  }
+
+  createGroup = async () => {
+    const { groupName } = this.state
+    const user = await this.cache.readData('user')
+    const response = await this.props.createGroup({ variables: { name: groupName, superUsers: [user.id] } })
+    const group = response.data.createGroup
+    console.log(response, group)
+    this.cache.writeData('user', { ...user, groups: [...user.groups, group] })
+    this.setState({ isGroupCreationActive: false })
   }
 
   toggleSearch = () => {
@@ -100,7 +118,7 @@ export default class Header extends Component {
   
 
   render() {
-    const { className, fetching, searching, pathname, menuIsActive } = this.state
+    const { className, fetching, searching, pathname, menuIsActive, isGroupCreationActive } = this.state
     const { inputHandler } = this.props
     return (
       <header className={className}>
@@ -134,9 +152,9 @@ export default class Header extends Component {
                   </li>
                 )
               }
-              <li className="notifications">
+              {/* <li className="notifications">
                 <i className="material-icons">bookmark</i>
-              </li>
+              </li> */}
               <li onClick={this.toggleMenu}>
                 <i className="material-icons">reorder</i>
               </li>
@@ -151,7 +169,7 @@ export default class Header extends Component {
                 <i className="material-icons">account_circle</i> Профиль
               </Link>
             </li>
-            <li>
+            <li onClick={this.toggleGroupCreation}>
               <i className="material-icons">add_box</i> Создать группу
             </li>
             <li>
@@ -174,8 +192,14 @@ export default class Header extends Component {
                 <i className="material-icons">account_circle</i> Профиль
               </Link>
             </li>
-            <li>
-              <i className="material-icons">add_box</i> Создать группу
+            <li className="create-group">
+              <span onClick={this.toggleGroupCreation}>
+                <i className="material-icons">add_box</i> Создать группу
+              </span>
+              <div className={'group-creation mobile ' + (isGroupCreationActive ? '' : 'hide')}>
+                <input placeholder="Имя группы" className="line-based" onChange={e => this.setState({ groupName: e.target.value })} />
+                <button onClick={this.createGroup} className="flat text-blue">Создать</button>
+              </div>
             </li>
             <li>
               <Link to="/settings">
@@ -186,7 +210,14 @@ export default class Header extends Component {
           <Button clickHandler={this.logout} classNameProp="regular" text="Выход" />
         </div>
         <div className={'sidebar-overlay ' + (menuIsActive ? '' : 'hide')} onClick={this.toggleMenu}></div>
+        <div className={'group-creation desktop ' + (isGroupCreationActive ? '' : 'hide')}>
+          <input placeholder="Имя группы" className="line-based" onChange={e => this.setState({ groupName: e.target.value })} />
+          <button className="flat text-blue" onClick={this.createGroup}>Создать</button>
+          <i onClick={this.toggleGroupCreation} className="material-icons">close</i>
+        </div>
       </header>
     )
   }
 }
+
+export default graphql(CREATE_GROUP, { name: 'createGroup' })(Header)
