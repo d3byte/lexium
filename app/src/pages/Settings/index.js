@@ -49,7 +49,8 @@ class Settings extends Component {
   fetchData = async token => {
     const response = await this.client.query({ query: USER, variables: { token } })
     const { user } = response.data
-    this.cache.writeData('user', user)
+    const groupsForCaching = user.groups.map(group => ({ ...group, avatarUrl: '' }))
+    this.cache.writeData('user', { ...user, groups: groupsForCaching })
     this.setState({ user, fetching: false })
   }
 
