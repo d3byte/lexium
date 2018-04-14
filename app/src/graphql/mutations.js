@@ -146,8 +146,8 @@ mutation updateUserAvatar($token: String!, $avatarUrl: String!) {
 `
 
 const CREATE_GROUP = gql`
-mutation createGroup($name: String!, $usersIds: [ID!]!, $superUsers: [ID!]!) {
-    createGroup(name: $name, usersIds: $usersIds, superUsers: $superUsers) {
+mutation createGroup($name: String!, $superUsers: [ID!]!) {
+    createGroup(name: $name, superUsers: $superUsers) {
         id
         name
         tasks {
