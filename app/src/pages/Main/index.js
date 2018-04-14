@@ -3,6 +3,7 @@ import React, { Component } from 'react'
 import './style.css'
 
 import logo from '../../assets/Lexium_white.png'
+import mac from '../../assets/mac.png'
 
 export default class Main extends Component {
   render() {
@@ -25,9 +26,13 @@ export default class Main extends Component {
             <h1 className="title-home">Давно хотите изучить иностранный язык, но устали от типичного обучения?</h1>
           </div>
         </section>
+        <section className="section-home">
+          <h2>Интерфейс платформы</h2>
+          <img src={mac} className="mac" />
+        </section>
         <footer>
           <div className="section info">
-          &copy;2017-2018 Copyright Lexium
+          &copy;2017-2018 Copyright Lexium. Все права защищены.
           </div>
         </footer>
       </div>
