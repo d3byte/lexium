@@ -10,7 +10,7 @@ type Query {
 }
 
 type Mutation {
-  createGroup(name: String!, usersIds: [ID!]!, superUsers: [ID!]!): Group
+  createGroup(name: String!, superUsers: [ID!]!): Group
   updateGroup(id: ID!, input: GroupInput): Group
   updateGroupAvatar(token: String!, avatarUrl: String!, id: ID!): Group
   addUserToGroup(id: ID!, userId: ID!): Group

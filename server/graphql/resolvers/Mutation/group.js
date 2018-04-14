@@ -2,13 +2,13 @@ const { models } = require('../../../models')
 const { getUserId } = require('../../../utils')
 
 module.exports = {
-    createGroup(root, { name, usersIds, superUsers }, context) {
-        let id
-        return models.Group.create({ name, superUsers: JSON.stringify(superUsers[0]) })
-            .then(group => {
-                id = group.id
-                return group.setUsers(usersIds)
-            }).then(theGroup => models.Group.findById(id))
+    async createGroup(root, { name, superUsers }, context) {
+        const group = await models.Group.create({ name, superUsers: JSON.stringify(superUsers[0]) })
+        // ЛЮТЫЙ КОСТЫЛЬ, НУЖНО ПОМЕНЯТЬ ПОТОМ
+        const user = await models.User.findById(superUsers[0])
+        user.addGroup(group.id)
+        group.addUser(user.id)
+        return group
     },
 
     async updateGroupAvatar(root, { token, avatarUrl, id }) {
