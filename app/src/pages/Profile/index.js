@@ -155,14 +155,15 @@ class Profile extends Component {
       })
       return { ...group, superUsers: JSON.parse(group.superUsers), tasks, uncompletedTasks, completedTasks }
     })
+    const groupsForCaching = groups.map(group => ({ ...group, avatarUrl: '' }))
     const newUser = Object.assign({}, { ...user, groups })
-    this.cache.writeData('user', newUser)
+    this.cache.writeData('user', { ...newUser, groups: groupsForCaching, avatarUrl: '' })
     const { currentGroup } = this.state
     newUser.groups.map(group => {
       if(group.id === currentGroup.id) {
         console.log(true)
         this.setState({ user, currentGroup: group, fetching: false })
-        this.cache.writeData('currentGroup', group)
+        this.cache.writeData('currentGroup', { ...group, avatarUrl: '' })
       } 
     })
   }
@@ -186,7 +187,7 @@ class Profile extends Component {
         const currentGroup = await this.cache.readData('currentGroup')
         const token = await this.cache.readData('token')
         this.token = token
-        this.setState({ user: cachedUser, currentGroup })
+        this.setState({ user: { ...cachedUser, avatarUrl: '' }, currentGroup })
         this.fetchData(token)
       } catch (error) {
         console.log(error)
@@ -332,7 +333,7 @@ class Profile extends Component {
                 user.groups && user.groups.map(group => (
                 <div key={group.id} className="group" onClick={() => this.changeGroup(group)}>
                   <div className="avatar">
-                    <img src="" alt="group-avatar" />
+                    <img src={group.avatarUrl} alt="group-avatar" />
                   </div>
                   <div className="info">
                     <p className="name">{group.name}</p>

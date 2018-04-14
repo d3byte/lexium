@@ -113,7 +113,7 @@ export default class Typein extends Component {
                   </div>
                   <div className={'word-container ' + (incorrect ? 'incorrect' : '')}>
                     <span className="key">{rightWords >= task.words.length ? '' : task.words[rightWords].key}</span>
-                    <input type="text" className="line-based" placeholder="Слово" focused={true} value={value} onChange={e => this.setState({value: e.target.value})} />
+                    <input type="text" className="line-based" placeholder="Слово" focused="true" value={value} onChange={e => this.setState({value: e.target.value})} />
                   </div>
                   <Button clickHandler={this.checkWord} classNameProp="regular lighter" text="Проверить" />
               </div>

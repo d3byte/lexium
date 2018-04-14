@@ -66,17 +66,19 @@ class Signin extends Component {
         this.setState({ error, loading: false, errorInput: 'password' })
       } else {
         let { user, token } = data.data.login
-        user.groups.map(group => {
+        const groupsForCaching = user.groups.map(group => {
           group.superUsers = JSON.parse(group.superUsers)
           if (group.tasks) {
             const { uncompletedTasks, completedTasks } = this.handleTasks(group.tasks, user.id)
             group.uncompletedTasks = uncompletedTasks
             group.completedTasks = completedTasks
           }
+          return { ...group, avatarUrl: '' }
         })
+        console.log(groupsForCaching)
         this.cache.writeData('token', token)
-        this.cache.writeData('user', user)
-        this.cache.writeData('currentGroup', user.groups[0])
+        this.cache.writeData('user', { ...user, groups: groupsForCaching })
+        this.cache.writeData('currentGroup', { ...user.groups[0], avatarUrl: '' })
         this.props.history.push({ pathname: '/profile', state: { user, token } })
       }
     }
