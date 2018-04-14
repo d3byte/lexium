@@ -37,7 +37,7 @@ class Settings extends Component {
         mutation: UPDATE_AVATAR, 
         variables: { token: this.token, avatarUrl: e.target.result } 
       })
-      this.cache.writeData('user', user)
+      this.cache.writeData('user', { ...user, avatarUrl: '' })
       if (user) {
         this.setState({ fetching: false, updatedAvatar: true })
       }
