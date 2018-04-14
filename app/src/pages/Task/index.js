@@ -11,7 +11,7 @@ import { USER } from '../../graphql/queries'
 
 import './style.css'
 
-export default class componentName extends Component {
+export default class Task extends Component {
   constructor() {
     super()
     this.state = {
@@ -30,6 +30,15 @@ export default class componentName extends Component {
     this.token = ''
   }
 
+  checkAttempts = () => {
+    const { takenAttempts, task } = this.state
+    const { attempts } = task
+    if (takenAttempts.learnWords >= attempts.learnWords && takenAttempts.findPair >= attempts.findPair 
+      && takenAttempts.typeIn >= attempts.typeIn && takenAttempts.scramble >= attempts.scramble) {
+        this.setState({ testAvailable: true })
+    }
+  }
+
   componentDidMount = async () => {
     const { location, history } = this.props
     const task = ((location || {}).state || {}).task
@@ -40,10 +49,11 @@ export default class componentName extends Component {
         words: (typeof task.words === 'string' ? JSON.parse(task.words) : task.words), 
         attempts: (typeof task.attempts === 'string' ? JSON.parse(task.attempts) : task.attempts), 
       } 
-    })
+    }, this.checkAttempts)
     try {
       const cachedAttempts = await this.cache.readData(`task-${task.id}`)
       this.setState({ takenAttempts: cachedAttempts })
+      this.checkAttempts()
     } catch(error) {
       this.cache.writeData(`task-${task.id}`, this.state.takenAttempts)
     }
@@ -70,9 +80,9 @@ export default class componentName extends Component {
                   {
                     (task.results || []).length > 0 ? (
                       <p>
-                        Уже прошёл <b>{((task.results[0] || {}).user || {}).name}</b> и
+                        Уже прошёл <b>{((task.results[0] || {}).user || {}).name}</b>
                         {
-                          (task.results || []).length > 1 && <span className="underlined"> {task.results.length - 1} других людей</span>
+                          (task.results || []).length > 1 && <span className="underlined">и {task.results.length - 1} других людей</span>
                         }
                       </p>
                     ) : <p>Никто ещё не прошёл это задание</p>
@@ -127,7 +137,7 @@ export default class componentName extends Component {
               <center>
                 <div className="test-proposal">
                   <span>Вы можете пройти тест!</span>
-                  <Button clickHandler={() => history.push('/task/test')} classNameProp="regular lighter" text="Перейти к тесту" />
+                  <Button clickHandler={() => history.push({ pathname: '/task/test', state: { task } })} classNameProp="regular lighter" text="Перейти к тесту" />
                 </div>
               </center>
             )

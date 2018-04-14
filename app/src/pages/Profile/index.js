@@ -289,7 +289,7 @@ class Profile extends Component {
         </div>
 
         <div className="section tasks">
-          <MaterialSwitch titleProp="Показать выполненные задания" onChange={this.toggleCompletedTasks}/>
+          <MaterialSwitch titleProp="Показать выполненные задания" changeHandler={this.toggleCompletedTasks}/>
           <div className={'containers ' + (!showCompleted ? 'hide' : '')}>
 
             {
@@ -300,7 +300,7 @@ class Profile extends Component {
                       <div className="info">
                         <p className="name">Модальный глагол cut</p>
                         <p className="deadline">Осталось дней: <b>{this.determineRemainingDays(task)}</b></p>
-                        <p className="deadline">Ваш результат: <b>{this.getUserResult(task)}%</b></p>
+                        <p className="deadline">Ваш результат: <b>{this.getUserResult(task).percentage}%</b></p>
                       </div>
                       <Button clickHandler={() => this.routeToTask(task)} classNameProp="regular fluid" text="Улучшить результат" />
                     </div>
@@ -311,7 +311,7 @@ class Profile extends Component {
                     <div className="info">
                       <p className="name">{task.name}</p>
                       <p className="deadline">Осталось дней: <b>{this.determineRemainingDays(task)}</b></p>
-                      <p className="deadline">Ваш результат: <b>{this.getUserResult(task)}%</b></p>
+                      <p className="deadline">Ваш результат: <b>{this.getUserResult(task).percentage}%</b></p>
                     </div>
                     <Button clickHandler={() => this.routeToTask(task)} classNameProp="regular fluid" text="Улучшить результат" />
                   </div>

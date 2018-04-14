@@ -4,7 +4,6 @@ const { getUserId } = require('../../../utils')
 module.exports = {
     // User
     async createTask(root, { input, groupId, attempts }, context) {
-        console.log(input, groupId, attempts)
         const task = await models.Task.create({ 
             ...input, groupId, attempts: JSON.stringify(attempts)
         })
@@ -20,9 +19,11 @@ module.exports = {
     },
 
     setResult(root, { id, res, userId }, context) {
+        let resultId
         return models.Task.findById(id)
             .then(task => models.Result.create(res)
                 .then(result => {   
+                    resultId = result.id
                     result.setUser(userId)
                     models.User.findById(userId)
                         .then(user => user.update({ 
@@ -31,11 +32,11 @@ module.exports = {
                             avatarUrl: user.avatarUrl, wordsLearnt: (user.wordsLearnt + result.wordsLearnt)
                         }))
                     return task.addResult(result.id)
-                })).then(added => models.Task.findById(id))
+                })).then(added => models.Result.findById(resultId))
     },
 
-    updateResult(root, { id, taskId, result, userId }, context) {
-        return models.Result.findById(id).then(res => res.update(result)
+    updateResult(root, { id, resultId, res, userId }, context) {
+        return models.Result.findById(resultId).then(result => result.update(res)
             .then(() => {
                 models.User.findById(userId)
                     .then(user => user.update({
@@ -43,7 +44,7 @@ module.exports = {
                         password: user.password, email: user.email,
                         avatarUrl: user.avatarUrl, wordsLearnt: (user.wordsLearnt + result.wordsLearnt)
                     }))
-                return models.Task.findById(taskId)
+                return models.Result.findById(resultId)
             }))
     },
 

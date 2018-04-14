@@ -18,6 +18,7 @@ export default class Typein extends Component {
       currentWordPair: {},
       splittedWord: [],
       correct: false,
+      index: 0,
       currentLetter: null
     }
     this.cache = new CacheManager()
@@ -88,22 +89,37 @@ export default class Typein extends Component {
     this.setState({ splittedWord: copy })
   }
 
+  incrementAttempt = () => {
+    const { takenAttempts, task } = this.state
+    const newTakenAttempts = { ...takenAttempts, scramble: takenAttempts.scramble + 1 }
+    this.cache.writeData(`task-${task.id}`, newTakenAttempts)
+    this.setState({ takenAttempts: newTakenAttempts })
+  }
+
   stopMoving = () => {
-    const { splittedWord, currentKey } = this.state
+    const { splittedWord, currentWordPair, index, task } = this.state
     const joinedCurrentWord = splittedWord.map(item => item.letter).join('')
     let correct = false
-    if(joinedCurrentWord === currentKey)
+    if(joinedCurrentWord === currentWordPair.key)
       correct = true
+    if (index === task.words.length - 1) {
+      this.incrementAttempt()
+      this.setState({ completed: true })
+    }
     this.setState({ currentLetter: null, correct })
   }
 
   nextWord = () => {
-    const { currentWordPair, task } = this.state
-    const index = task.words.indexOf(currentWordPair)
+    const { currentWordPair, task, index } = this.state
     if (index === task.words.length - 1) {
       return
     }
-    this.setState({ currentWordPair: task.words[index + 1] })
+    const { key } = task.words[index + 1]
+    const letters = this.getLetters(key)
+    this.setState({ 
+      splittedWord: shuffle(letters), currentWordPair: task.words[index + 1], 
+      correct: false, index: index + 1 
+    })
   }
 
   componentDidMount = () => {
@@ -111,10 +127,10 @@ export default class Typein extends Component {
     const task = ((location || {}).state || {}).task
     const takenAttempts = ((location || {}).state || {}).takenAttempts
     !task && (history.push('/profile'))
-    this.setState({ task, takenAttempts })
+    this.setState({ task: { ...task, words: shuffle(task.words) }, takenAttempts })
     // Ставлю первое слово в игру
     const currentWordPair = shuffle(task.words)[0]
-    const { key, value } = currentWordPair
+    const { key } = currentWordPair
     const letters = this.getLetters(key)
     this.setState({ splittedWord: shuffle(letters), currentWordPair })
   }
@@ -122,7 +138,14 @@ export default class Typein extends Component {
   render() {
     const { history } = this.props
     const { pathname } = this.props.location
-    const { currentWordPair, splittedWord, correct, currentLetter, task, takenAttempts } = this.state
+    const { currentWordPair, splittedWord, correct, currentLetter, task, takenAttempts, completed } = this.state
+
+    if (Object.keys(task).length == 0) return ''
+
+    const attemptsLeft = task.attempts.scramble - takenAttempts.learnWords > 0 ? 
+      task.attempts.scramble - takenAttempts.scramble 
+      : 0
+
     return (
       <div className="task-game">
         <Header fetching={false} pathname={pathname} history={history} />
@@ -140,46 +163,56 @@ export default class Typein extends Component {
         <div className="section">
           <span className="title">Карточки со словами</span>
 
-          <div className={'currentWord ' + (correct ? 'lighter' : '')} >{currentWordPair.value}</div>
-
           {
-            correct ? (
-              <div className="correct-word">
-                  <span className="words-left">Осталось слов: 8</span>
-                  <div className="word-container">
-                    <span className="key">{currentWordPair.key}</span>
-                  </div>
-                  <Button clickHandler={() => console.log('Ура!')} classNameProp="regular lighter" text="Следующее слово" />
-              </div>
-            ) : (
-              <div className="letters-wrapper">
-                <div className="letters">
-                  {
-                    splittedWord.map(item => (
-                      <div 
-                        key={item.id} 
-                        className={'letter ' + (currentLetter && currentLetter.id === item.id ? 'selected' : '') }
-                        onClick={() => this.chooseLetter(item)}
-                      >
-                        {item.letter}
+            !completed ? (
+              <div className="game-wrapper">
+                <div className={'currentWord ' + (correct ? 'lighter' : '')} >{currentWordPair.value}</div>
+                {
+                  correct ? (
+                    <div className="correct-word">
+                        <div className="word-container">
+                          <span className="key">{currentWordPair.key}</span>
+                        </div>
+                        <Button clickHandler={this.nextWord} classNameProp="regular lighter" text="Следующее слово" />
+                    </div>
+                  ) : (
+                    <div className="letters-wrapper">
+                      <div className="letters">
+                        {
+                          splittedWord.map(item => (
+                            <div 
+                              key={item.id} 
+                              className={'letter ' + (currentLetter && currentLetter.id === item.id ? 'selected' : '') }
+                              onClick={() => this.chooseLetter(item)}
+                            >
+                              {item.letter}
+                            </div>
+                          ))
+                        }
                       </div>
-                    ))
-                  }
+                    </div>
+                  )
+                }
+                {
+                  !correct && (
+                    <div className={'controls ' + (currentLetter !== null ? 'active' : '')}>
+                      <i onClick={() => this.moveLetter('left')} className="material-icons">keyboard_arrow_left</i>
+                      <i onClick={this.stopMoving} className="material-icons">done</i>
+                      <i onClick={() => this.moveLetter('right')} className="material-icons">keyboard_arrow_right</i>
+                    </div>
+                  )
+                }
                 </div>
-              </div>
-            )
-          }
-          {
-            !correct && (
-              <div className={'controls ' + (currentLetter !== null ? 'active' : '')}>
-                <i onClick={() => this.moveLetter('left')} className="material-icons">keyboard_arrow_left</i>
-                <i onClick={this.stopMoving} className="material-icons">done</i>
-                <i onClick={() => this.moveLetter('right')} className="material-icons">keyboard_arrow_right</i>
-              </div>
-            )
-          }
+                ) : (
+                  <div className="result_game">
+                      <h1>Вы успешно прошли игру!</h1>
+                      <p>Необходимо ещё <b>{attemptsLeft}</b> прохождений</p>
+                      <Button clickHandler={this.restart} classNameProp="regular" text="Пройти ещё раз" />
+                    </div>
+                )
+              }
 
-        </div>
+            </div>
 
       </div>
     )

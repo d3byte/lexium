@@ -20,8 +20,8 @@ type Mutation {
 
   createTask(input: TaskInput!, groupId: ID!, attempts: Attempts!): Task
   updateTask(id: ID!, input: TaskInput!): Task
-  setResult(id: ID!, res: ResultInput!, userId: ID!): Task
-  updateResult(id: ID!, taskId: ID!, result: ResultInput!, userId: ID!): Task
+  setResult(id: ID!, res: ResultInput!, userId: ID!): Result
+  updateResult(id: ID!, resultId: ID!, res: ResultInput!, userId: ID!): Result
   removeTask(id: ID!): Task
 
   updateUser(id: ID!, input: UserInput!): User
@@ -128,6 +128,7 @@ type Result {
   user: User!
   wordsLearnt: Int!
   percentage: Int!
+  createdAt: Date!
 }
 
 input ResultInput {

@@ -5,7 +5,7 @@ import Button from '../../components/Button'
 import Header from '../../components/Header'
 import { Gamebar } from '../../components/Gamebar'
 
-import { CacheManager } from '../../utils'
+import { CacheManager, shuffle } from '../../utils'
 
 import './style.css'
 
@@ -15,9 +15,11 @@ export default class FlashCards extends Component {
     this.state = {
       task: {},
       takenAttempts: {},
-      know: [],
-      dontKnow: [],
-      numberWords: 0
+      knownWords: 0,
+      unknownWords: 0,
+      numberWords: 0,
+      completed: false,
+      percentage: null
     }
     this.cache = new CacheManager()
   }
@@ -27,29 +29,74 @@ export default class FlashCards extends Component {
     // показано кол-во оставшихся карточек, или кнопками
     const { target } = e
     if (target.nodeName !== 'SPAN' && !target.classList.contains('on-top') &&
-        target.nodeName !== 'BUTTON' && !target.classList.contains('controls')) {
+        target.nodeName !== 'BUTTON' && !target.classList.contains('control-buttons')) {
       this.setState({ showKey: !this.state.showKey })
     }
   }
 
-  componentDidMount = () => {
+  nextWord = (e, know = false) => {
+    const { numberWords, task } = this.state
+    let knownWords= this.state.knownWords,
+      unknownWords = this.state.unknownWords
+
+    know ? knownWords++ : unknownWords++
+    
+    if (knownWords + unknownWords === task.words.length) {
+      const percentage = Math.floor(knownWords * 100 / task.words.length)
+      percentage >= 75 && this.incrementAttempt()
+      this.setState({ completed: true, percentage })
+      return
+    }
+    
+    this.setState({ 
+      numberWords: numberWords + 1,
+      knownWords,
+      unknownWords
+    })
+  }
+  
+  incrementAttempt = () => {
+    const { takenAttempts, task } = this.state
+    const newTakenAttempts = { ...takenAttempts, learnWords: takenAttempts.learnWords + 1 }
+    this.cache.writeData(`task-${task.id}`, newTakenAttempts)
+    this.setState({ takenAttempts: newTakenAttempts })
+  }
+
+  restart = () => {
+    const { task } = this.state
+    this.setState({ 
+      completed: false, percentage: null, 
+      knownWords: 0, unknownWords: 0, numberWords: 0,
+      task: { ...task, words: shuffle(task.words) }
+    })
+  }
+
+
+  componentDidMount = async () => {
     const { location, history } = this.props
     const task = ((location || {}).state || {}).task
     const takenAttempts = ((location || {}).state || {}).takenAttempts
     !task && (history.push('/profile'))
-    this.setState({ task, takenAttempts })
+    this.setState({ task: { ...task, words: shuffle(task.words) }, takenAttempts })
+    try {
+      const cachedAttempts = await this.cache.readData(`task-${task.id}`)
+      this.setState({ takenAttempts: cachedAttempts })
+    } catch(error) {
+      this.cache.writeData(`task-${task.id}`, this.state.takenAttempts)
+    }
   }
   
   render() {
     const { history } = this.props
     const { pathname } = this.props.location
-    const { showKey, task, takenAttempts, numberWords, know, dontKnow } = this.state
-    
-    // console.log(dontKnow)
-    
-    // console.log(know)
-    // console.log(task.words)
+    const { showKey, task, takenAttempts, numberWords, percentage, completed } = this.state
+
     if (Object.keys(task).length == 0) return ''
+
+    const attemptsLeft = task.attempts.learnWords - takenAttempts.learnWords > 0 ? 
+      task.attempts.learnWords - takenAttempts.learnWords 
+      : 0
+      
     return (
       <div className="task-game">
         <Header fetching={false} pathname={pathname} history={history} />
@@ -67,62 +114,65 @@ export default class FlashCards extends Component {
         </div>
 
         <div className="section">
-          <span className="title">Карточки со словами</span>
-            <div className="game-wrapper flash-cards">
+          <span className="title">
+          {
+            completed ? 
+              percentage < 75 ? 
+                'Неудачное прохождение'
+                : 'Успешное прохождение'
+              : 'Карточки со словами'
+          }
+          </span>
+          <div className="game-wrapper flash-cards">
+          {
+            !completed ? (
               <div className="words">
                 <div className="mobile-content">
                   <div className="previous-word">
-                  {
-                    numberWords >= task.words.length-1 ? '' : task.words[numberWords+1].key
-                  }
+                    {numberWords !== 0 ? task.words[numberWords-1].key : ''}
                   </div>
                   <div className="next-word">
-                  {
-                    numberWords < 1 ? '' : task.words[numberWords-1].key
-                  }
+                  {numberWords >= task.words.length - 1 ? '' : task.words[numberWords+1].key}
                   </div>
                 </div>
                 <div className="previous-word">
-                {
-                  numberWords >= task.words.length-1 ? '' : task.words[numberWords+1].key
-                }
+                  {numberWords !== 0 ? task.words[numberWords-1].key : ''}
                 </div>
                 <div className="current-word" onClick={this.toggleCard}>
-                  <span className="on-top">Осталось карточек: { numberWords == 0 ? task.words.length : task.words.length - numberWords }</span>
+                  <span className="on-top">Осталось карточек: {task.words.length - numberWords}</span>
                   {
-                    numberWords == task.words.length ? (numberWords == task.words.length ? 'Результат ' + Math.round(know.length * (100 / task.words.length)) +'%' : '') : showKey ? task.words[numberWords].value : task.words[numberWords].key
+                    numberWords === task.words.length ? 
+                      '' 
+                      : showKey ? 
+                        task.words[numberWords].value 
+                        : task.words[numberWords].key
                   }
                   <div className="control-buttons">
-                    { numberWords != task.words.length ? 
-                    <Button clickHandler={() => {
-                      let knowData = know.slice(0)
-                      knowData.push(task.words[numberWords])
-                      this.setState({ 
-                        numberWords: numberWords+1,
-                        know: knowData
-                      })
-                    }} classNameProp="regular" text="Знаю" />
-                    : ''}
-                    { numberWords != task.words.length ?
-                    <Button clickHandler={() => { 
-                      let dontKnowData = dontKnow.slice(0)
-                      dontKnowData.push(task.words[numberWords])
-                      this.setState({ 
-                        numberWords: numberWords+1,
-                        dontKnow: dontKnowData
-                      })
-                    }} classNameProp ="regular gray" text="Не знаю" />
-                    : ''}
+                    <Button clickHandler={e => this.nextWord(e, true)} classNameProp="regular" text="Знаю" />
+                    <Button clickHandler={this.nextWord} classNameProp ="regular gray" text="Не знаю" />
                   </div>
                 </div>
                 <div className="next-word">
-                {
-                  numberWords < 1 ? '' : task.words[numberWords-1].key
-                }
+                  {numberWords >= task.words.length - 1 ? '' : task.words[numberWords+1].key}
                 </div>
               </div>
-            </div>
-            
+            ) : percentage < 75 ? (
+                <div className="result_game">
+                  <h1>Попробуйте ещё раз</h1>
+                  <p>Ваш результат: {percentage}% из 75% необходимых</p>
+                  <Button clickHandler={this.restart} classNameProp="regular" text="Пройти ещё раз" />
+                </div>
+              ) : 
+              (
+                <div className="result_game">
+                  <h1>Вы успешно прошли игру!</h1>
+                  <p>Необходимо ещё <b>{attemptsLeft}</b> прохождений</p>
+                  <Button clickHandler={this.restart} classNameProp="regular" text="Пройти ещё раз" />
+                </div>
+              )
+          }
+          </div>
+
         </div>
       </div>
     )

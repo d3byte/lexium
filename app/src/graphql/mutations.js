@@ -319,11 +319,46 @@ mutation updateGroupAvatar($token: String!, $id: ID!, $avatarUrl: String!) {
 }
 `
 
+const SET_RESULT = gql`
+mutation setResult($id: ID!, $res: ResultInput!, $userId: ID!) {
+    setResult(id: $id, res: $res, userId: $userId) {
+        id
+        wordsLearnt
+        percentage
+        user {
+            id
+            name
+            username
+            avatarUrl
+        }
+        createdAt
+    }
+}
+`
+
+const UPDATE_RESULT = gql`
+mutation updateResult($id: ID!, $resultId: ID!, $res: ResultInput!, $userId: ID!) {
+    updateResult(id: $id, resultId: $resultId, res: $res, userId: $userId) {
+        id
+        wordsLearnt
+        percentage
+        user {
+            id
+            name
+            username
+            avatarUrl
+        }
+        createdAt
+    }
+}
+`
+
 export {
     LOGIN, SIGN_UP,
     CREATE_GROUP, UPDATE_GROUP,
     CHECK_USERNAME, CHECK_EMAIL,
     UPDATE_AVATAR, CREATE_TASK,
     ADD_USERS_TO_GROUP, UPDATE_TASK,
-    UPDATE_GROUP_AVATAR, 
+    UPDATE_GROUP_AVATAR, SET_RESULT,
+    UPDATE_RESULT,
 }
