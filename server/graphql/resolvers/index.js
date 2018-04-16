@@ -1,6 +1,6 @@
 const GraphQLDate = require('graphql-date')
 
-const query = require('./query')
+const query = require('./Query')
 const mutation = require('./Mutation')
 
 module.exports = function resolvers() {
