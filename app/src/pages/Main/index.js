@@ -1,40 +1,21 @@
 import React, { Component } from 'react'
+import { Link } from 'react-router-dom'
+
+import Header from '../../components/Header'
 
 import './style.css'
-
-import logo from '../../assets/Lexium_white.png'
-import mac from '../../assets/mac.png'
-
 export default class Main extends Component {
   render() {
+    const { pathname } = this.props.location
+    const { history } = this.props
     return (
-      <div>
-        <section className="background-image">
-          <header className="home">
-            <div className="logo">
-              <img src={logo} />
-            </div>
-            <nav>
-              <ul>
-                <li><a href="">Главная</a></li>
-                <li><a href="" className="login">Вход</a></li>
-                <li><a href="" className="register">Регистрация</a></li>
-              </ul>
-            </nav>
-          </header>
-          <div className="section info">
-            <h1 className="title-home">Давно хотите изучить иностранный язык, но устали от типичного обучения?</h1>
-          </div>
-        </section>
-        <section className="section-home">
-          <h2>Интерфейс платформы</h2>
-          <img src={mac} className="mac" />
-        </section>
-        <footer>
-          <div className="section info">
-          &copy;2017-2018 Copyright Lexium. Все права защищены.
-          </div>
-        </footer>
+      <div className="home-page">
+        <Header pathname={pathname} history={history} />
+        <div className="section">
+          <h1>Учить иностранные языки с Lexium - легко!</h1>
+          <p>Просто зайдите в <Link to="/profile">профиль</Link> и попробуйте сами!
+          </p>
+        </div>
       </div>
     )
   }
