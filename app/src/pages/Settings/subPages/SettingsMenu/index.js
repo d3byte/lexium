@@ -28,10 +28,6 @@ export default class SettingsMenu extends Component {
                 <span className="menu-header">Настройки</span>
                 <div className="menu-setting-list">
                     <span className={'menu-setting ' + (currentTab == 'account-subpage' ? 'menu-highlighted' : '')} onClick={() => console.log('debug')}>Аккаунт</span>
-                    <span className="menu-setting">Безопасность</span>
-                    <span className="menu-setting">Личная информация</span>
-                    <span className="menu-setting">Управление группами</span>
-                    <span className="menu-setting">Подписка</span>
                 </div>
           </div>
         )
