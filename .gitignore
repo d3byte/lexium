@@ -4,6 +4,7 @@ app/src/**/*.css
 app/src/**/style.css.map
 app/public/style/style.css.map
 app/public/style/fonts.css.map
+app/build
 server/dist
 server/db.sqlite3
 server/package-lock.json
