@@ -155,15 +155,13 @@ class Profile extends Component {
       })
       return { ...group, superUsers: JSON.parse(group.superUsers), tasks, uncompletedTasks, completedTasks }
     })
-    const groupsForCaching = groups.map(group => ({ ...group, avatarUrl: '' }))
     const newUser = Object.assign({}, { ...user, groups })
-    this.cache.writeData('user', { ...newUser, groups: groupsForCaching, avatarUrl: '' })
+    this.cache.writeData('user', newUser)
     const { currentGroup } = this.state
     newUser.groups.map(group => {
       if(group.id === currentGroup.id) {
-        console.log(true)
         this.setState({ user, currentGroup: group, fetching: false })
-        this.cache.writeData('currentGroup', { ...group, avatarUrl: '' })
+        this.cache.writeData('currentGroup', group)
       } 
     })
   }
@@ -187,7 +185,7 @@ class Profile extends Component {
         const currentGroup = await this.cache.readData('currentGroup')
         const token = await this.cache.readData('token')
         this.token = token
-        this.setState({ user: { ...cachedUser, avatarUrl: '' }, currentGroup })
+        this.setState({ user: cachedUser, currentGroup })
         this.fetchData(token)
       } catch (error) {
         console.log(error)
@@ -243,7 +241,7 @@ class Profile extends Component {
                   <p className="bigger">Участников: <b>{currentGroup.users && currentGroup.users.length}</b></p>
                   <Link
                     className="lighten"
-                    to={{ pathname: `/group/${currentGroup.id}`, state: { group: currentGroup, user, token: this.token } }}>
+                    to={{ pathname: `/group/${currentGroup.id}`, state: { group: { ...currentGroup, avatarUrl: '' }, user, token: this.token } }}>
                     Посмотреть подробную информацию
                   </Link>
                   <p className="lighten hover" onClick={this.callGroupList}>Сменить группу</p>

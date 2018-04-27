@@ -1,3 +1,4 @@
+import localforage from 'localforage'
 import EncryptionManager from './encrypt'
 
 export default class CacheManager extends EncryptionManager {
@@ -6,17 +7,17 @@ export default class CacheManager extends EncryptionManager {
     }
 
     writeData = (key, data) => {
-        return new Promise((resolve, reject) => {
+        return new Promise(async (resolve, reject) => {
             const encryptedData = this.encrypt(data)
-            localStorage.setItem(key, encryptedData)
-            resolve(true)
+            localforage.setItem(key, encryptedData).then(() => resolve(true))
         })
     }
 
     readData = key => {
-        return new Promise((resolve, reject) => {
-            const encryptedData = localStorage.getItem(key)
+        return new Promise(async (resolve, reject) => {
+            const encryptedData = await localforage.getItem(key)
             const decryptedData = this.decrypt(encryptedData)
+            console.log(decryptedData)
             if (decryptedData !== '' && decryptedData !== null && decryptedData != undefined)
                 resolve(decryptedData)
             else
@@ -25,31 +26,12 @@ export default class CacheManager extends EncryptionManager {
     }
 
     removeData = key => {
-        return new Promise((resolve, reject) => {
-            localStorage.removeItem(key)
-            resolve(true)
+        return new Promise(async (resolve, reject) => {
+            localforage.removeItem(key).then(() => resolve(true))
         })
     }
 
     clear = () => {
-        localStorage.clear()
-    }
-
-    updateData = (key, data) => {
-        return new Promise((resolve, reject) => {
-            const encryptedOldData = this.readData(key),
-                decryptedOldData = this.decrypt(encryptedOldData)
-            if (typeof decryptedOldData == 'object') {
-                this.removeData(key)
-                let newData = Object.assign({}, decryptedOldData, data)
-                this.setData(key, newData)
-                return true
-            } else {
-                this.removeData(key)
-                const encryptedData = this.encrypt(data)
-                this.setData(key, encryptedData)
-                return true
-            }
-        })
+        localforage.clear()
     }
 }
