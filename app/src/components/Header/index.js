@@ -104,6 +104,7 @@ class Header extends Component {
   }
 
   componentDidMount = () => {
+    document.getElementById('root').classList.remove('no-scroll')
     const { pathname, fetching } = this.props
     this.setState({ fetching, pathname })
     switch (pathname) {
