@@ -120,7 +120,7 @@ class Header extends Component {
 
   render() {
     const { className, fetching, searching, pathname, menuIsActive, isGroupCreationActive } = this.state
-    const { inputHandler } = this.props
+    const { inputHandler, lockMenu } = this.props
     return (
       <header className={className}>
         <img className="logo" src={logo} alt="logo"/>
@@ -156,9 +156,13 @@ class Header extends Component {
               {/* <li className="notifications">
                 <i className="material-icons">bookmark</i>
               </li> */}
-              <li onClick={this.toggleMenu}>
-                <i className="material-icons">reorder</i>
-              </li>
+              {
+                !lockMenu && (
+                  <li onClick={this.toggleMenu}>
+                    <i className="material-icons">reorder</i>
+                  </li>
+                )
+              }
             </ul>
           )
         }
