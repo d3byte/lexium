@@ -95,7 +95,7 @@ export default class Task extends Component {
             <div className="container of-info reverse">
               {
                 <div className={'avatar ' + ((task.results || []).length > 0 ? '' : 'transparent')}>
-                  <img src={''} alt="user-avatar" />
+                  <img src={task.results && task.results[task.results.length - 1].user.avatarUrl} alt="user-avatar" />
                 </div>
               }
               <div className="container-main">
