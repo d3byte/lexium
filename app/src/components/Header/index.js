@@ -120,10 +120,10 @@ class Header extends Component {
 
   render() {
     const { className, fetching, searching, pathname, menuIsActive, isGroupCreationActive } = this.state
-    const { inputHandler, lockMenu } = this.props
+    const { inputHandler, lockMenu, history } = this.props
     return (
       <header className={className}>
-        <img className="logo" src={logo} alt="logo"/>
+        <img onClick={() => history.push('/')} className="logo" src={logo} alt="logo"/>
         {
           className === 'isLoggedIn' && (
             <ul className="navigation">
