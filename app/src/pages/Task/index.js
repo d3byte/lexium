@@ -64,6 +64,10 @@ export default class Task extends Component {
     const { fetching, testAvailable, task, takenAttempts } = this.state
     const { history } = this.props
     const { pathname } = this.props.location
+
+    if (Object.keys(task).length == 0) return ''
+    console.log(task)
+
     return (
       <div className="task">
         <Header fetching={fetching} pathname={pathname} history={history} />
@@ -95,7 +99,10 @@ export default class Task extends Component {
             <div className="container of-info reverse">
               {
                 <div className={'avatar ' + ((task.results || []).length > 0 ? '' : 'transparent')}>
-                  <img src={task.results && task.results[task.results.length - 1].user.avatarUrl} alt="user-avatar" />
+                  <img 
+                    src={task.results && task.results.length > 0 && task.results[task.results.length - 1].user.avatarUrl} 
+                    alt="user-avatar" 
+                  />
                 </div>
               }
               <div className="container-main">
