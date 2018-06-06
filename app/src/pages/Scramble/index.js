@@ -18,11 +18,25 @@ export default class Typein extends Component {
       currentWordPair: {},
       splittedWord: [],
       correct: false,
+      completed: false,
       index: 0,
       currentLetter: null
     }
     this.cache = new CacheManager()
     this.screenWidth = window.screen.innerWidth || document.clientWidth || document.body.clientWidth
+  }
+
+  restart = () => {
+    const { task } = this.state
+    const newTask = { ...task, words: shuffle(task.words) }
+    const currentWordPair = newTask.words[0]
+    const { key } = currentWordPair
+    const letters = this.getLetters(key)
+    this.setState({
+      splittedWord: shuffle(letters), currentWordPair,
+      completed: false, correct: false, 
+      task: newTask,
+    })
   }
 
   getLetters = currentWord => {
@@ -102,7 +116,7 @@ export default class Typein extends Component {
     let correct = false
     if(joinedCurrentWord === currentWordPair.key)
       correct = true
-    if (index === task.words.length - 1) {
+    if (index === task.words.length - 1 && correct) {
       this.incrementAttempt()
       this.setState({ completed: true })
     }
