@@ -50,7 +50,15 @@ export default class NewTask extends Component {
     this.setState({ wordPairs: newWordPairs }, () => this.inputTofocus.focus())
   }
 
-  removeWordPair = (e, item, index) => { 
+  removeWordPair = (item, index) => { 
+    const { wordPairs } = this.state
+    let newWordPairs = wordPairs.slice(0)
+    newWordPairs = newWordPairs.filter(pair => pair.id !== item.id)
+    this.setState({ wordPairs: newWordPairs })
+  }
+
+  hotkeyRemoveWordPair = (e, item, index) => {
+    const { selected } = this.state
     const { keyCode } = e
     if(keyCode !== 8) {
       this.keyCode = keyCode
@@ -58,9 +66,7 @@ export default class NewTask extends Component {
     }
     if ((this.keyCode === 17 || this.keyCode === 224 || this.keyCode === 91) && keyCode === 8 && index !== 0) {
       this.keyCode = null
-      let newWordPairs = this.state.wordPairs.slice(0)
-      newWordPairs = newWordPairs.filter(pair => pair.id !== item.id)
-      this.setState({ wordPairs: newWordPairs })
+      this.removeWordPair(item, index)
     }
   }
 
@@ -230,11 +236,21 @@ export default class NewTask extends Component {
                       wordPairs.map((item, index) => (
                         <div className="table-row" key={item.id}>
                           <div className="cell">
+                            {
+                              index !== 0 && (
+                                <i 
+                                  className="material-icons" 
+                                  onClick={() => this.removeWordPair(item, index)}
+                                >
+                                  close
+                                </i>
+                              )
+                            }
                             <input 
                               type="text" placeholder="Banana"
                               className="clear"
                               name="key" onChange={e => this.editWordPair(e, item)}
-                              onKeyDown={e => this.removeWordPair(e, item, index)}
+                              onKeyDown={e => this.hotkeyRemoveWordPair(e, item, index)}
                               ref={ref => this.inputTofocus = ref}
                               required
                             />

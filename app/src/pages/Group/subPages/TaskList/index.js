@@ -158,12 +158,16 @@ class TaskList extends Component {
                       selected.words.map((item, index) => (
                         <div className="table-row" key={item.id}>
                           <div className="cell">
-                            <i 
-                              className="material-icons" 
-                              onClick={() => this.removeWordPair(item, index)}
-                            >
-                              close
-                            </i>
+                            {
+                              index !== 0 && (
+                                <i 
+                                  className="material-icons" 
+                                  onClick={() => this.removeWordPair(item, index)}
+                                >
+                                  close
+                                </i>
+                              )
+                            }
                             <input 
                               type="text" placeholder="Banana" 
                               value={item.key} name="key"
