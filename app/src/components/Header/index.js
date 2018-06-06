@@ -40,11 +40,15 @@ class Header extends Component {
   createGroup = async () => {
     const { groupName } = this.state
     const user = await this.cache.readData('user')
-    const response = await this.props.createGroup({ variables: { name: groupName, superUsers: [user.id] } })
-    const group = response.data.createGroup
-    console.log(response, group)
-    this.cache.writeData('user', { ...user, groups: [...user.groups, group] })
-    this.setState({ isGroupCreationActive: false })
+    try {
+      const response = await this.props.createGroup({ variables: { name: groupName, superUsers: [user.id] } })
+      const group = response.data.createGroup
+      console.log(response, group)
+      this.cache.writeData('user', { ...user, groups: [...user.groups, group] })
+      this.setState({ isGroupCreationActive: false })
+    } catch (error) {
+      console.log(error)
+    }
   }
 
   toggleSearch = () => {
